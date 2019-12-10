@@ -8,5 +8,7 @@ setup(name='vizAI',
       license='',
       packages=find_packages(),
       zip_safe=False,
-      install_requires=[]
+      install_requires=['pandas',
+        'plotnine',
+        'numpy']
       )
