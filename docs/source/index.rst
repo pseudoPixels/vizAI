@@ -7,7 +7,7 @@ Welcome to vizAI's documentation!
 =================================
 
 
-.. automodule:: vizAI.core.test
+.. automodule:: core.test
    :members:
    :undoc-members:
    :show-inheritance:
