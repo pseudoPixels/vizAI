@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 
 from plotnine import *
 from plotnine.data import mpg
