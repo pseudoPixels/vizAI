@@ -30,7 +30,12 @@ def make_plot(x, y):
 @app.route('/')
 @app.route('/index')
 def index():
-	p = make_plot('sepal_width', 'sepal_length')
+	# create a Figure object
+	p = figure(plot_width=1700, plot_height=850)
+
+	# add a Circle renderer to this figure
+	p.circle([1, 2.5, 3, 2], [2, 3, 1, 1.5], radius=0.3, alpha=0.5)
+
 	scripts, div = components(p)
-	print(scripts)
+	# print(scripts)
 	return render_template('index.html', script=scripts, div=div)
