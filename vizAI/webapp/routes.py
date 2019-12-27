@@ -1,7 +1,7 @@
 from flask import render_template
 from flask import request, jsonify
 from vizAI.webapp import app
-
+import plotly.express as px
 
 import json
 
@@ -37,5 +37,17 @@ def index():
 	p.circle([1, 2.5, 3, 2], [2, 3, 1, 1.5], radius=0.3, alpha=0.5)
 
 	scripts, div = components(p)
-	# print(scripts)
-	return render_template('index.html', script=scripts, div=div)
+
+	data_canada = px.data.gapminder().query("country == 'Canada'")
+	print(data_canada.head())
+	fig = px.bar(data_canada, x='year', y='pop')
+
+	fig.update_layout({
+	"plot_bgcolor": "rgba(.9, .9, .9, .1)",
+	"paper_bgcolor": "rgba(.9, .9, .9, .1)"
+	})
+
+
+	scripts = fig.to_json()
+
+	return render_template('index.html', pData=scripts, div=div)
