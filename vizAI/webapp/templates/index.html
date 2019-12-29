@@ -27,10 +27,10 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
 
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.js"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.js"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.js"></script>
-<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-1.4.0.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.4.0.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-1.4.0.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 
 </head>
 <body>
@@ -46,33 +46,28 @@
                     </li>
                     <li class="menu-title">Tips Dataset</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Categorical Features</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Categorical Features</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
-                            <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
-
-                            <li><i class="fa fa-id-card-o"></i><a href="ui-cards.html">Cards</a></li>
-                            <li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
-                            <li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
-                            <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
-                            <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
-                            <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
-                            <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
+                            {% for aCaterogicalFeature in categorical_features%}
+                                <li><i class="fa fa-bars"></i><a href="#">{{aCaterogicalFeature}}</a></li>
+                            {% endfor %}
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Numeric Features</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
+                            {% for aNumericFeature in neumeric_features%}
+                                <li><i class="fa fa-bars"></i><a href="#">{{aNumericFeature}}</a></li>
+                            {% endfor %}
+
                         </ul>
                     </li>
                     <li class="menu-item-has-children active dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Aggregated Features</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Aggregated Features</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
+                            <li><i class="fa fa-bars"></i><a href="#">Sum</a></li>
+                            <li><i class="fa fa-bars"></i><a href="#">Median</a></li>
+                            <li><i class="fa fa-bars"></i><a href="#">Mode</a></li>
                         </ul>
                     </li>
 
@@ -137,7 +132,7 @@
                             <div class="dropdown-menu" aria-labelledby="message">
                                 <p class="red">You have 4 Mails</p>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/avatar/1.jpg') }}" ></span>
+                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/pp.png') }}" ></span>
                                     <div class="message media-body">
                                         <span class="name float-left">Jonathan Smith</span>
                                         <span class="time float-right">Just now</span>
@@ -145,7 +140,7 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/avatar/2.jpg') }}"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/pp.png') }}"></span>
                                     <div class="message media-body">
                                         <span class="name float-left">Jack Sanders</span>
                                         <span class="time float-right">5 minutes ago</span>
@@ -153,7 +148,7 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/avatar/3.jpg') }}" ></span>
+                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/pp.png') }}" ></span>
                                     <div class="message media-body">
                                         <span class="name float-left">Cheryl Wheeler</span>
                                         <span class="time float-right">10 minutes ago</span>
@@ -161,7 +156,7 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item media" href="#">
-                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/avatar/4.jpg') }}"></span>
+                                    <span class="photo media-left"><img alt="avatar" src="{{ url_for('static',filename='images/pp.png') }}"></span>
                                     <div class="message media-body">
                                         <span class="name float-left">Rachel Santos</span>
                                         <span class="time float-right">15 minutes ago</span>
@@ -174,7 +169,7 @@
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{ url_for('static',filename='images/admin.jpg') }}" alt="User Avatar">
+                            <img class="user-avatar rounded-circle" src="{{ url_for('static',filename='images/pp.png') }}" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -207,17 +202,9 @@
 
                               <select data-placeholder="Select..." class="standardSelect" tabindex="1">
                                 <option value="" label="default"></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                                <option value="Andorra">Andorra</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Anguilla">Anguilla</option>
-                                <option value="Antarctica">Antarctica</option>
+                                {% for aFeature in all_features%}
+                                    <option value={{aFeature}}>{{aFeature}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -233,17 +220,9 @@
 
                               <select data-placeholder="Select..." class="standardSelect" tabindex="1">
                                 <option value="" label="default"></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                                <option value="Andorra">Andorra</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Anguilla">Anguilla</option>
-                                <option value="Antarctica">Antarctica</option>
+                                {% for aFeature in all_features%}
+                                    <option value={{aFeature}}>{{aFeature}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -257,19 +236,11 @@
                             </div>
                             <div class="card-body">
 
-                              <select data-placeholder="Select..." class="standardSelect" tabindex="1">
+                              <select data-placeholder="Select..." class="standardSelect plot_feature" tabindex="1">
                                 <option value="" label="default"></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                                <option value="Andorra">Andorra</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Anguilla">Anguilla</option>
-                                <option value="Antarctica">Antarctica</option>
+                                {% for aFeature in all_features%}
+                                    <option value={{aFeature}}>{{aFeature}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -286,17 +257,9 @@
 
                               <select data-placeholder="Select..." class="standardSelect" tabindex="1">
                                 <option value="" label="default"></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                                <option value="Andorra">Andorra</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Anguilla">Anguilla</option>
-                                <option value="Antarctica">Antarctica</option>
+                                {% for aFeature in all_features%}
+                                    <option value={{aFeature}}>{{aFeature}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -312,17 +275,9 @@
 
                               <select data-placeholder="Select..." class="standardSelect" tabindex="1">
                                 <option value="" label="default"></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                                <option value="Andorra">Andorra</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Anguilla">Anguilla</option>
-                                <option value="Antarctica">Antarctica</option>
+                                {% for aFeature in all_features%}
+                                    <option value={{aFeature}}>{{aFeature}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -339,17 +294,9 @@
 
                               <select data-placeholder="Select..." class="standardSelect" tabindex="1">
                                 <option value="" label="default"></option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Afghanistan">Afghanistan</option>
-                                <option value="Aland Islands">Aland Islands</option>
-                                <option value="Albania">Albania</option>
-                                <option value="Algeria">Algeria</option>
-                                <option value="American Samoa">American Samoa</option>
-                                <option value="Andorra">Andorra</option>
-                                <option value="Angola">Angola</option>
-                                <option value="Anguilla">Anguilla</option>
-                                <option value="Antarctica">Antarctica</option>
+                                {% for aFeature in all_features%}
+                                    <option value={{aFeature}}>{{aFeature}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -363,7 +310,7 @@
 
                                 	<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
                                 <script>
-                                    Plotly.newPlot('myDiv', {{pData | safe}} );
+                                    Plotly.newPlot('myDiv', {{pData | safe}});
                                 </script>
                                 <!-- <img src="{{ url_for('static',filename='images/sampleChart.png') }}" alt="sample chart"> -->
 
@@ -405,6 +352,9 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{{ url_for('static',filename='js/plot_controllers/draw_plot.js') }}"></script>
 
 <script>
     jQuery(document).ready(function() {

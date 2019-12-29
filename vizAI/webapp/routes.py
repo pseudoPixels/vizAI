@@ -1,53 +1,41 @@
 from flask import render_template
 from flask import request, jsonify
-from vizAI.webapp import app
 import plotly.express as px
-
+import pandas as pd
 import json
-
-from bokeh.embed import json_item
-from bokeh.plotting import figure
-from bokeh.resources import CDN
-from bokeh.sampledata.iris import flowers
-from bokeh.embed import components
-
-
 from flask import Flask
 from jinja2 import Template
 
-colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
-colors = [colormap[x] for x in flowers['species']]
 
-def make_plot(x, y):
-	p = figure(title = "Iris Morphology", sizing_mode="fixed", plot_width=400, plot_height=400)
-	p.xaxis.axis_label = x
-	p.yaxis.axis_label = y
-	p.circle(flowers[x], flowers[y], color=colors, fill_alpha=0.2, size=10)
-	return p
-
+from vizAI.webapp import app
+from vizAI.core.visualizers.plotly.makePlots import *
+from vizAI.core.utils.dataFrameUtils import *
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-	# create a Figure object
-	p = figure(plot_width=1700, plot_height=850)
 
-	# add a Circle renderer to this figure
-	p.circle([1, 2.5, 3, 2], [2, 3, 1, 1.5], radius=0.3, alpha=0.5)
+	data = pd.read_csv("vizAI/webapp/datasets/tips.csv")
+	fig_data = get_bar_plot(data=data, x="sex", y="total_bill")
 
-	scripts, div = components(p)
+	all_features = get_all_features(data=data)
+	categorical_features = get_categorical_features(data=data)
+	neumeric_features = get_numeric_features(data=data)
 
-	data_canada = px.data.gapminder().query("country == 'Canada'")
-	print(data_canada.head())
-	fig = px.bar(data_canada, x='year', y='pop')
-
-	fig.update_layout({
-	"plot_bgcolor": "rgba(.9, .9, .9, .1)",
-	"paper_bgcolor": "rgba(.9, .9, .9, .1)"
-	})
+	return render_template('index.html',
+						   pData=fig_data,
+						   all_features=all_features,
+						   categorical_features=categorical_features,
+						   neumeric_features=neumeric_features)
 
 
-	scripts = fig.to_json()
 
-	return render_template('index.html', pData=scripts, div=div)
+@app.route('/getPlot', methods=['POST'])
+def getPlot():
+	color = request.form['color']
+
+	data = pd.read_csv("vizAI/webapp/datasets/tips.csv")
+	fig_data = get_bar_plot(data=data, x="sex", y="total_bill", color=color)
+
+	return jsonify({'plotData': fig_data})
