@@ -27,15 +27,24 @@ $(document).ready(function(){
 
     $(".featureDroppable").droppable({
         accept:'.aFeature',
+        classes: {
+            "ui-droppable-active": "ui-state-default"
+        },
         drop: function(ev, ui){
             var droppedItem = $(ui.draggable).clone();
-            $(this).html("<h4><b>"+$(ui.draggable).text()+"</b></h4>");
+            $(this).html($(ui.draggable).text());
+
+            var graph_x_axis = $("#graph_x_axis").text();
+            var graph_y_axis = $("#graph_y_axis").text();
+            var graph_color = $("#graph_color").text();
+            var graph_facet = $("#graph_facet").text();
+            var graph_size = $("#graph_size").text();
 
             $.ajax({
                 type: "POST",
                 cache: false,
                 url: "/getPlot",
-                data: "color="+$(ui.draggable).text(),
+                data: "graph_x_axis="+graph_x_axis+"&graph_y_axis="+graph_y_axis+"&graph_color="+graph_color+"&graph_facet="+graph_facet+"&graph_size="+graph_size,
                 success: function (option) {
                     //alert(option['plotData']);
                     var figure = JSON.parse(option['plotData']);

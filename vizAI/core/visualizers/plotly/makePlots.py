@@ -1,10 +1,8 @@
 import plotly.express as px
 
-def get_bar_plot(data, x, y, color=None):
-    if color is None:
-        fig = px.bar(data, x=x, y=y)
-    else:
-        fig = px.bar(data, x=x, y=y, color=color, barmode='group')
+def get_bar_plot(data, graph_x_axis=None, graph_y_axis=None, graph_color=None, graph_facet=None, graph_size=None):
+
+    fig = px.scatter(data, x=graph_x_axis, y=graph_y_axis, size=graph_size, color=graph_color, facet_col=graph_facet)
 
 
     fig.update_layout({

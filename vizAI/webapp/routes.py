@@ -17,7 +17,7 @@ from vizAI.core.utils.dataFrameUtils import *
 def index():
 
 	data = pd.read_csv("vizAI/webapp/datasets/tips.csv")
-	fig_data = get_bar_plot(data=data, x="sex", y="total_bill")
+	fig_data = get_bar_plot(data=data, graph_x_axis="sex", graph_y_axis="total_bill")
 
 	all_features = get_all_features(data=data)
 	categorical_features = get_categorical_features(data=data)
@@ -33,9 +33,19 @@ def index():
 
 @app.route('/getPlot', methods=['POST'])
 def getPlot():
-	color = request.form['color']
+
+	graph_x_axis = request.form['graph_x_axis']
+	graph_y_axis = request.form['graph_y_axis']
+	graph_color = request.form['graph_color']
+	graph_facet = request.form['graph_facet']
+	graph_size = request.form['graph_size']
 
 	data = pd.read_csv("vizAI/webapp/datasets/tips.csv")
-	fig_data = get_bar_plot(data=data, x="sex", y="total_bill", color=color)
+	fig_data = get_bar_plot(data=data,
+							graph_x_axis=graph_x_axis,
+							graph_y_axis=graph_y_axis,
+							graph_color=graph_color,
+							graph_facet=graph_facet,
+							graph_size=graph_size)
 
 	return jsonify({'plotData': fig_data})

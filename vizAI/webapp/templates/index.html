@@ -22,6 +22,7 @@
 
     <link rel="stylesheet"  href= "{{ url_for('static',filename='assets/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet"  href= "{{ url_for('static',filename='assets/css/style.css') }}">
+    <link rel="stylesheet"  href= "{{ url_for('static',filename='assets/css/dragAndDrop.css') }}">
     <link rel="stylesheet"  href= "{{ url_for('static',filename='assets/css/lib/chosen/chosen.min.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -57,7 +58,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Numeric Features</a>
                         <ul class="sub-menu children dropdown-menu">
                             {% for aNumericFeature in neumeric_features%}
-                                <li><i class="fa fa-bars"></i><a href="#">{{aNumericFeature}}</a></li>
+                                <li class="aFeature"><i class="fa fa-bars"></i><a href="#">{{aNumericFeature}}</a></li>
                             {% endfor %}
 
                         </ul>
@@ -198,7 +199,7 @@
                             <div class="card-header">
                                 <strong class="card-title">X axis</strong>
                             </div>
-                            <div class="card-body featureDroppable">
+                            <div class="card-body featureDroppable" id="graph_x_axis">
 
                         </div>
                     </div>
@@ -210,7 +211,7 @@
                             <div class="card-header">
                                 <strong class="card-title">Y axis</strong>
                             </div>
-                            <div class="card-body featureDroppable">
+                            <div class="card-body featureDroppable" id="graph_y_axis">
 
                         </div>
                     </div>
@@ -222,7 +223,7 @@
                             <div class="card-header">
                                 <strong class="card-title">Color</strong>
                             </div>
-                            <div class="card-body featureDroppable">
+                            <div class="card-body featureDroppable" id="graph_color">
 
 
                         </div>
@@ -236,7 +237,7 @@
                             <div class="card-header">
                                 <strong class="card-title">Facet</strong>
                             </div>
-                            <div class="card-body featureDroppable">
+                            <div class="card-body featureDroppable" id="graph_facet">
 
 
                         </div>
@@ -249,7 +250,7 @@
                             <div class="card-header">
                                 <strong class="card-title">Size</strong>
                             </div>
-                            <div class="card-body featureDroppable">
+                            <div class="card-body featureDroppable" id="graph_size">
 
                         </div>
                     </div>
