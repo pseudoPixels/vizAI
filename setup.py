@@ -1,14 +1,17 @@
 from setuptools import setup, find_packages
 
+
+
+
+with open('requirements.txt') as f:
+    DEPENDENCIES = f.read().splitlines()
+
+
 setup(name='vizAI',
       version='0.0.2',
       description="vizAI",
-      author='Golam Mostaeen',
-      author_email='golammostaeen@gmail.com',
       license='',
       packages=find_packages(),
       zip_safe=False,
-      install_requires=['pandas',
-        'plotnine',
-        'numpy']
+      install_requires=DEPENDENCIES
       )
