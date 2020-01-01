@@ -41,6 +41,7 @@ def getPlot():
 	graph_size = request.form['graph_size']
 
 	data = pd.read_csv("vizAI/webapp/datasets/titanic.csv")
+	
 	fig_data = get_bar_plot(data,
 							x=graph_x_axis,
 							y=graph_y_axis,
