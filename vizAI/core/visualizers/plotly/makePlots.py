@@ -1,6 +1,11 @@
 import plotly.express as px
 import pandas as pd
 
+from vizAI.core.visualizers.plotly.config import *
+
+
+
+
 def get_bar_plot(data, **kwargs):
 
     # fig = px.scatter(data, x=graph_x_axis, y=graph_y_axis, size=graph_size, color=graph_color, facet_col=graph_facet)
@@ -12,7 +17,7 @@ def get_bar_plot(data, **kwargs):
 
 
     # kwargs = {"x": graph_x_axis}
-    fig = px.histogram(data, **graph_params)#, color=graph_color, facet_col=graph_facet)
+    fig = GRAPHS_DICT["histogram"]["GO"](data, **graph_params)#, color=graph_color, facet_col=graph_facet)
 
     fig.update_layout({
         "plot_bgcolor": "rgba(.9, .9, .9, .1)",

@@ -1,4 +1,5 @@
 import pandas as pd
+from vizAI.core.utils.dataFrameUtils import *
 
 def get_candidate_graphs(data, **kwargs):
     """
@@ -12,5 +13,18 @@ def get_candidate_graphs(data, **kwargs):
     :return: (list) list of candidate graphs
     """
 
-    pass
+    categorical_features = get_categorical_features(data=data)
+    numerical_features = get_numeric_features(data=data)
+
+    x = kwargs['x'] if 'x' in kwargs else None
+    y = kwargs['y'] if 'y' in kwargs else None
+
+    print(x, y)
+
+
+
+if __name__ == '__main__':
+    df = pd.read_csv("../../webapp/datasets/tips.csv")
+
+    get_candidate_graphs(data=df,x="tips")
 

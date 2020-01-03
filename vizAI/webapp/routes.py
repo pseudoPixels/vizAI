@@ -17,7 +17,7 @@ from vizAI.core.utils.dataFrameUtils import *
 def index():
 
 	data = pd.read_csv("vizAI/webapp/datasets/titanic.csv")
-	fig_data = get_bar_plot(data=data, x="sex", y="age")
+	fig_data = ""#get_bar_plot(data=data, x="sex", y="age")
 
 	all_features = get_all_features(data=data)
 	categorical_features = get_categorical_features(data=data)
