@@ -40,9 +40,12 @@ def getPlot():
 	graph_facet = request.form['graph_facet']
 	graph_size = request.form['graph_size']
 
+	chart_type = request.form['chart_type']
+
 	data = pd.read_csv("vizAI/webapp/datasets/titanic.csv")
 	
-	fig_data = get_bar_plot(data,
+	fig_data = get_plot(data,
+							chart_type=chart_type,
 							x=graph_x_axis,
 							y=graph_y_axis,
 							color=graph_color,

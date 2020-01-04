@@ -21,7 +21,9 @@ $(document).ready(function(){
 
     });
 
-
+//    $(document).on("change", "#chartType", function(){
+//        alert($(this).val())
+//    });
 
     $( ".aFeature" ).draggable({helper:'clone'});
 
@@ -39,12 +41,18 @@ $(document).ready(function(){
             var graph_color = $("#graph_color").text();
             var graph_facet = $("#graph_facet").text();
             var graph_size = $("#graph_size").text();
+            var chart_type = $("#chart_type").val();
 
             $.ajax({
                 type: "POST",
                 cache: false,
                 url: "/getPlot",
-                data: "graph_x_axis="+graph_x_axis+"&graph_y_axis="+graph_y_axis+"&graph_color="+graph_color+"&graph_facet="+graph_facet+"&graph_size="+graph_size,
+                data: "graph_x_axis="+graph_x_axis+
+                       "&graph_y_axis="+graph_y_axis+
+                       "&graph_color="+graph_color+
+                       "&graph_facet="+graph_facet+
+                       "&graph_size="+graph_size+
+                       "&chart_type="+chart_type,
                 success: function (option) {
                     //alert(option['plotData']);
                     var figure = JSON.parse(option['plotData']);
