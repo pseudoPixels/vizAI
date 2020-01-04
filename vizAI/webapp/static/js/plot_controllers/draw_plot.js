@@ -21,20 +21,7 @@ $(document).ready(function(){
 
     });
 
-//    $(document).on("change", "#chartType", function(){
-//        alert($(this).val())
-//    });
-
-    $( ".aFeature" ).draggable({helper:'clone'});
-
-    $(".featureDroppable").droppable({
-        accept:'.aFeature',
-        classes: {
-            "ui-droppable-active": "ui-state-default"
-        },
-        drop: function(ev, ui){
-            var droppedItem = $(ui.draggable).clone();
-            $(this).html($(ui.draggable).text());
+function re_draw_graph() {
 
             var graph_x_axis = $("#graph_x_axis").text();
             var graph_y_axis = $("#graph_y_axis").text();
@@ -63,6 +50,25 @@ $(document).ready(function(){
                 }
 
     	    });
+}
+
+    $(document).on("change", "#chart_type", function(){
+//        alert($(this).val())
+          re_draw_graph();
+    });
+
+    $( ".aFeature" ).draggable({helper:'clone'});
+
+    $(".featureDroppable").droppable({
+        accept:'.aFeature',
+        classes: {
+            "ui-droppable-active": "ui-state-default"
+        },
+        drop: function(ev, ui){
+            var droppedItem = $(ui.draggable).clone();
+            $(this).html($(ui.draggable).text());
+            re_draw_graph();
+
 
         }
 

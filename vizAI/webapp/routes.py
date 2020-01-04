@@ -50,6 +50,7 @@ def getPlot():
 							y=graph_y_axis,
 							color=graph_color,
 							facet_col=graph_facet,
+							size=graph_size,
 							barmode="group")
 
 	return jsonify({'plotData': fig_data})
