@@ -47,4 +47,4 @@ if __name__ == '__main__':
     tv.make_bar_graph(df=mpg, x='cty', fill="fl", target_filename='../webapp/static/vizAI_plots/bar_graph_only_x2.png')
 
     print(txhousing.head())
-    tv.make_bar_graph(df=txhousing, x='month', fill='city', target_filename='/home/golammostaeen/Documents/My Projects/vizAI/vizAI/webapp/static/images/sampleChart.png')
+    tv.make_bar_graph(df=txhousing, x='month', fill='city', target_filename='/graphaite/webapp/static/images/sampleChart.png')

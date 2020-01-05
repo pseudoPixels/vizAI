@@ -1,5 +1,5 @@
 import pandas as pd
-from vizAI.core.utils.dataFrameUtils import *
+from graphaite.core.utils.dataFrameUtils import *
 
 def get_candidate_graphs(data, **kwargs):
     """

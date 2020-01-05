@@ -1,10 +1,10 @@
 import plotly.express as px
-from vizAI.core.visualizers.plotly.graphDefinitions import graphDefinitions as gd
+from graphaite.core.visualizers.plotly.graphDefinitions import graphDefinitions as gd
 
 
 GRAPHS_DICT = {
-    "Histogram" : gd.Histogram(),
-    "Scatter" : gd.Scatter()
+    "histogram" : gd.Histogram(),
+    "scatter" : gd.Scatter()
 }
 
 

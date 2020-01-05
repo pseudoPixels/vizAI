@@ -1,2 +1,2 @@
-export FLASK_APP=vizAI/webapp/main.py
+export FLASK_APP=graphaite/webapp/main.py
 flask run

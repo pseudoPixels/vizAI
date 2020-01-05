@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../vizAI'))
+sys.path.insert(0, os.path.abspath('../../graphaite'))
 
 
 # -- Project information -----------------------------------------------------

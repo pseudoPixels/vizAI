@@ -7,16 +7,16 @@ from flask import Flask
 from jinja2 import Template
 
 
-from vizAI.webapp import app
-from vizAI.core.visualizers.plotly.makePlots import *
-from vizAI.core.utils.dataFrameUtils import *
+from graphaite.webapp import app
+from graphaite.core.visualizers.plotly.makePlots import *
+from graphaite.core.utils.dataFrameUtils import *
 
 
 @app.route('/')
 @app.route('/index')
 def index():
 
-	data = pd.read_csv("vizAI/webapp/datasets/titanic.csv")
+	data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
 	fig_data = ""#get_bar_plot(data=data, x="sex", y="age")
 
 	all_features = get_all_features(data=data)
@@ -42,15 +42,16 @@ def getPlot():
 
 	chart_type = request.form['chart_type']
 
-	data = pd.read_csv("vizAI/webapp/datasets/titanic.csv")
+	data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
 	
 	fig_data = get_plot(data,
-							chart_type=chart_type,
-							x=graph_x_axis,
-							y=graph_y_axis,
-							color=graph_color,
-							facet_col=graph_facet,
-							size=graph_size,
-							barmode="group")
+						chart_type,
+						x=graph_x_axis,
+						y=graph_y_axis,
+						color=graph_color,
+						facet_col=graph_facet,
+						size=graph_size,
+						barmode="group")
 
 	return jsonify({'plotData': fig_data})
+
