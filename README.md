@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/pseudoPixels/graphaite/blob/master/vizAI/webapp/static/images/logoGraphaite.png" width="30%" title="Graph[ai]te">
+  <img src="https://github.com/pseudoPixels/vizAI/blob/master/graphaite/webapp/static/images/logoGraphaite.png" width="30%" title="Graph[ai]te">
 </p>
 
 # vizAI
