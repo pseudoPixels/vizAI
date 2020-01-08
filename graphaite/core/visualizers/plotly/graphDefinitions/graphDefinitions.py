@@ -197,3 +197,389 @@ class Histogram(GraphObject):
         return px.histogram
 
 
+
+
+
+class Line(GraphObject):
+    def __init__(self):
+        super().__init__()
+        self.PARAMS = {
+            "x" : {
+                "accepts_feature_column" : "single"
+            },
+            "y" : {
+                "accepts_feature_column" : "single"
+            },
+            "color" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_name" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_data" : {
+                "accepts_feature_column" : "multiple"
+            },
+            "text" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_row" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_col" : {
+                "accepts_feature_column" : "single"
+            },
+            # "facet_col_wrap" = 0,
+            "animation_frame" : {
+                "accepts_feature_column" : "single"
+            },
+            "animation_group" : {
+                "accepts_feature_column" : "single"
+            },
+            # category_orders = {},
+            # labels = {},
+            # color_discrete_sequence = None,
+            # color_discrete_map = {},
+            # color_continuous_scale = None,
+            # range_color = None,
+            # color_continuous_midpoint = None,
+            # symbol_sequence = None,
+            # symbol_map = {},
+            # opacity = None,
+            # size_max = None,
+            # trendline_color_override = None,
+            # log_x = False,
+            # log_y = False,
+            # range_x = None,
+            # range_y = None,
+            # render_mode = "auto",
+            # title = None,
+            # template = None,
+            # width = None,
+            # height = None
+        }
+
+
+
+    def get_graph_object(self):
+        return px.line
+
+
+class Area(GraphObject):
+    def __init__(self):
+        super().__init__()
+        self.PARAMS = {
+            "x" : {
+                "accepts_feature_column" : "single"
+            },
+            "y" : {
+                "accepts_feature_column" : "single"
+            },
+            "color" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_name" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_data" : {
+                "accepts_feature_column" : "multiple"
+            },
+            "text" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_row" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_col" : {
+                "accepts_feature_column" : "single"
+            },
+            # "facet_col_wrap" = 0,
+            "animation_frame" : {
+                "accepts_feature_column" : "single"
+            },
+            "animation_group" : {
+                "accepts_feature_column" : "single"
+            },
+            # category_orders = {},
+            # labels = {},
+            # color_discrete_sequence = None,
+            # color_discrete_map = {},
+            # color_continuous_scale = None,
+            # range_color = None,
+            # color_continuous_midpoint = None,
+            # symbol_sequence = None,
+            # symbol_map = {},
+            # opacity = None,
+            # size_max = None,
+            # trendline_color_override = None,
+            # log_x = False,
+            # log_y = False,
+            # range_x = None,
+            # range_y = None,
+            # render_mode = "auto",
+            # title = None,
+            # template = None,
+            # width = None,
+            # height = None
+        }
+
+
+
+    def get_graph_object(self):
+        return px.area
+
+
+class Violin(GraphObject):
+    def __init__(self):
+        super().__init__()
+        self.PARAMS = {
+            "x" : {
+                "accepts_feature_column" : "single"
+            },
+            "y" : {
+                "accepts_feature_column" : "single"
+            },
+            "color" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_name" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_data" : {
+                "accepts_feature_column" : "multiple"
+            },
+            "text" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_row" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_col" : {
+                "accepts_feature_column" : "single"
+            },
+            # "facet_col_wrap" = 0,
+            "animation_frame" : {
+                "accepts_feature_column" : "single"
+            },
+            "animation_group" : {
+                "accepts_feature_column" : "single"
+            },
+            # category_orders = {},
+            # labels = {},
+            # color_discrete_sequence = None,
+            # color_discrete_map = {},
+            # color_continuous_scale = None,
+            # range_color = None,
+            # color_continuous_midpoint = None,
+            # symbol_sequence = None,
+            # symbol_map = {},
+            # opacity = None,
+            # size_max = None,
+            # trendline_color_override = None,
+            # log_x = False,
+            # log_y = False,
+            # range_x = None,
+            # range_y = None,
+            # render_mode = "auto",
+            # title = None,
+            # template = None,
+            # width = None,
+            # height = None
+        }
+
+
+
+    def get_graph_object(self):
+        return px.violin
+
+
+class Box(GraphObject):
+    def __init__(self):
+        super().__init__()
+        self.PARAMS = {
+            "x" : {
+                "accepts_feature_column" : "single"
+            },
+            "y" : {
+                "accepts_feature_column" : "single"
+            },
+            "color" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_name" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_data" : {
+                "accepts_feature_column" : "multiple"
+            },
+            "text" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_row" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_col" : {
+                "accepts_feature_column" : "single"
+            },
+            # "facet_col_wrap" = 0,
+            "animation_frame" : {
+                "accepts_feature_column" : "single"
+            },
+            "animation_group" : {
+                "accepts_feature_column" : "single"
+            },
+            # category_orders = {},
+            # labels = {},
+            # color_discrete_sequence = None,
+            # color_discrete_map = {},
+            # color_continuous_scale = None,
+            # range_color = None,
+            # color_continuous_midpoint = None,
+            # symbol_sequence = None,
+            # symbol_map = {},
+            # opacity = None,
+            # size_max = None,
+            # trendline_color_override = None,
+            # log_x = False,
+            # log_y = False,
+            # range_x = None,
+            # range_y = None,
+            # render_mode = "auto",
+            # title = None,
+            # template = None,
+            # width = None,
+            # height = None
+        }
+
+
+
+    def get_graph_object(self):
+        return px.box
+
+
+class Strip(GraphObject):
+    def __init__(self):
+        super().__init__()
+        self.PARAMS = {
+            "x" : {
+                "accepts_feature_column" : "single"
+            },
+            "y" : {
+                "accepts_feature_column" : "single"
+            },
+            "color" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_name" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_data" : {
+                "accepts_feature_column" : "multiple"
+            },
+            "text" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_row" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_col" : {
+                "accepts_feature_column" : "single"
+            },
+            # "facet_col_wrap" = 0,
+            "animation_frame" : {
+                "accepts_feature_column" : "single"
+            },
+            "animation_group" : {
+                "accepts_feature_column" : "single"
+            },
+            # category_orders = {},
+            # labels = {},
+            # color_discrete_sequence = None,
+            # color_discrete_map = {},
+            # color_continuous_scale = None,
+            # range_color = None,
+            # color_continuous_midpoint = None,
+            # symbol_sequence = None,
+            # symbol_map = {},
+            # opacity = None,
+            # size_max = None,
+            # trendline_color_override = None,
+            # log_x = False,
+            # log_y = False,
+            # range_x = None,
+            # range_y = None,
+            # render_mode = "auto",
+            # title = None,
+            # template = None,
+            # width = None,
+            # height = None
+        }
+
+
+
+    def get_graph_object(self):
+        return px.strip
+
+
+
+class Funnel(GraphObject):
+    def __init__(self):
+        super().__init__()
+        self.PARAMS = {
+            "x" : {
+                "accepts_feature_column" : "single"
+            },
+            "y" : {
+                "accepts_feature_column" : "single"
+            },
+            "color" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_name" : {
+                "accepts_feature_column" : "single"
+            },
+            "hover_data" : {
+                "accepts_feature_column" : "multiple"
+            },
+            "text" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_row" : {
+                "accepts_feature_column" : "single"
+            },
+            "facet_col" : {
+                "accepts_feature_column" : "single"
+            },
+            # "facet_col_wrap" = 0,
+            "animation_frame" : {
+                "accepts_feature_column" : "single"
+            },
+            "animation_group" : {
+                "accepts_feature_column" : "single"
+            },
+            # category_orders = {},
+            # labels = {},
+            # color_discrete_sequence = None,
+            # color_discrete_map = {},
+            # color_continuous_scale = None,
+            # range_color = None,
+            # color_continuous_midpoint = None,
+            # symbol_sequence = None,
+            # symbol_map = {},
+            # opacity = None,
+            # size_max = None,
+            # trendline_color_override = None,
+            # log_x = False,
+            # log_y = False,
+            # range_x = None,
+            # range_y = None,
+            # render_mode = "auto",
+            # title = None,
+            # template = None,
+            # width = None,
+            # height = None
+        }
+
+
+
+    def get_graph_object(self):
+        return px.funnel

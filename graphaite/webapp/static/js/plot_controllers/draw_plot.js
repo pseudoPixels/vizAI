@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-
     $(document).on('change', ".plot_feature" ,function () {//here
     	$.ajax({
             type: "POST",

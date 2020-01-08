@@ -55,3 +55,14 @@ def getPlot():
 
 	return jsonify({'plotData': fig_data})
 
+
+
+
+@app.route('/getDataFrame', methods=['POST'])
+def getDataFrame():
+
+	data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+	table = data.to_json(orient='split', index=False)
+
+	return table
+
