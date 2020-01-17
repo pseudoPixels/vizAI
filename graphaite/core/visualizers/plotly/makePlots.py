@@ -26,7 +26,7 @@ def get_plot(data, chart_type, **kwargs):
     plotly_go = graphObject.get_graph_object()
 
     ## draw the plot with data and kwargs
-    fig = plotly_go(data, **graph_params)
+    fig = plotly_go(data, height=750, template="presentation", **graph_params)
 
     ## required layout changes.
     fig.update_layout({
