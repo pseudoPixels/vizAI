@@ -67,6 +67,11 @@ def getPlot():
 
 @app.route('/getDataFrame', methods=['POST'])
 def getDataFrame():
+	"""
+	Getting DataFrame from Server for client visualization.
+
+	:return: (Pandas DataFrame) the Dataset as Pandas DataFrame.
+	"""
 
 	data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
 	table = data.to_json(orient='split', index=False)
