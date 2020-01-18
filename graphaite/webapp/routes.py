@@ -10,7 +10,7 @@ from jinja2 import Template
 from graphaite.webapp import app
 from graphaite.core.visualizers.plotly.makePlots import *
 from graphaite.core.utils.dataFrameUtils import *
-
+from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 
 @app.route('/')
 @app.route('/index')
@@ -39,8 +39,10 @@ def getPlot():
 	graph_color = request.form['graph_color']
 	graph_facet = request.form['graph_facet']
 	graph_size = request.form['graph_size']
+	graph_names = request.form['graph_names']
 
 	chart_type = request.form['chart_type']
+	chart_template = request.form['chart_template']
 
 	data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
 	
@@ -51,9 +53,14 @@ def getPlot():
 						color=graph_color,
 						facet_col=graph_facet,
 						size=graph_size,
-						barmode="group")
+						names=graph_names,
+						barmode="group",
+						template=chart_template)
 
-	return jsonify({'plotData': fig_data})
+	chart_params = GRAPHS_DICT[chart_type].get_graph_param_keys()
+
+	return jsonify({'plotData' : fig_data,
+					'chart_params' : chart_params})
 
 
 

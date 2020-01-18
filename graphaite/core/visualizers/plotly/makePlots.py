@@ -1,7 +1,7 @@
 import plotly.express as px
 import pandas as pd
 
-from graphaite.core.visualizers.plotly.config import *
+from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 
 
 
@@ -26,13 +26,13 @@ def get_plot(data, chart_type, **kwargs):
     plotly_go = graphObject.get_graph_object()
 
     ## draw the plot with data and kwargs
-    fig = plotly_go(data, height=750, template="presentation", **graph_params)
+    fig = plotly_go(data, height=750, **graph_params)
 
     ## required layout changes.
-    fig.update_layout({
-        "plot_bgcolor": "rgba(.9, .9, .9, .1)",
-        "paper_bgcolor": "rgba(.9, .9, .9, .1)"
-    })
+    # fig.update_layout({
+    #     "plot_bgcolor": "rgba(.9, .9, .9, .1)",
+    #     "paper_bgcolor": "rgba(.9, .9, .9, .1)"
+    # })
 
     return fig.to_json()
 

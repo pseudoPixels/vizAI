@@ -179,7 +179,7 @@
                   <!-- Header-->
                   <div class="content">
                      <div class="animated fadeIn">
-                        <div class="row">
+                        <div class="row" >
                            <div class="col-xs-2 col-sm-2">
                               <div class="card" style="padding:15px;">
                                  <div class="card-header">
@@ -196,13 +196,31 @@
                                        <option value="box">Box</option>
                                        <option value="strip">Strip</option>
                                        <option value="funnel">Funnel</option>
+                                       <option value="pie">Pie</option>
                                     </select>
 
                                   X-axis: <div class="card-body featureDroppable" id="graph_x_axis" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
                                   Y-axis: <div class="card-body featureDroppable" id="graph_y_axis" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
                                   Color: <div class="card-body featureDroppable" id="graph_color" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
                                   Size: <div class="card-body featureDroppable" id="graph_size" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
-                                  Facet Col.: <div class="card-body featureDroppable" id="graph_facet" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
+                                  Facet Column: <div class="card-body featureDroppable" id="graph_facet" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
+                                  Names: <div class="card-body featureDroppable" id="names" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
+
+
+                                  Plot Theme:
+                                   <select id="chart_template" >
+                                       <option value="presentation">Presentation</option>
+                                       <option value="simple_white">Plain White</option>
+                                       <option value="seaborn">Seaborn</option>
+                                       <option value="ggplot2">Ggplot2</option>
+                                       <option value="plotly">Plotly</option>
+                                       <option value="plotly_dark">Dark</option>
+                                       <option value="xgridoff">X Grid Off</option>
+                                       <option value="plotly_white">Plotly White</option>
+                                       <option value="gridon">Grid On</option>
+                                      <option value="ygridoff">Y Grid Off</option>
+                                    </select>
+
 
                               </div>
                            </div>

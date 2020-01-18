@@ -10,7 +10,8 @@ GRAPHS_DICT = {
     "violin" : gd.Violin(),
     "box" : gd.Box(),
     "strip" : gd.Strip(),
-    "funnel" : gd.Funnel()
+    "funnel" : gd.Funnel(),
+    "pie" : gd.Pie()
 }
 
 
