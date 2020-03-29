@@ -156,20 +156,37 @@ def getAutoViz():
 @celery.task(bind=True)
 def long_task(self):
     """Background task that runs a long function with progress reports."""
-    verb = ['Starting up', 'Booting', 'Repairing', 'Loading', 'Checking']
-    adjective = ['master', 'radiant', 'silent', 'harmonic', 'fast']
-    noun = ['solar array', 'particle reshaper', 'cosmic ray', 'orbiter', 'bit']
-    message = ''
-    total = random.randint(10, 50)
-    for i in range(total):
-        if not message or random.random() < 0.25:
-            message = '{0} {1} {2}...'.format(random.choice(verb),
-                                              random.choice(adjective),
-                                              random.choice(noun))
-        self.update_state(state='PROGRESS',
-                          meta={'current': i, 'total': total,
-                                'status': message})
-        time.sleep(1)
+
+    graph_x_axis = "age"
+    graph_y_axis = ""
+    graph_color = "survived"
+    graph_facet = ""
+    graph_size = ""
+    graph_names = ""
+
+    chart_type = "histogram"
+    chart_template = "presentation"
+
+    data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+
+    fig_data = get_plot(data,
+                        chart_type,
+                        x=graph_x_axis,
+                        y=graph_y_axis,
+                        color=graph_color,
+                        facet_col=graph_facet,
+                        size=graph_size,
+                        names=graph_names,
+                        barmode="group",
+                        template=chart_template,
+                        height=430)
+
+
+
+    self.update_state(state='PLOTDONE',meta={'result': fig_data})
+    time.sleep(5000)
+
+
     return {'current': 100, 'total': 100, 'status': 'Task completed!',
             'result': 42}
 
@@ -211,4 +228,4 @@ def taskstatus(task_id):
     return jsonify(response)
 
 
-# pip install celery==4.4.1
+

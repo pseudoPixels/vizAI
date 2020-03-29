@@ -47,19 +47,15 @@ $(document).ready(function(){
         function update_progress(status_url, nanobar, status_div) {
             // send GET request to status URL
             $.getJSON(status_url, function(data) {
-                // update UI
-                percent = parseInt(data['current'] * 100 / data['total']);
-                nanobar.go(percent);
-                $(status_div.childNodes[1]).text(percent + '%');
-                $(status_div.childNodes[2]).text(data['status']);
-                if (data['state'] != 'PENDING' && data['state'] != 'PROGRESS') {
+               if (data['state'] == 'PLOTDONE') {
                     if ('result' in data) {
                         // show result
-                        $(status_div.childNodes[3]).text('Result: ' + data['result']);
-                    }
-                    else {
-                        // something unexpected happened
-                        $(status_div.childNodes[3]).text('Result: ' + data['state']);
+//                        $(status_div.childNodes[3]).text('Result: ' + data['result']);
+
+                        $("#r").append("<div id='myDivasn' style='width:48%;'></div>");
+                        var figure = JSON.parse(data['result']);
+                        Plotly.newPlot('myDivasn', figure.data, figure.layout);
+
                     }
                 }
                 else {
