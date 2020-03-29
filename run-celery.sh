@@ -1,0 +1,1 @@
+celery -A graphaite.webapp.routes.celery worker
