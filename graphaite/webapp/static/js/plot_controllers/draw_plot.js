@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    alert($("#names").text());
+//    alert($("#names").text());
 
     $(document).on('change', ".plot_feature" ,function () {//here
     	$.ajax({

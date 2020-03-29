@@ -98,7 +98,43 @@ def upload_dataset_and_create_project():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash('File successfully uploaded')
-            return redirect('/')
+            return redirect('/autoviz')
         else:
             flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
             return redirect(request.url)
+
+@app.route('/autoviz')
+def autoviz():
+    return render_template('autoviz.html')
+
+
+@app.route('/getAutoViz', methods=['POST'])
+def getAutoViz():
+    graph_x_axis = "age"
+    graph_y_axis = ""
+    graph_color = "survived"
+    graph_facet = ""
+    graph_size = ""
+    graph_names = ""
+
+    chart_type = "histogram"
+    chart_template = "presentation"
+
+    data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+
+    fig_data = get_plot(data,
+                        chart_type,
+                        x=graph_x_axis,
+                        y=graph_y_axis,
+                        color=graph_color,
+                        facet_col=graph_facet,
+                        size=graph_size,
+                        names=graph_names,
+                        barmode="group",
+                        template=chart_template,
+                        height=430)
+
+    chart_params = GRAPHS_DICT[chart_type].get_graph_param_keys()
+
+    return jsonify({'plotData': fig_data,
+                    'chart_params': chart_params})

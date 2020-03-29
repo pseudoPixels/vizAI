@@ -6,7 +6,7 @@ from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 
 
 
-def get_plot(data, chart_type, **kwargs):
+def get_plot(data, chart_type, height=750, **kwargs):
     """
     Draws and Returns the plot as plotly json based on the data, chart type and param settings of the specific chart type.
 
@@ -26,7 +26,7 @@ def get_plot(data, chart_type, **kwargs):
     plotly_go = graphObject.get_graph_object()
 
     ## draw the plot with data and kwargs
-    fig = plotly_go(data, height=750, **graph_params)
+    fig = plotly_go(data, height=height, **graph_params)
 
     ## required layout changes.
     # fig.update_layout({
