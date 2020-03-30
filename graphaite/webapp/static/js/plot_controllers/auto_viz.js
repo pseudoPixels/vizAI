@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+        plotCounter = -1;
+
     	$.ajax({
             type: "POST",
             cache: false,
@@ -49,14 +51,21 @@ $(document).ready(function(){
             $.getJSON(status_url, function(data) {
                if (data['state'] == 'PLOTDONE') {
                     if ('result' in data) {
-                        // show result
-//                        $(status_div.childNodes[3]).text('Result: ' + data['result']);
 
-                        $("#r").append("<div id='myDivasn' style='width:48%;'></div>");
-                        var figure = JSON.parse(data['result']);
-                        Plotly.newPlot('myDivasn', figure.data, figure.layout);
+                        current = parseInt(data['current']);
+                        alert(current.toString() + " => " + plotCounter.toString());
+                        if (current > plotCounter){
+                            $("#r").append("<div id='"+ data['plotid']+ "' style='width:48%;'></div>");
+                            var figure = JSON.parse(data['result']);
+                            Plotly.newPlot(data['plotid'], figure.data, figure.layout);
+                            plotCounter = plotCounter + 1;
+                        }
 
                     }
+
+                     setTimeout(function() {
+                        update_progress(status_url, nanobar, status_div);
+                    }, 2000);
                 }
                 else {
                     // rerun in 2 seconds

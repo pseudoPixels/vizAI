@@ -169,9 +169,12 @@ def long_task(self):
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
 
-    fig_data = get_plot(data,
+    feature_variables = ['age','pclass','sibsp','parch','fare','sex']
+
+    for i in range(len(feature_variables)):
+        fig_data = get_plot(data,
                         chart_type,
-                        x=graph_x_axis,
+                        x=feature_variables[i],
                         y=graph_y_axis,
                         color=graph_color,
                         facet_col=graph_facet,
@@ -181,10 +184,8 @@ def long_task(self):
                         template=chart_template,
                         height=430)
 
-
-
-    self.update_state(state='PLOTDONE',meta={'result': fig_data})
-    time.sleep(5000)
+        self.update_state(state='PLOTDONE',meta={'result': fig_data,'current':i,'plotid':feature_variables[i]})
+        time.sleep(5)
 
 
     return {'current': 100, 'total': 100, 'status': 'Task completed!',
@@ -213,10 +214,11 @@ def taskstatus(task_id):
             'state': task.state,
             'current': task.info.get('current', 0),
             'total': task.info.get('total', 1),
-            'status': task.info.get('status', '')
+            'status': task.info.get('status', ''),
+            'plotid': task.info.get('plotid', '')
         }
         if 'result' in task.info:
-            response['result'] = task.info['result']
+            response['result'] = task.info.get('result', '')
     else:
         # something went wrong in the background job
         response = {
