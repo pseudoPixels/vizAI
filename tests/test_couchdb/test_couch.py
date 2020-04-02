@@ -3,6 +3,8 @@ from couchdb.design import ViewDefinition
 from flaskext.couchdb import CouchDBManager
 from flaskext.couchdb import Document, TextField, FloatField, DictField, Mapping,ListField, IntegerField
 
+from graphaite.core.models.graphaiteGraph import GraphaiteGraph
+
 
 
 app = Flask(__name__)
@@ -32,7 +34,9 @@ Add doc
 def add():
     post = BlogPost(title='Hello', content='Hello, world!', author='Steve')
     post.id = 'tesid2'
-    post.store()
+
+    g.couch.save(post)
+    # post.store()
 
     return "OK"
 
