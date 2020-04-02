@@ -19,5 +19,6 @@
 
 ### App Start
 ```buildoutcfg
+>>> cd vizAI
 >>> sh run.sh
 ```
