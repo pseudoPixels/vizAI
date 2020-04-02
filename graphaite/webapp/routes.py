@@ -122,9 +122,14 @@ def getAutoViz():
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
 
-    fig_data = get_plot(data,
+    feature_variables = ['age','pclass','sibsp','parch','fare','sex']
+
+
+    plots = {}
+    for i in range(len(feature_variables)):
+        fig_data = get_plot(data,
                         chart_type,
-                        x=graph_x_axis,
+                        x=feature_variables[i],
                         y=graph_y_axis,
                         color=graph_color,
                         facet_col=graph_facet,
@@ -134,7 +139,7 @@ def getAutoViz():
                         template=chart_template,
                         height=430)
 
-    chart_params = GRAPHS_DICT[chart_type].get_graph_param_keys()
+        plots[feature_variables[i]] = fig_data
 
-    return jsonify({'plotData': fig_data,
-                    'chart_params': chart_params})
+
+    return jsonify({'plots': plots})
