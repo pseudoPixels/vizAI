@@ -1,5 +1,6 @@
 certifi==2019.11.28
 Click==7.0
+CouchDB==1.2
 Flask==1.1.1
 itsdangerous==1.1.0
 Jinja2==2.10.3

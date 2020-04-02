@@ -2,7 +2,7 @@
   <img src="https://github.com/pseudoPixels/vizAI/blob/master/graphaite/webapp/static/images/logoGraphaite.png" width="30%" title="Graph[ai]te">
 </p>
 
-# vizAI
+## Graphaite
 
 ### Installation
 ```buildoutcfg
