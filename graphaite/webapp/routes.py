@@ -105,7 +105,11 @@ def upload_dataset_and_create_project():
 
 @app.route('/autoviz')
 def autoviz():
-    return render_template('autoviz.html')
+    ## The list will be available from project info (CouchDB)
+    feature_variables = ['age','pclass','sibsp','parch','fare','sex']
+
+    return render_template('autoviz.html',
+    feature_variables=feature_variables)
 
 
 @app.route('/getAutoViz', methods=['POST'])
@@ -142,4 +146,4 @@ def getAutoViz():
         plots[feature_variables[i]] = fig_data
 
 
-    return jsonify({'plots': plots})
+    return jsonify({'plots': plots, 'feature_variables': feature_variables})
