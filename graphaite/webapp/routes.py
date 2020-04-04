@@ -7,6 +7,8 @@ import pandas as pd
 import json
 from flask import Flask
 from jinja2 import Template
+import uuid
+
 
 from graphaite.webapp import app
 from graphaite.core.visualizers.plotly.makePlots import *
@@ -143,7 +145,10 @@ def getAutoViz():
                         template=chart_template,
                         height=430)
 
-        plots[feature_variables[i]] = fig_data
+        feature_tags = []
+        feature_tags.append(feature_variables[i])
+        plot_id = str(uuid.uuid4()) ## TODO: plot id will have to fetched from db
+        plots[plot_id] = {'figure_data': fig_data, 'feature_tags': feature_tags}
 
 
-    return jsonify({'plots': plots, 'feature_variables': feature_variables})
+    return jsonify({'plots': plots})#, 'feature_variables': feature_variables})
