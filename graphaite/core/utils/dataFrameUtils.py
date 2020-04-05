@@ -1,5 +1,5 @@
 import pandas as pd
-
+import pathlib
 
 def get_numeric_features(data):
     """
@@ -38,11 +38,38 @@ def get_all_features(data):
     return list(data.columns)
 
 
+def get_feature_type(data, target_feature)->str:
+    """ Returns the type of the supplied feature. Such as, Categorical, Neumerical, TimeSeries.
+
+    Args:
+        data (Pandas DataFrame): The target DataFrame   
+        target_feature (string, column name): the target feature to detect and return type of.
+
+    Returns:
+        str: ""    
+    """
+
+    if target_feature not in get_all_features(data):
+        return None
+
+    if target_feature in get_numeric_features(data):
+        return "Numeric"
+    elif target_feature in get_categorical_features(data):
+        return "Categorical"
+    
+    ## TODO: Add TIme series data type
+
+    return None
+
 
 
 if __name__ == '__main__':
-    df = pd.read_csv("../../webapp/datasets/tips.csv")
+    WEBAPP_DIR = str(pathlib.Path(__file__).parent.parent.parent.absolute()) + "/webapp/"
+
+    df = pd.read_csv(WEBAPP_DIR+"/datasets/tips.csv")
 
     n = get_all_features(data=df)
 
-    print(n)
+    dataType = get_feature_type(data=df, target_feature="sex")
+
+    print(dataType)
