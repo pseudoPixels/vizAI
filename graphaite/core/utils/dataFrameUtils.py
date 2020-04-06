@@ -1,28 +1,41 @@
 import pandas as pd
 import pathlib
 
-def get_numeric_features(data):
+def get_numeric_features(data, uniqueness_threshold=0.05):
     """
     Given a pandas DataFrame, retuns the list of numeric columns from it.
 
     :param data: (pandas DataFrame), the target dataset
+    :param uniqueness_threshold: (float), the uniqueness of occurance to treat numeric labeled feature to exclude from numeric
     :return: (list) list of numeric columns in the DataFrame
     """
 
     num_cols = data._get_numeric_data().columns
-    return list(num_cols)
+
+    # finding out numeric labeled categorical features 
+    # Reference: https://stackoverflow.com/questions/35826912/what-is-a-good-heuristic-to-detect-if-a-column-in-a-pandas-dataframe-is-categori
+    likely_categorical = []
+    for var in num_cols:
+        unique_values_ratio = 1.*data[var].nunique()/data[var].count()
+
+        if unique_values_ratio < uniqueness_threshold:
+            likely_categorical.append(var)
 
 
-def get_categorical_features(data):
+    return list(set(num_cols) - set(likely_categorical))
+
+
+def get_categorical_features(data, uniqueness_threshold=0.05):
     """
     Given a pandas DataFrame, retuns the list of categorical columns from it.
 
     :param data: (pandas DataFrame), the target dataset
+    :param uniqueness_threshold: (float), the uniqueness of occurance to treat numeric labeled feature to exclude from numeric
     :return: (list) list of categorical columns in the DataFrame
     """
 
     all_columns_set = set(data.columns)
-    numeric_columns_set = set(get_numeric_features(data=data))
+    numeric_columns_set = set(get_numeric_features(data=data, uniqueness_threshold=uniqueness_threshold))
 
     return list(all_columns_set - numeric_columns_set)
 
@@ -53,11 +66,11 @@ def get_feature_type(data, target_feature)->str:
         return None
 
     if target_feature in get_numeric_features(data):
-        return "Numeric"
+        return "Numerical"
     elif target_feature in get_categorical_features(data):
         return "Categorical"
     
-    ## TODO: Add TIme series data type
+    ## TODO: Add Time series data type
 
     return None
 
@@ -66,10 +79,13 @@ def get_feature_type(data, target_feature)->str:
 if __name__ == '__main__':
     WEBAPP_DIR = str(pathlib.Path(__file__).parent.parent.parent.absolute()) + "/webapp/"
 
-    df = pd.read_csv(WEBAPP_DIR+"/datasets/tips.csv")
+    df = pd.read_csv(WEBAPP_DIR+"/datasets/titanic.csv")
 
-    n = get_all_features(data=df)
+    print(get_numeric_features(df))
+    print(get_categorical_features(df))
 
-    dataType = get_feature_type(data=df, target_feature="sex")
+    # n = get_all_features(data=df)
 
-    print(dataType)
+    # dataType = get_feature_type(data=df, target_feature="sex")
+
+    # print(dataType)
