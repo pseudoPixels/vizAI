@@ -1,5 +1,13 @@
 import pandas as pd
 import pathlib
+from enum import Enum
+
+class FeatureType(Enum):
+    CATEGORICAL  = 1
+    NUMERICAL  = 2
+    TIMESERIES = 3
+
+
 
 def get_numeric_features(data, uniqueness_threshold=0.05):
     """
@@ -66,9 +74,9 @@ def get_feature_type(data, target_feature)->str:
         return None
 
     if target_feature in get_numeric_features(data):
-        return "Numerical"
+        return FeatureType.NUMERICAL
     elif target_feature in get_categorical_features(data):
-        return "Categorical"
+        return FeatureType.CATEGORICAL
     
     ## TODO: Add Time series data type
 
@@ -83,6 +91,10 @@ if __name__ == '__main__':
 
     print(get_numeric_features(df))
     print(get_categorical_features(df))
+
+    print(get_feature_type(df, "sex") == get_feature_type(df, "survived"))
+
+    print(FeatureType.CATEGORICAL == FeatureType.NUMERICAL)
 
     # n = get_all_features(data=df)
 
