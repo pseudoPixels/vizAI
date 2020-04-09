@@ -18,7 +18,7 @@ def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
     """
 
     ## if no axes are provided, no graph candidates possible
-    if x_axis == None and y_axis = None:
+    if x_axis == None and y_axis == None:
         return None
 
     ## if x_axis is None, then assign the y_axis to x_axis, since
