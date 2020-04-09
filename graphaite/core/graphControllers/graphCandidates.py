@@ -39,7 +39,12 @@ def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
 
         if x_axis_feature_type == FeatureType.NUMERICAL and y_axis_feature_type == FeatureType.NUMERICAL:
             graph_candidates.append("scatter")
+            graph_candidates.append("line")
+        if x_axis_feature_type == FeatureType.CATEGORICAL and y_axis_feature_type == FeatureType.NUMERICAL:
+            graph_candidates.append("box")
 
+    if len(graph_candidates) == 0:
+        return None
 
     return graph_candidates
 

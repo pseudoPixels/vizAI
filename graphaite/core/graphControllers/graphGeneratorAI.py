@@ -19,15 +19,29 @@ def get_auto_generated_graphs(dataset, feature_variables=None, target_variable=N
     ## univariate vizualizations
     for aFeature in feature_variables:
         graph_candidates = get_candidate_graphs(data=dataset, x_axis=aFeature)
-        auto_visualizations.append(graph_candidates)
+        if graph_candidates != None:
+                auto_visualizations.append(graph_candidates)
+
+
+    ##Bivariate Features
+    for xFeature in feature_variables:
+        for yFeature in feature_variables:
+            if xFeature != yFeature:
+                graph_candidates = get_candidate_graphs(data=dataset, x_axis=xFeature, y_axis=yFeature)
+                if graph_candidates != None:
+                    auto_visualizations.append(graph_candidates)
 
     return auto_visualizations
+
+
+
+
 
 if __name__ == "__main__":
     WEBAPP_DIR = str(pathlib.Path(__file__).parent.parent.parent.absolute()) + "/webapp/"
     df = pd.read_csv(WEBAPP_DIR+"/datasets/titanic.csv")
     
-    l = get_auto_generated_graphs(dataset=df, feature_variables=["sex", "age"])
+    l = get_auto_generated_graphs(dataset=df, feature_variables=["sex", "age", "fare"])
 
 
     print(l)
