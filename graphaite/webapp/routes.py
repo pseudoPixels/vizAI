@@ -46,6 +46,7 @@ def getPlot():
     chart_template = request.form['chart_template']
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+    # data = data.sort_values(by = [graph_x_axis, graph_y_axis] )
 
     fig_data = get_plot(data,
                         chart_type,

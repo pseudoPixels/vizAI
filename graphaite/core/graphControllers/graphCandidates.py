@@ -1,5 +1,6 @@
 import pandas as pd
-from graphaite.core.utils.dataFrameUtils import *
+from graphaite.core.utils.dataFrameUtils import get_feature_type
+from graphaite.core.utils.dataFrameUtils import FeatureType
 
 def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
     """ Given a pandas DataFrame and graph drawing params, returns the list of candidate graphs. THe graph
@@ -24,17 +25,23 @@ def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
     ## some plots are possible with only availability of x_axis
     if x_axis == None:
         x_axis = y_axis
+        y_axis = None
 
-    
+    graph_candidates = []
+    ## Only one feature available
+    if y_axis is None:
+        graph_candidates.append("histogram")
+
+    ## both the axes are available
+    else:
+        x_axis_feature_type = get_feature_type(data= data, target_feature=x_axis)
+        y_axis_feature_type = get_feature_type(data = data, target_feature=y_axis)
+
+        if x_axis_feature_type == FeatureType.NUMERICAL and y_axis_feature_type == FeatureType.NUMERICAL:
+            graph_candidates.append("scatter")
 
 
-    categorical_features = get_categorical_features(data=data)
-    numerical_features = get_numeric_features(data=data)
-
-    x = kwargs['x'] if 'x' in kwargs else None
-    y = kwargs['y'] if 'y' in kwargs else None
-
-    print(x, y)
+    return graph_candidates
 
 
 
