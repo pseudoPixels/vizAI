@@ -14,6 +14,7 @@ from graphaite.webapp import app
 from graphaite.core.visualizers.plotly.makePlots import *
 from graphaite.core.utils.dataFrameUtils import *
 from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
+from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_graphs
 
 
 @app.route('/')
@@ -132,24 +133,26 @@ def getAutoViz():
     feature_variables = ['age','pclass','sibsp','parch','fare','sex']
 
 
-    plots = {}
-    for i in range(len(feature_variables)):
-        fig_data = get_plot(data,
-                        chart_type,
-                        x=feature_variables[i],
-                        y=graph_y_axis,
-                        color=graph_color,
-                        facet_col=graph_facet,
-                        size=graph_size,
-                        names=graph_names,
-                        barmode="group",
-                        template=chart_template,
-                        height=430)
+    plots = get_auto_generated_graphs(dataset=data, feature_variables=feature_variables, target_variable="survived")
 
-        feature_tags = []
-        feature_tags.append(feature_variables[i])
-        plot_id = str(uuid.uuid4()) ## TODO: plot id will have to fetched from db
-        plots[plot_id] = {'figure_data': fig_data, 'feature_tags': feature_tags}
+    # plots = {}
+    # for i in range(len(feature_variables)):
+    #     fig_data = get_plot(data,
+    #                     chart_type,
+    #                     x=feature_variables[i],
+    #                     y=graph_y_axis,
+    #                     color=graph_color,
+    #                     facet_col=graph_facet,
+    #                     size=graph_size,
+    #                     names=graph_names,
+    #                     barmode="group",
+    #                     template=chart_template,
+    #                     height=430)
+
+    #     feature_tags = []
+    #     feature_tags.append(feature_variables[i])
+    #     plot_id = str(uuid.uuid4()) ## TODO: plot id will have to fetched from db
+    #     plots[plot_id] = {'figure_data': fig_data, 'feature_tags': feature_tags}
 
 
     return jsonify({'plots': plots})#, 'feature_variables': feature_variables})
