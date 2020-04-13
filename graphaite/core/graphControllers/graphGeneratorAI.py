@@ -1,6 +1,8 @@
 from graphaite.core.graphControllers.graphCandidates import get_candidate_graphs
 from graphaite.core.visualizers.plotly.makePlots import *
 
+
+
 import pathlib
 import pandas as pd
 import uuid
@@ -39,6 +41,7 @@ def get_auto_generated_graphs(dataset, feature_variables=None, target_variable=N
                 feature_tags = []
                 feature_tags.append(aFeature)
                 plot_id = str(uuid.uuid4()) ## TODO: plot id will have to fetched from db
+
                 auto_visualizations[plot_id] = {'figure_data': fig_data, 'feature_tags': feature_tags}
 
                 

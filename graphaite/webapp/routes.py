@@ -15,6 +15,16 @@ from graphaite.core.visualizers.plotly.makePlots import *
 from graphaite.core.utils.dataFrameUtils import *
 from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_graphs
+from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
+
+from flaskext.couchdb import CouchDBManager
+app.config.update(
+    COUCHDB_SERVER='http://admin:123@localhost:5984',
+    COUCHDB_DATABASE='graphaitedb'
+)
+
+manager = CouchDBManager()
+manager.setup(app)
 
 
 @app.route('/')
@@ -122,6 +132,9 @@ def getAutoViz():
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
     feature_variables = ['age','pclass','sibsp','parch','fare','sex']
     target_variable = "survived"
+
+    plot = GraphaiteGraphModel(graph_id="plot_id", graph_title="aFeature", fig_data="fig_data", insigts="Very Good Graph", x="aFeature")
+    plot.store()
 
     plots = get_auto_generated_graphs(dataset=data, feature_variables=feature_variables, target_variable=target_variable)
 
