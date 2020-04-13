@@ -118,22 +118,11 @@ def autoviz():
 
 @app.route('/getAutoViz', methods=['POST'])
 def getAutoViz():
-    graph_x_axis = "age"
-    graph_y_axis = ""
-    graph_color = "survived"
-    graph_facet = ""
-    graph_size = ""
-    graph_names = ""
-
-    chart_type = "histogram"
-    chart_template = "presentation"
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
-
     feature_variables = ['age','pclass','sibsp','parch','fare','sex']
+    target_variable = "survived"
 
-
-    plots = get_auto_generated_graphs(dataset=data, feature_variables=feature_variables, target_variable="survived")
-
+    plots = get_auto_generated_graphs(dataset=data, feature_variables=feature_variables, target_variable=target_variable)
 
     return jsonify({'plots': plots})
