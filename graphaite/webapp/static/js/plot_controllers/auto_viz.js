@@ -24,8 +24,9 @@ $(document).ready(function(){
                     $("#tab-row-"+aFeatureTag).append("<div class='col-lg-6' style='width:100%;'>\
                                                             <div class='card' >\
                                                                 <div class='card-body'>\
-                                                                    <h4 class='card-title box-title'>"+ aFeatureTag +"</h4>\
+                                                                    <h4 class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") +"</h4>\
                                                                     <div id='" + unique_div_id + "' style='width:650px;'></div>\
+                                                                    <div><a href='#'>Edit chart</a> | <a href='#'>Add insights</a> | <a href='#'>Add to data story</a> | <a href='#'>Delete</a> </div>\
                                                                 </div>\
                                                             </div>\
                                                         </div>");
