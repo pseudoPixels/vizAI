@@ -4,8 +4,6 @@ import pandas as pd
 from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 
 
-
-
 def get_plot(data, chart_type, height=750, **kwargs):
     """
     Draws and Returns the plot as plotly json based on the data, chart type and param settings of the specific chart type.
@@ -20,7 +18,13 @@ def get_plot(data, chart_type, height=750, **kwargs):
     graphObject = GRAPHS_DICT[chart_type]
 
     ## filter out those kwargs which are empty/none and not available in the settings of the specific plotly chart type.
-    graph_params = {k: v for k, v in kwargs.items() if v is not None and v.strip(' \t\n\r') is not "" and k in graphObject.get_graph_param_keys()}
+    graph_params = {
+        k: v
+        for k, v in kwargs.items()
+        if v is not None
+        and v.strip(" \t\n\r") is not ""
+        and k in graphObject.get_graph_param_keys()
+    }
 
     ## get plotly graph object from graphaite
     plotly_go = graphObject.get_graph_object()
@@ -36,9 +40,11 @@ def get_plot(data, chart_type, height=750, **kwargs):
 
     return fig.to_json()
 
-if __name__ == '__main__':
-    data = pd.read_csv("../../../webapp/datasets/tips.csv")
-    figData = get_plot(data, chart_type="Histogram", x="total_bill",  color="sex", size="tips")
-    print(figData)
 
+if __name__ == "__main__":
+    data = pd.read_csv("../../../webapp/datasets/tips.csv")
+    figData = get_plot(
+        data, chart_type="Histogram", x="total_bill", color="sex", size="tips"
+    )
+    print(figData)
 

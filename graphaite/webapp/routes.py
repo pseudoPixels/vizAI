@@ -18,17 +18,17 @@ from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_
 from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
 
 from flaskext.couchdb import CouchDBManager
+
 app.config.update(
-    COUCHDB_SERVER='http://admin:123@localhost:5984',
-    COUCHDB_DATABASE='graphaitedb'
+    COUCHDB_SERVER="http://admin:123@localhost:5984", COUCHDB_DATABASE="graphaitedb"
 )
 
 manager = CouchDBManager()
 manager.setup(app)
 
 
-@app.route('/')
-@app.route('/index')
+@app.route("/")
+@app.route("/index")
 def index():
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
     fig_data = ""  # get_bar_plot(data=data, x="sex", y="age")
@@ -37,105 +37,110 @@ def index():
     categorical_features = get_categorical_features(data=data)
     neumeric_features = get_numeric_features(data=data)
 
-    return render_template('index.html',
-                           pData=fig_data,
-                           all_features=all_features,
-                           categorical_features=categorical_features,
-                           neumeric_features=neumeric_features)
+    return render_template(
+        "index.html",
+        pData=fig_data,
+        all_features=all_features,
+        categorical_features=categorical_features,
+        neumeric_features=neumeric_features,
+    )
 
 
-@app.route('/getPlot', methods=['POST'])
+@app.route("/getPlot", methods=["POST"])
 def getPlot():
-    graph_x_axis = request.form['graph_x_axis']
-    graph_y_axis = request.form['graph_y_axis']
-    graph_color = request.form['graph_color']
-    graph_facet = request.form['graph_facet']
-    graph_size = request.form['graph_size']
-    graph_names = request.form['graph_names']
+    graph_x_axis = request.form["graph_x_axis"]
+    graph_y_axis = request.form["graph_y_axis"]
+    graph_color = request.form["graph_color"]
+    graph_facet = request.form["graph_facet"]
+    graph_size = request.form["graph_size"]
+    graph_names = request.form["graph_names"]
 
-    chart_type = request.form['chart_type']
-    chart_template = request.form['chart_template']
+    chart_type = request.form["chart_type"]
+    chart_template = request.form["chart_template"]
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
     # data = data.sort_values(by = [graph_x_axis, graph_y_axis] )
 
-    fig_data = get_plot(data,
-                        chart_type,
-                        x=graph_x_axis,
-                        y=graph_y_axis,
-                        color=graph_color,
-                        facet_col=graph_facet,
-                        size=graph_size,
-                        names=graph_names,
-                        barmode="group",
-                        template=chart_template)
+    fig_data = get_plot(
+        data,
+        chart_type,
+        x=graph_x_axis,
+        y=graph_y_axis,
+        color=graph_color,
+        facet_col=graph_facet,
+        size=graph_size,
+        names=graph_names,
+        barmode="group",
+        template=chart_template,
+    )
 
     chart_params = GRAPHS_DICT[chart_type].get_graph_param_keys()
 
-    return jsonify({'plotData': fig_data,
-                    'chart_params': chart_params})
+    return jsonify({"plotData": fig_data, "chart_params": chart_params})
 
 
-@app.route('/getDataFrame', methods=['POST'])
+@app.route("/getDataFrame", methods=["POST"])
 def getDataFrame():
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
-    table = data.to_json(orient='split', index=False)
+    table = data.to_json(orient="split", index=False)
 
     return table
 
 
-@app.route('/createProject')
+@app.route("/createProject")
 def createProject():
-    return render_template('create_project.html')
+    return render_template("create_project.html")
 
 
-ALLOWED_EXTENSIONS = set(['csv'])
+ALLOWED_EXTENSIONS = set(["csv"])
 
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/upload_dataset_and_create_project/', methods=['POST'])
+@app.route("/upload_dataset_and_create_project/", methods=["POST"])
 def upload_dataset_and_create_project():
-    if request.method == 'POST':
+    if request.method == "POST":
         # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
+        if "file" not in request.files:
+            flash("No file part")
             return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            flash('No file selected for uploading')
+        file = request.files["file"]
+        if file.filename == "":
+            flash("No file selected for uploading")
             return redirect(request.url)
         if file and allowed_file(file.filename):
 
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('File successfully uploaded')
-            return redirect('/autoviz')
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            flash("File successfully uploaded")
+            return redirect("/autoviz")
         else:
-            flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
+            flash("Allowed file types are txt, pdf, png, jpg, jpeg, gif")
             return redirect(request.url)
 
-@app.route('/autoviz')
+
+@app.route("/autoviz")
 def autoviz():
     ## The list will be available from project info (CouchDB)
-    feature_variables = ['age','pclass','sibsp','parch','fare','sex']
+    feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
 
-    return render_template('autoviz.html',
-    feature_variables=feature_variables)
+    return render_template("autoviz.html", feature_variables=feature_variables)
 
 
-@app.route('/getAutoViz', methods=['POST'])
+@app.route("/getAutoViz", methods=["POST"])
 def getAutoViz():
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
-    feature_variables = ['age','pclass','sibsp','parch','fare','sex']
+    feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
     target_variable = "survived"
 
-    plot = GraphaiteGraphModel(graph_id="plot_id", graph_title="aFeature", fig_data="fig_data", insigts="Very Good Graph", x="aFeature")
-    plot.store()
+    plots = get_auto_generated_graphs(
+        dataset=data,
+        feature_variables=feature_variables,
+        target_variable=target_variable,
+    )
 
-    plots = get_auto_generated_graphs(dataset=data, feature_variables=feature_variables, target_variable=target_variable)
+    return jsonify({"plots": plots})
 
-    return jsonify({'plots': plots})

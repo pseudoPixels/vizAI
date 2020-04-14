@@ -2,7 +2,8 @@ import pandas as pd
 from graphaite.core.utils.dataFrameUtils import get_feature_type
 from graphaite.core.utils.dataFrameUtils import FeatureType
 
-def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
+
+def get_candidate_graphs(data, x_axis=None, y_axis=None) -> list:
     """ Given a pandas DataFrame and graph drawing params, returns the list of candidate graphs. THe graph
     selection usually done using the passed x and y axis of the dataset. For example, scatter plot is
     possible candidate when both the axes are available and numeric. Histogram is possible with any of the
@@ -34,14 +35,20 @@ def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
 
     ## both the axes are available
     else:
-        x_axis_feature_type = get_feature_type(data= data, target_feature=x_axis)
-        y_axis_feature_type = get_feature_type(data = data, target_feature=y_axis)
+        x_axis_feature_type = get_feature_type(data=data, target_feature=x_axis)
+        y_axis_feature_type = get_feature_type(data=data, target_feature=y_axis)
 
-        if x_axis_feature_type == FeatureType.NUMERICAL and y_axis_feature_type == FeatureType.NUMERICAL:
+        if (
+            x_axis_feature_type == FeatureType.NUMERICAL
+            and y_axis_feature_type == FeatureType.NUMERICAL
+        ):
             graph_candidates.append("scatter")
             graph_candidates.append("line")
             graph_candidates.append("area")
-        if x_axis_feature_type == FeatureType.CATEGORICAL and y_axis_feature_type == FeatureType.NUMERICAL:
+        if (
+            x_axis_feature_type == FeatureType.CATEGORICAL
+            and y_axis_feature_type == FeatureType.NUMERICAL
+        ):
             graph_candidates.append("box")
             graph_candidates.append("violin")
 
@@ -51,9 +58,8 @@ def get_candidate_graphs(data, x_axis=None, y_axis=None)->list:
     return graph_candidates
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     df = pd.read_csv("../../webapp/datasets/tips.csv")
 
-    get_candidate_graphs(data=df,x="tips")
+    get_candidate_graphs(data=df, x="tips")
 
