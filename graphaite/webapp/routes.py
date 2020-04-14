@@ -136,11 +136,23 @@ def getAutoViz():
     feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
     target_variable = "survived"
 
+    ## get auto generated plots
     plots = get_auto_generated_graphs(
         dataset=data,
         feature_variables=feature_variables,
         target_variable=target_variable,
     )
+
+    ## add the graphs to database
+    for aPlotID in plots:
+        plotModel = GraphaiteGraphModel(
+            graph_id=aPlotID,
+            graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
+            figure_data=plots[aPlotID]["figure_data"],
+            insights=["No insights added yet!"],
+            **plots[aPlotID]["graph_settings"]
+        )
+        plotModel.store()
 
     return jsonify({"plots": plots})
 

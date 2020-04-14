@@ -19,9 +19,12 @@ class GraphaiteGraphModel(Document):
     # last_modified_date = DateTimeField(default=datetime.datetime.now)
 
     ### Graph Atributes
-    x = TextField()
-    y = TextField()
-    color = TextField()
+    chart_type = TextField()
+    x = TextField(default="")
+    y = TextField(default="")
+    color = TextField(default="")
+    barmode = TextField(default="")
+    template = TextField(default="")
 
 
 if __name__ == "__main__":
