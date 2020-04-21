@@ -156,3 +156,7 @@ def getAutoViz():
 
     return jsonify({"plots": plots})
 
+
+@app.route("/manage_datasets")
+def manage_datasets():
+    return render_template("manage_datasets.html")
