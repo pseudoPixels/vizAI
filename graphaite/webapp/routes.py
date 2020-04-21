@@ -81,10 +81,13 @@ def getPlot():
 
 @app.route("/getDataFrame", methods=["POST"])
 def getDataFrame():
-    data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
-    table = data.to_json(orient="split", index=False)
+    df = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+    # table = data.to_json(orient="split", index=False)
 
-    return table
+    return jsonify(
+                   my_table=json.loads(df.to_json(orient="split"))["data"],
+                   columns=[{"title": str(col)} for col in json.loads(df.to_json(orient="split"))["columns"]])
+
 
 
 @app.route("/createProject")
@@ -160,3 +163,38 @@ def getAutoViz():
 @app.route("/manage_datasets")
 def manage_datasets():
     return render_template("manage_datasets.html")
+
+@app.route('/python-flask-files-upload', methods=['POST'])
+def upload_file():
+	# check if the post request has the file part
+	if 'files[]' not in request.files:
+		resp = jsonify({'message' : 'No file part in the request'})
+		resp.status_code = 400
+		return resp
+	
+	files = request.files.getlist('files[]')
+	
+	errors = {}
+	success = False
+	
+	for file in files:
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			success = True
+		else:
+			errors[file.filename] = 'File type is not allowed'
+	
+	if success and errors:
+		errors['message'] = 'File(s) successfully uploaded'
+		resp = jsonify(errors)
+		resp.status_code = 206
+		return resp
+	if success:
+		resp = jsonify({'message' : 'Files successfully uploaded'})
+		resp.status_code = 201
+		return resp
+	else:
+		resp = jsonify(errors)
+		resp.status_code = 400
+		return resp
