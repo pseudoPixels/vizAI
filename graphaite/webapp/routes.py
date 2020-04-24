@@ -1,5 +1,5 @@
 import os
-from flask import render_template
+from flask import render_template, session
 from flask import jsonify, flash, request, redirect
 from werkzeug.utils import secure_filename
 import plotly.express as px
@@ -15,7 +15,10 @@ from graphaite.core.visualizers.plotly.makePlots import *
 from graphaite.core.utils.dataFrameUtils import *
 from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_graphs
+
+## Models
 from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
+from graphaite.core.models.GraphaiteProject import GraphaiteProjectModel
 
 from flaskext.couchdb import CouchDBManager
 
@@ -90,9 +93,9 @@ def getDataFrame():
 
 
 
-@app.route("/createProject")
+@app.route("/home")
 def createProject():
-    return render_template("create_project.html")
+    return render_template("home.html")
 
 
 ALLOWED_EXTENSIONS = set(["csv"])
@@ -102,26 +105,41 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route("/upload_dataset_and_create_project/", methods=["POST"])
-def upload_dataset_and_create_project():
-    if request.method == "POST":
-        # check if the post request has the file part
-        if "file" not in request.files:
-            flash("No file part")
-            return redirect(request.url)
-        file = request.files["file"]
-        if file.filename == "":
-            flash("No file selected for uploading")
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
+@app.route("/create_new_project/", methods=["POST"])
+def create_new_project():
+    projectName = request.form["project_name"]
+    projectOwner = "golam@example.com"
+    projectID = str(uuid.uuid4())
 
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-            flash("File successfully uploaded")
-            return redirect("/autoviz")
-        else:
-            flash("Allowed file types are txt, pdf, png, jpg, jpeg, gif")
-            return redirect(request.url)
+    newProject  = GraphaiteProjectModel(
+        project_id = projectID,
+        project_title = projectName,
+        porject_owner_id = projectOwner
+    )
+
+    newProject.store()
+
+    session['PROJECT_ID'] = projectID
+    return redirect("/manage_datasets")
+
+    # if request.method == "POST":
+    #     # check if the post request has the file part
+    #     if "file" not in request.files:
+    #         flash("No file part")
+    #         return redirect(request.url)
+    #     file = request.files["file"]
+    #     if file.filename == "":
+    #         flash("No file selected for uploading")
+    #         return redirect(request.url)
+    #     if file and allowed_file(file.filename):
+
+    #         filename = secure_filename(file.filename)
+    #         file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+    #         flash("File successfully uploaded")
+    #         return redirect("/autoviz")
+    #     else:
+    #         flash("Allowed file types are txt, pdf, png, jpg, jpeg, gif")
+    #         return redirect(request.url)
 
 
 @app.route("/autoviz")
@@ -162,6 +180,7 @@ def getAutoViz():
 
 @app.route("/manage_datasets")
 def manage_datasets():
+    print("="*10, session.get('PROJECT_ID'))
     return render_template("manage_datasets.html")
 
 @app.route('/python-flask-files-upload', methods=['POST'])
