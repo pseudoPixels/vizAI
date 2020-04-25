@@ -6,3 +6,8 @@
 	<input type="text" name="project_name" placeholder="Project Name">
 	<input type="submit" value="Create New Project">
 </form>
+
+<br /><br />
+{% for aProject in userProjects %}
+<a href="/manage_datasets/{{aProject.project_doc_id}}">{{aProject.project_title}}</a> <br /><br />
+{% endfor %}

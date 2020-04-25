@@ -115,14 +115,14 @@ def getDataFrame():
 @app.route("/home")
 def createProject():
 
-    allProjects = []
+    userProjects = []
     for aProject in views_by_graphaite_project_owner(g.couch):
         if aProject.key == "golam@example.com":
             aProjectDoc = GraphaiteProjectModel.load(aProject.value)
-            allProjects.append(aProjectDoc.project_title)
+            userProjects.append({'project_doc_id':aProject.value, 'project_title':aProjectDoc.project_title})
 
-    print(allProjects)
-    return render_template("home.html")
+    # print(userProjects)
+    return render_template("home.html", userProjects=userProjects)
 
 
 ALLOWED_EXTENSIONS = set(["csv"])
@@ -144,7 +144,7 @@ def create_new_project():
 
     newProject.store()
 
-    return redirect("/manage_datasets")
+    return redirect("/manage_datasets/"+projectID)
 
 
 @app.route("/autoviz")
