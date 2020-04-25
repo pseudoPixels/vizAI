@@ -100,7 +100,14 @@ def getPlot():
 
 @app.route("/getDataFrame/<project_id>", methods=["POST"])
 def getDataFrame(project_id):
-    df = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    try:
+        df = pd.read_csv(app.config["UPLOAD_FOLDER"] + "/" + aProjectDoc.dataset_path)
+    except Exception:
+        df = pd.DataFrame()
+
+    
     # table = data.to_json(orient="split", index=False)
 
     return jsonify(
@@ -190,8 +197,8 @@ def manage_datasets(project_id):
     return render_template("manage_datasets.html", project_id=project_id)
 
 
-@app.route("/python-flask-files-upload", methods=["POST"])
-def upload_file():
+@app.route("/python-flask-files-upload/<project_id>", methods=["POST"])
+def upload_file(project_id):
     # check if the post request has the file part
     if "files[]" not in request.files:
         resp = jsonify({"message": "No file part in the request"})

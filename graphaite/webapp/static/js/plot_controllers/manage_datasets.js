@@ -13,7 +13,7 @@ $(document).ready(function (e) {
         }
 
         $.ajax({
-            url: 'python-flask-files-upload', // point to server-side URL
+            url: 'python-flask-files-upload/' + $('#project_id').text(),
             dataType: 'json', // what to expect back from server
             cache: false,
             contentType: false,
