@@ -98,8 +98,8 @@ def getPlot():
     return jsonify({"plotData": fig_data, "chart_params": chart_params})
 
 
-@app.route("/getDataFrame", methods=["POST"])
-def getDataFrame():
+@app.route("/getDataFrame/<project_id>", methods=["POST"])
+def getDataFrame(project_id):
     df = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
     # table = data.to_json(orient="split", index=False)
 
@@ -186,8 +186,8 @@ def getAutoViz():
 @app.route("/manage_datasets/<project_id>")
 def manage_datasets(project_id):
     # print("="*10, session.get('PROJECT_ID'))
-    print(project_id)
-    return render_template("manage_datasets.html")
+    # print(project_id)
+    return render_template("manage_datasets.html", project_id=project_id)
 
 
 @app.route("/python-flask-files-upload", methods=["POST"])
