@@ -102,10 +102,13 @@ def getPlot():
 def getDataFrame(project_id):
     aProjectDoc = GraphaiteProjectModel.load(project_id)
 
+    isDataAvailable = True
     try:
-        df = pd.read_csv(app.config["UPLOAD_FOLDER"] + "/" + aProjectDoc.dataset_path)
+        df = pd.read_csv(aProjectDoc.dataset_path)
     except Exception:
         df = pd.DataFrame()
+        isDataAvailable = False
+
 
     
     # table = data.to_json(orient="split", index=False)
@@ -116,6 +119,7 @@ def getDataFrame(project_id):
             {"title": str(col)}
             for col in json.loads(df.to_json(orient="split"))["columns"]
         ],
+        isDataAvailable = isDataAvailable
     )
 
 
@@ -215,6 +219,10 @@ def upload_file(project_id):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
             success = True
+
+            aProjectDoc = GraphaiteProjectModel.load(project_id)
+            aProjectDoc.dataset_path = str(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            aProjectDoc.store()
         else:
             errors[file.filename] = "File type is not allowed"
 
