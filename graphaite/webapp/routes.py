@@ -15,6 +15,7 @@ from graphaite.core.visualizers.plotly.makePlots import *
 from graphaite.core.utils.dataFrameUtils import *
 from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_graphs
+from graphaite.core.utils.fileUtils import delete_files_of_directory
 
 ## Models
 from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
@@ -217,11 +218,27 @@ def upload_file(project_id):
     for file in files:
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            ## load the project info from database
+            aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+            ## create directory for this project if not exists already
+            thisUserDir = app.config["UPLOAD_FOLDER"] + "/" + aProjectDoc.porject_owner_id
+            if not os.path.exists(thisUserDir):
+                os.makedirs(thisUserDir)
+            thisProjectDir = thisUserDir + "/" + aProjectDoc.project_id
+            if not os.path.exists(thisProjectDir):
+                os.makedirs(thisProjectDir)
+            ## empty the project directory, as there should be one dataset per
+            ## project. Deletion is required so user does not takes extra file space per project 
+            delete_files_of_directory(target_dir=thisProjectDir)
+
+            ## finally, save the new dataset to the target path
+            datasetTargetPath = os.path.join(thisProjectDir+"/", filename)
+            file.save(datasetTargetPath)
             success = True
 
-            aProjectDoc = GraphaiteProjectModel.load(project_id)
-            aProjectDoc.dataset_path = str(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            ## update the dataset path in the database
+            aProjectDoc.dataset_path = str(datasetTargetPath)
             aProjectDoc.store()
         else:
             errors[file.filename] = "File type is not allowed"
