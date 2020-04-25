@@ -26,8 +26,8 @@ $(document).ready(function (e) {
                     }
                     dTable = $('#view_raw_data').DataTable({
                         data: data.my_table,
-                        columns: data.columns
-
+                        columns: data.columns,
+                        stateSave: true
                     });
                 }
             },
