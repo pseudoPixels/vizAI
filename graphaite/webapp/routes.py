@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import plotly.express as px
 import pandas as pd
 import json
-from flask import Flask
+from flask import Flask, g
 from jinja2 import Template
 import uuid
 
@@ -21,13 +21,29 @@ from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
 from graphaite.core.models.GraphaiteProject import GraphaiteProjectModel
 
 from flaskext.couchdb import CouchDBManager
+from couchdb.design import ViewDefinition
 
 app.config.update(
     COUCHDB_SERVER="http://admin:123@localhost:5984", COUCHDB_DATABASE="graphaitedb"
 )
 
+views_by_graphaite_project_owner = ViewDefinition(
+    "graphaite_views",
+    "by_graphaite_project_owner",
+    """
+    function (doc) {
+         if (doc.doc_type == 'graphaite_project') {
+            emit(doc.porject_owner_id, doc._id)
+        };   
+    }
+    """,
+)
+
+
 manager = CouchDBManager()
 manager.setup(app)
+manager.add_viewdef([views_by_graphaite_project_owner])
+manager.sync(app)
 
 
 @app.route("/")
@@ -88,13 +104,24 @@ def getDataFrame():
     # table = data.to_json(orient="split", index=False)
 
     return jsonify(
-                   my_table=json.loads(df.to_json(orient="split"))["data"],
-                   columns=[{"title": str(col)} for col in json.loads(df.to_json(orient="split"))["columns"]])
-
+        my_table=json.loads(df.to_json(orient="split"))["data"],
+        columns=[
+            {"title": str(col)}
+            for col in json.loads(df.to_json(orient="split"))["columns"]
+        ],
+    )
 
 
 @app.route("/home")
 def createProject():
+
+    allProjects = []
+    for aProject in views_by_graphaite_project_owner(g.couch):
+        if aProject.key == "golam@example.com":
+            aProjectDoc = GraphaiteProjectModel.load(aProject.value)
+            allProjects.append(aProjectDoc.project_title)
+
+    print(allProjects)
     return render_template("home.html")
 
 
@@ -111,35 +138,13 @@ def create_new_project():
     projectOwner = "golam@example.com"
     projectID = str(uuid.uuid4())
 
-    newProject  = GraphaiteProjectModel(
-        project_id = projectID,
-        project_title = projectName,
-        porject_owner_id = projectOwner
+    newProject = GraphaiteProjectModel(
+        project_id=projectID, project_title=projectName, porject_owner_id=projectOwner
     )
 
     newProject.store()
 
-    session['PROJECT_ID'] = projectID
     return redirect("/manage_datasets")
-
-    # if request.method == "POST":
-    #     # check if the post request has the file part
-    #     if "file" not in request.files:
-    #         flash("No file part")
-    #         return redirect(request.url)
-    #     file = request.files["file"]
-    #     if file.filename == "":
-    #         flash("No file selected for uploading")
-    #         return redirect(request.url)
-    #     if file and allowed_file(file.filename):
-
-    #         filename = secure_filename(file.filename)
-    #         file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-    #         flash("File successfully uploaded")
-    #         return redirect("/autoviz")
-    #     else:
-    #         flash("Allowed file types are txt, pdf, png, jpg, jpeg, gif")
-    #         return redirect(request.url)
 
 
 @app.route("/autoviz")
@@ -178,42 +183,45 @@ def getAutoViz():
     return jsonify({"plots": plots})
 
 
-@app.route("/manage_datasets")
-def manage_datasets():
-    print("="*10, session.get('PROJECT_ID'))
+@app.route("/manage_datasets/<project_id>")
+def manage_datasets(project_id):
+    # print("="*10, session.get('PROJECT_ID'))
+    print(project_id)
     return render_template("manage_datasets.html")
 
-@app.route('/python-flask-files-upload', methods=['POST'])
+
+@app.route("/python-flask-files-upload", methods=["POST"])
 def upload_file():
-	# check if the post request has the file part
-	if 'files[]' not in request.files:
-		resp = jsonify({'message' : 'No file part in the request'})
-		resp.status_code = 400
-		return resp
-	
-	files = request.files.getlist('files[]')
-	
-	errors = {}
-	success = False
-	
-	for file in files:
-		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			success = True
-		else:
-			errors[file.filename] = 'File type is not allowed'
-	
-	if success and errors:
-		errors['message'] = 'File(s) successfully uploaded'
-		resp = jsonify(errors)
-		resp.status_code = 206
-		return resp
-	if success:
-		resp = jsonify({'message' : 'Files successfully uploaded'})
-		resp.status_code = 201
-		return resp
-	else:
-		resp = jsonify(errors)
-		resp.status_code = 400
-		return resp
+    # check if the post request has the file part
+    if "files[]" not in request.files:
+        resp = jsonify({"message": "No file part in the request"})
+        resp.status_code = 400
+        return resp
+
+    files = request.files.getlist("files[]")
+
+    errors = {}
+    success = False
+
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            success = True
+        else:
+            errors[file.filename] = "File type is not allowed"
+
+    if success and errors:
+        errors["message"] = "File(s) successfully uploaded"
+        resp = jsonify(errors)
+        resp.status_code = 206
+        return resp
+    if success:
+        resp = jsonify({"message": "Files successfully uploaded"})
+        resp.status_code = 201
+        return resp
+    else:
+        resp = jsonify(errors)
+        resp.status_code = 400
+        return resp
+

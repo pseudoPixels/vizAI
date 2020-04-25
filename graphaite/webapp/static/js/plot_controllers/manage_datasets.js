@@ -43,7 +43,7 @@ $(document).ready(function (e) {
 
 
     $.ajax({
-        url: 'getDataFrame', // point to server-side URL
+        url: 'http://127.0.0.1:5000/getDataFrame', // point to server-side URL
         dataType: 'json', // what to expect back from server
         cache: false,
         contentType: false,
