@@ -171,8 +171,14 @@ def autoviz():
 def getAutoViz():
 
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
-    feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
+    # feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
     target_variable = "survived"
+
+    feature_variables = request.form.getlist("selected_features")
+
+    # print("="*20)
+    # print(feature_variables)
+    # print("="*20)
 
     ## get auto generated plots
     plots = get_auto_generated_graphs(
