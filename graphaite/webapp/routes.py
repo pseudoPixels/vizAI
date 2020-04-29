@@ -16,6 +16,8 @@ from graphaite.core.utils.dataFrameUtils import *
 from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_graphs
 from graphaite.core.utils.fileUtils import delete_files_of_directory
+from graphaite.core.utils.dataFrameUtils import get_all_features
+
 
 ## Models
 from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
@@ -159,18 +161,25 @@ def create_new_project():
     return redirect("/manage_datasets/"+projectID)
 
 
-@app.route("/autoviz")
-def autoviz():
+@app.route("/autoviz/<project_id>")
+def autoviz(project_id):
+
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    df = pd.read_csv(aProjectDoc.dataset_path)
+
+    
     ## The list will be available from project info (CouchDB)
-    feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
+    feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
 
-    return render_template("autoviz.html", feature_variables=feature_variables)
+    return render_template("autoviz.html", feature_variables=feature_variables, project_id=project_id)
 
 
-@app.route("/getAutoViz", methods=["POST"])
-def getAutoViz():
+@app.route("/getAutoViz/<project_id>", methods=["POST"])
+def getAutoViz(project_id):
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
 
-    data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+    data = pd.read_csv(aProjectDoc.dataset_path)
     # feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
     target_variable =  request.form.get("target_variable") #"survived"
 

@@ -14,7 +14,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "/getAutoViz",
+            url: "http://127.0.0.1:5000/getAutoViz/" + $('#project_id').text(),
             data: $('#fs').serialize(),
             success: function (option) {
                 for (aPlotID in option['plots']) {
