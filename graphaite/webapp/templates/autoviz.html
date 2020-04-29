@@ -200,9 +200,9 @@
 
 
                            Set target variable:
-                           <select>
+                           <select name="target_variable">
                               {% for aFeature in feature_variables%}
-                              <option name="{{aFeature}}">{{aFeature}}</option>
+                              <option value="{{aFeature}}">{{aFeature}}</option>
                               {% endfor %}
                            </select>
                            <br /><br />
