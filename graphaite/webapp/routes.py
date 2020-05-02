@@ -42,10 +42,22 @@ views_by_graphaite_project_owner = ViewDefinition(
     """,
 )
 
+views_by_graphaite_graph = ViewDefinition(
+    "graphaite_views",
+    "by_graphaite_graph",
+    """
+    function (doc) {
+         if (doc.doc_type == 'graphaite_graph') {
+            emit(doc.graph_id, doc._id)
+        };   
+    }
+    """,
+)
+
 
 manager = CouchDBManager()
 manager.setup(app)
-manager.add_viewdef([views_by_graphaite_project_owner])
+manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph])
 manager.sync(app)
 
 
@@ -165,47 +177,83 @@ def create_new_project():
 def autoviz(project_id):
 
     aProjectDoc = GraphaiteProjectModel.load(project_id)
+    # graphsOfThisProject = aProjectDoc.graphaite_graph_ids
 
     df = pd.read_csv(aProjectDoc.dataset_path)
-
-    
     ## The list will be available from project info (CouchDB)
     feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
 
-    return render_template("autoviz.html", feature_variables=feature_variables, project_id=project_id)
+
+
+    # plots = {}
+    # for aGraph in views_by_graphaite_graph(g.couch):
+    #     if aGraph.key in graphsOfThisProject:
+    #         aGraphDoc = GraphaiteGraphModel(aGraph.value)
+
+    #         plots[aGraph.value] = {
+    #                 "figure_data": aGraphDoc.figure_data,
+    #                 "feature_tags": ['tip']
+    #         }
+
+
+    return render_template("autoviz.html", 
+    feature_variables=feature_variables, 
+    project_id=project_id)#, 
+    #plots=plots)
 
 
 @app.route("/getAutoViz/<project_id>", methods=["POST"])
 def getAutoViz(project_id):
     aProjectDoc = GraphaiteProjectModel.load(project_id)
+    graphsOfThisProject = aProjectDoc.graphaite_graph_ids
 
-    data = pd.read_csv(aProjectDoc.dataset_path)
-    # feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
-    target_variable =  request.form.get("target_variable") #"survived"
 
-    feature_variables = request.form.getlist("selected_features")
+    plots = {}
+    for aGraph in views_by_graphaite_graph(g.couch):
+        if aGraph.key in graphsOfThisProject:
+            aGraphDoc = GraphaiteGraphModel.load(aGraph.value)
 
-    # print("="*20)
-    # print(target_variable)
-    # print("="*20)
+            plots[aGraph.value] = {
+                    "figure_data": str(aGraphDoc.figure_data),
+                    "feature_tags": ['tip'],
+                    "figure_title": aGraphDoc.graph_title
+            }
 
-    ## get auto generated plots
-    plots = get_auto_generated_graphs(
-        dataset=data,
-        feature_variables=feature_variables,
-        target_variable=target_variable,
-    )
+    print(plots)
 
-    ## add the graphs to database
-    for aPlotID in plots:
-        plotModel = GraphaiteGraphModel(
-            graph_id=aPlotID,
-            graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
-            figure_data=plots[aPlotID]["figure_data"],
-            insights=["No insights added yet!"],
-            **plots[aPlotID]["graph_settings"]
-        )
-        plotModel.store()
+
+
+
+    # data = pd.read_csv(aProjectDoc.dataset_path)
+    # # feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
+    # target_variable =  request.form.get("target_variable") #"survived"
+
+    # feature_variables = request.form.getlist("selected_features")
+
+    # ## get auto generated plots
+    # plots = get_auto_generated_graphs(
+    #     dataset=data,
+    #     feature_variables=feature_variables,
+    #     target_variable=target_variable,
+    # )
+
+    # ## add the graphs to database
+    # for aPlotID in plots:
+    #     plotModel = GraphaiteGraphModel(
+    #         graph_id=aPlotID,
+    #         graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
+    #         figure_data=plots[aPlotID]["figure_data"],
+    #         insights=["No insights added yet!"],
+    #         **plots[aPlotID]["graph_settings"]
+    #     )
+
+    #     plotModel.store()
+
+
+    #     ## add the graphid to the corresponding project data model
+    #     aProjectDoc.graphaite_graph_ids.append(aPlotID)
+    #     aProjectDoc.store()
+
 
     return jsonify({"plots": plots})
 
