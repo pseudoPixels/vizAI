@@ -204,55 +204,63 @@ def autoviz(project_id):
 
 @app.route("/getAutoViz/<project_id>", methods=["POST"])
 def getAutoViz(project_id):
+    ## getting user seelected target and feature varaibles 
+    new_target_variable =  request.form.get("target_variable")
+    new_feature_variables = request.form.getlist("selected_features")
+
+    ## get existing target and featrue variables from db 
     aProjectDoc = GraphaiteProjectModel.load(project_id)
-    graphsOfThisProject = aProjectDoc.graphaite_graph_ids
+    prev_target_variable = aProjectDoc.selected_target_variable
+    prev_feature_variables = aProjectDoc.selected_feature_variables
 
 
     plots = {}
-    for aGraph in views_by_graphaite_graph(g.couch):
-        if aGraph.key in graphsOfThisProject:
-            aGraphDoc = GraphaiteGraphModel.load(aGraph.value)
 
-            plots[aGraph.value] = {
-                    "figure_data": str(aGraphDoc.figure_data),
-                    "feature_tags": ['tip'],
-                    "figure_title": aGraphDoc.graph_title
-            }
+    ## check if the previous an new targe and feature variables are exact same.
+    ## if they are exact same, we just load of db and send instead of generating plots again.
+    if (prev_target_variable == new_target_variable) and (prev_feature_variables.sort() == new_feature_variables.sort()):
 
-    print(plots)
+        graphIDsOfThisProject = aProjectDoc.graphaite_graph_ids
 
+        for aGraph in views_by_graphaite_graph(g.couch):
+            if aGraph.key in graphIDsOfThisProject:
+                aGraphDoc = GraphaiteGraphModel.load(aGraph.value)
 
+                plots[aGraph.value] = {
+                        "figure_data": str(aGraphDoc.figure_data),
+                        "feature_tags": aGraphDoc.feature_tags,
+                        "figure_title": aGraphDoc.graph_title
+                }
 
+    ## some settings (such as, target or feature variables) changed and need to regenerate auto plots 
+    else:
+            
+        data = pd.read_csv(aProjectDoc.dataset_path)
 
-    # data = pd.read_csv(aProjectDoc.dataset_path)
-    # # feature_variables = ["age", "pclass", "sibsp", "parch", "fare", "sex"]
-    # target_variable =  request.form.get("target_variable") #"survived"
+        ## get auto generated plots
+        plots = get_auto_generated_graphs(
+            dataset=data,
+            feature_variables=new_feature_variables,
+            target_variable=new_target_variable,
+        )
 
-    # feature_variables = request.form.getlist("selected_features")
+        aProjectDoc.graphaite_graph_ids = []
+        ## add the graphs to database
+        for aPlotID in plots:
+            plotModel = GraphaiteGraphModel(
+                graph_id=aPlotID,
+                graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
+                figure_data=plots[aPlotID]["figure_data"],
+                insights=["No insights added yet!"],
+                feature_tags = plots[aPlotID]["feature_tags"],
+                **plots[aPlotID]["graph_settings"]
+            )
 
-    # ## get auto generated plots
-    # plots = get_auto_generated_graphs(
-    #     dataset=data,
-    #     feature_variables=feature_variables,
-    #     target_variable=target_variable,
-    # )
-
-    # ## add the graphs to database
-    # for aPlotID in plots:
-    #     plotModel = GraphaiteGraphModel(
-    #         graph_id=aPlotID,
-    #         graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
-    #         figure_data=plots[aPlotID]["figure_data"],
-    #         insights=["No insights added yet!"],
-    #         **plots[aPlotID]["graph_settings"]
-    #     )
-
-    #     plotModel.store()
-
-
-    #     ## add the graphid to the corresponding project data model
-    #     aProjectDoc.graphaite_graph_ids.append(aPlotID)
-    #     aProjectDoc.store()
+            plotModel.store()
+           
+            ## add the graphid to the corresponding project data model
+            aProjectDoc.graphaite_graph_ids.append(aPlotID)
+            aProjectDoc.store()
 
 
     return jsonify({"plots": plots})

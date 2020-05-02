@@ -16,6 +16,9 @@ class GraphaiteGraphModel(Document):
     graph_title = TextField()  ## title of the graph
     figure_data = TextField()  ## figure data, like json for plotly
     insights = ListField(TextField())  ## visualization insights
+    feature_tags = ListField(
+        TextField()
+    )  ## feature tags used for displaying charts in corresponding categories (mainly, x, y axes are the tags)
     # last_modified_date = DateTimeField(default=datetime.datetime.now)
 
     ### Graph Atributes
