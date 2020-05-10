@@ -186,6 +186,8 @@
       <!-- /header -->
       <!-- Header-->
       <div class="content">
+         <div style="display: none;" id='project_id'>{{project_id}}</div>
+
          <div class="animated fadeIn">
             <div class="row">
                <div class="col-xs-2 col-sm-2">
@@ -207,8 +209,8 @@
                         <option value="pie">Pie</option>
                      </select>
 
-                     X-axis: <div class="card-body featureDroppable" id="graph_x_axis" style="border:1px solid #AAA;border-radius: 10px;padding:15px;">{{graph_settings['graph_x']}}</div>
-                     Y-axis: <div class="card-body featureDroppable" id="graph_y_axis" style="border:1px solid #AAA;border-radius: 10px;padding:15px;">{{graph_settings['graph_y']}}</div>
+                     X-axis: <div class="card-body featureDroppable" id="graph_x" style="border:1px solid #AAA;border-radius: 10px;padding:15px;">{{graph_settings['graph_x']}}</div>
+                     Y-axis: <div class="card-body featureDroppable" id="graph_y" style="border:1px solid #AAA;border-radius: 10px;padding:15px;">{{graph_settings['graph_y']}}</div>
                      Color: <div class="card-body featureDroppable" id="graph_color" style="border:1px solid #AAA;border-radius: 10px;padding:15px;">{{graph_settings['graph_color']}}</div>
                      Size: <div class="card-body featureDroppable" id="graph_size" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>
                      Facet Column: <div class="card-body featureDroppable" id="graph_facet" style="border:1px solid #AAA;border-radius: 10px;padding:15px;"></div>

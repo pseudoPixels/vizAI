@@ -93,13 +93,16 @@ def graph_editor(project_id, graph_id):
         categorical_features=categorical_features,
         neumeric_features=neumeric_features,
         graph_settings=graph_settings,
+        project_id=project_id
     )
 
 
-@app.route("/getPlot", methods=["POST"])
-def getPlot():
-    graph_x_axis = request.form["graph_x_axis"]
-    graph_y_axis = request.form["graph_y_axis"]
+@app.route("/getPlot/<project_id>", methods=["POST"])
+def getPlot(project_id):
+    projectDoc = GraphaiteProjectModel.load(project_id)
+
+    graph_x_axis = request.form["graph_x"]
+    graph_y_axis = request.form["graph_y"]
     graph_color = request.form["graph_color"]
     graph_facet = request.form["graph_facet"]
     graph_size = request.form["graph_size"]
@@ -108,7 +111,7 @@ def getPlot():
     chart_type = request.form["chart_type"]
     chart_template = request.form["chart_template"]
 
-    data = pd.read_csv("graphaite/webapp/datasets/golam@example.com/72787517-93a9-456c-82e4-308fb594bdc0/tips.csv")
+    data = pd.read_csv(projectDoc.dataset_path)
     # data = data.sort_values(by = [graph_x_axis, graph_y_axis] )
 
     fig_data = get_plot(
@@ -198,18 +201,6 @@ def autoviz(project_id):
     df = pd.read_csv(aProjectDoc.dataset_path)
     ## The list will be available from project info (CouchDB)
     feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
-
-
-
-    # plots = {}
-    # for aGraph in views_by_graphaite_graph(g.couch):
-    #     if aGraph.key in graphsOfThisProject:
-    #         aGraphDoc = GraphaiteGraphModel(aGraph.value)
-
-    #         plots[aGraph.value] = {
-    #                 "figure_data": aGraphDoc.figure_data,
-    #                 "feature_tags": ['tip']
-    #         }
 
 
     return render_template("autoviz.html", 
