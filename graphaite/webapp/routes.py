@@ -61,11 +61,21 @@ manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph]
 manager.sync(app)
 
 
-@app.route("/")
-@app.route("/index")
-def index():
+# @app.route("/")
+@app.route("/graph_editor/<graph_id>")
+def graph_editor(graph_id):
     data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
     fig_data = ""  # get_bar_plot(data=data, x="sex", y="age")
+
+    graphDoc = None
+    for aGraph in views_by_graphaite_graph(g.couch):
+        if aGraph.key == graph_id:
+            graphDoc = GraphaiteGraphModel.load(aGraph.value)
+            break
+
+    if graphDoc is not None:
+        fig_data = graphDoc.figure_data
+
 
     all_features = get_all_features(data=data)
     categorical_features = get_categorical_features(data=data)
