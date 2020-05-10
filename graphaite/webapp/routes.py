@@ -62,9 +62,12 @@ manager.sync(app)
 
 
 # @app.route("/")
-@app.route("/graph_editor/<graph_id>")
-def graph_editor(graph_id):
-    data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+@app.route("/graph_editor/<project_id>/<graph_id>")
+def graph_editor(project_id, graph_id):
+
+    projectDoc = GraphaiteProjectModel.load(project_id)
+
+    data = pd.read_csv(projectDoc.dataset_path)
     fig_data = ""  # get_bar_plot(data=data, x="sex", y="age")
 
     graphDoc = None
@@ -81,12 +84,15 @@ def graph_editor(graph_id):
     categorical_features = get_categorical_features(data=data)
     neumeric_features = get_numeric_features(data=data)
 
+    graph_settings = {"graph_x":graphDoc.x, "graph_y":graphDoc.y, "graph_color":graphDoc.color}
+
     return render_template(
         "index.html",
         pData=fig_data,
         all_features=all_features,
         categorical_features=categorical_features,
         neumeric_features=neumeric_features,
+        graph_settings=graph_settings,
     )
 
 
@@ -102,7 +108,7 @@ def getPlot():
     chart_type = request.form["chart_type"]
     chart_template = request.form["chart_template"]
 
-    data = pd.read_csv("graphaite/webapp/datasets/titanic.csv")
+    data = pd.read_csv("graphaite/webapp/datasets/golam@example.com/72787517-93a9-456c-82e4-308fb594bdc0/tips.csv")
     # data = data.sort_values(by = [graph_x_axis, graph_y_axis] )
 
     fig_data = get_plot(
