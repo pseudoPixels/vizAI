@@ -93,7 +93,8 @@ def graph_editor(project_id, graph_id):
         categorical_features=categorical_features,
         neumeric_features=neumeric_features,
         graph_settings=graph_settings,
-        project_id=project_id
+        project_id=project_id,
+        graph_id=graph_id
     )
 
 
