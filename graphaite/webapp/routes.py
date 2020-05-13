@@ -224,9 +224,10 @@ def getAutoViz(project_id):
 
     plots = {}
 
+
     ## check if the previous an new targe and feature variables are exact same.
     ## if they are exact same, we just load of db and send instead of generating plots again.
-    if (prev_target_variable == new_target_variable) and (prev_feature_variables.sort() == new_feature_variables.sort()):
+    if (prev_target_variable == new_target_variable) and (sorted(prev_feature_variables) == sorted(new_feature_variables)):
 
         graphIDsOfThisProject = aProjectDoc.graphaite_graph_ids
 
@@ -237,8 +238,10 @@ def getAutoViz(project_id):
                 plots[aGraph.value] = {
                         "figure_data": str(aGraphDoc.figure_data),
                         "feature_tags": aGraphDoc.feature_tags,
-                        "figure_title": aGraphDoc.graph_title
+                        "figure_title": aGraphDoc.graph_title,
+                        "graph_id": aGraphDoc.graph_id
                 }
+
 
     ## some settings (such as, target or feature variables) changed and need to regenerate auto plots 
     else:
@@ -269,6 +272,12 @@ def getAutoViz(project_id):
             ## add the graphid to the corresponding project data model
             aProjectDoc.graphaite_graph_ids.append(aPlotID)
             aProjectDoc.store()
+
+        ## since the target and feature variable changed, update and store them
+        aProjectDoc.selected_target_variable = new_target_variable
+        aProjectDoc.selected_feature_variables = new_feature_variables
+        aProjectDoc.store()
+
 
 
     return jsonify({"plots": plots})

@@ -21,13 +21,15 @@ def get_auto_generated_graphs(dataset, feature_variables=None, target_variable=N
             'plot_id_1': {
                 'figure_data' : {<plotly Json Object>},
                 'feature_tags' : ['tag_1', 'tag_2', '...'],
-                'graph_settings' : {<kwargs for the corresponding graph settings>}
+                'graph_settings' : {<kwargs for the corresponding graph settings>},
+                "graph_id": <unique id which can be used for storing/tracking this graph in db>
             },
 
             'plot_id_2': {
                 'figure_data' : {<plotly Json Object>},
                 'feature_tags' : ['tag_A', 'tag_B', '...'],
-                'graph_settings' : {<kwargs for the corresponding graph settings>}
+                'graph_settings' : {<kwargs for the corresponding graph settings>},
+                "graph_id": <unique id which can be used for storing/tracking this graph in db>
             },
             ...
         }
@@ -75,6 +77,7 @@ def get_auto_generated_graphs(dataset, feature_variables=None, target_variable=N
                     "figure_data": fig_data,
                     "feature_tags": feature_tags,
                     "graph_settings": graph_settings,
+                    "graph_id": plot_id,
                 }
 
     ##Bivariate Features
@@ -119,6 +122,7 @@ def get_auto_generated_graphs(dataset, feature_variables=None, target_variable=N
                             "figure_data": fig_data,
                             "feature_tags": feature_tags,
                             "graph_settings": graph_settings,
+                            "graph_id": plot_id,
                         }
 
     return auto_visualizations

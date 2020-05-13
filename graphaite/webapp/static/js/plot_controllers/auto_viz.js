@@ -26,12 +26,13 @@ $(document).ready(function () {
                         aFeatureTag = aPlotObject['feature_tags'][index];
                         // create unique div id, to map the plotly fig
                         var unique_div_id = get_uuid();
+                        var graphEditorLink = "http://127.0.0.1:5000/graph_editor/" + $('#project_id').text() + "/" + aPlotObject['graph_id'];
                         $("#tab-row-" + aFeatureTag).append("<div class='col-lg-6' style='width:100%;'>\
                                                                 <div class='card' >\
                                                                     <div class='card-body'>\
                                                                         <h4 class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</h4>\
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
-                                                                        <div><a href='#'>Edit chart</a> | <a href='#'>Add insights</a> | <a href='#'>Add to data story</a> | <a href='#'>Delete</a> </div>\
+                                                                        <div><a href='" + graphEditorLink + "'>Edit chart</a> | <a href='#'>Add insights</a> | <a href='#'>Add to data story</a> | <a href='#'>Delete</a> </div>\
                                                                     </div>\
                                                                 </div>\
                                                             </div>");
