@@ -1,5 +1,5 @@
 import os
-from flask import render_template, session
+from flask import render_template, session, url_for
 from flask import jsonify, flash, request, redirect
 from werkzeug.utils import secure_filename
 import plotly.express as px
@@ -17,6 +17,10 @@ from graphaite.core.visualizers.plotly.config import GRAPHS_DICT
 from graphaite.core.graphControllers.graphGeneratorAI import get_auto_generated_graphs
 from graphaite.core.utils.fileUtils import delete_files_of_directory
 from graphaite.core.utils.dataFrameUtils import get_all_features
+
+
+## Forms
+from graphaite.webapp.forms import RegistrationForm, LoginForm
 
 
 ## Models
@@ -345,3 +349,12 @@ def upload_file(project_id):
         resp.status_code = 400
         return resp
 
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.email.data}!', 'success')
+        return redirect(url_for('createProject'))
+    return render_template('register.html', title='Register', form=form)
