@@ -10,7 +10,7 @@ from jinja2 import Template
 import uuid
 from flask_bcrypt import Bcrypt
 
-from flask_login import login_required, LoginManager
+# from flask_login import login_required, LoginManager
 
 
 from graphaite.webapp import app
@@ -82,8 +82,8 @@ manager.sync(app)
 ## password hashing
 bcrypt = Bcrypt(app)
 
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+# login_manager = LoginManager(app)
+# login_manager.login_view = 'login'
 
 ## Forms
 # from graphaite.webapp.forms import RegistrationForm, LoginForm
