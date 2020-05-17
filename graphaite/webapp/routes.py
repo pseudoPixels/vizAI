@@ -10,6 +10,8 @@ from jinja2 import Template
 import uuid
 from flask_bcrypt import Bcrypt
 
+from flask_login import login_required, LoginManager
+
 
 from graphaite.webapp import app
 from graphaite.core.visualizers.plotly.makePlots import *
@@ -80,7 +82,8 @@ manager.sync(app)
 ## password hashing
 bcrypt = Bcrypt(app)
 
-
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 ## Forms
 # from graphaite.webapp.forms import RegistrationForm, LoginForm
@@ -214,6 +217,7 @@ def getDataFrame(project_id):
 
 
 @app.route("/home")
+# @login_required
 def createProject():
 
     userProjects = []
@@ -433,5 +437,5 @@ def login():
                 return redirect(url_for('createProject'))
 
         flash('Login Unsuccessful. Please check email and password', 'danger')
-        
+
     return render_template('login.html', title='Login', form=form)
