@@ -49,6 +49,18 @@ views_by_graphaite_project_owner = ViewDefinition(
     """,
 )
 
+views_by_graphaite_project_id_docid = ViewDefinition(
+    "graphaite_views",
+    "graphaite_project_id_docid",
+    """
+    function (doc) {
+         if (doc.doc_type == 'graphaite_project') {
+            emit(doc.project_id, doc._id)
+        };   
+    }
+    """,
+)
+
 views_by_graphaite_graph = ViewDefinition(
     "graphaite_views",
     "by_graphaite_graph",
@@ -89,7 +101,11 @@ views_by_graphaite_user_docID = ViewDefinition(
 
 manager = CouchDBManager()
 manager.setup(app)
-manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph, views_by_graphaite_user, views_by_graphaite_user_docID])
+manager.add_viewdef([views_by_graphaite_project_owner, 
+views_by_graphaite_graph, 
+views_by_graphaite_user, 
+views_by_graphaite_user_docID, 
+views_by_graphaite_project_id_docid])
 manager.sync(app)
 
 
@@ -235,10 +251,9 @@ def getDataFrame(project_id):
 @app.route("/home")
 @login_required
 def createProject():
-
     userProjects = []
     for aProject in views_by_graphaite_project_owner(g.couch):
-        if aProject.key == "golam@example.com":
+        if aProject.key == current_user.email:
             aProjectDoc = GraphaiteProjectModel.load(aProject.value)
             userProjects.append({'project_doc_id':aProject.value, 'project_title':aProjectDoc.project_title})
 
@@ -254,21 +269,28 @@ def allowed_file(filename):
 
 
 @app.route("/create_new_project/", methods=["POST"])
+@login_required
 def create_new_project():
     projectName = request.form["project_name"]
-    projectOwner = "golam@example.com"
+    projectOwner = current_user.email#"golam@example.com"
     projectID = str(uuid.uuid4())
 
     newProject = GraphaiteProjectModel(
         project_id=projectID, project_title=projectName, porject_owner_id=projectOwner
     )
-
+ 
     newProject.store()
 
-    return redirect("/manage_datasets/"+projectID)
+    projectDocID = None
+    for aProject in views_by_graphaite_project_id_docid(g.couch):
+        if aProject.key == projectID:
+            projectDocID = aProject.value
+
+    return redirect("/manage_datasets/"+projectDocID)
 
 
 @app.route("/autoviz/<project_id>")
+@login_required
 def autoviz(project_id):
 
     aProjectDoc = GraphaiteProjectModel.load(project_id)
@@ -286,6 +308,7 @@ def autoviz(project_id):
 
 
 @app.route("/getAutoViz/<project_id>", methods=["POST"])
+@login_required
 def getAutoViz(project_id):
     ## getting user seelected target and feature varaibles 
     new_target_variable =  request.form.get("target_variable")
@@ -359,6 +382,7 @@ def getAutoViz(project_id):
 
 
 @app.route("/manage_datasets/<project_id>")
+@login_required
 def manage_datasets(project_id):
     # print("="*10, session.get('PROJECT_ID'))
     # print(project_id)
@@ -366,6 +390,7 @@ def manage_datasets(project_id):
 
 
 @app.route("/python-flask-files-upload/<project_id>", methods=["POST"])
+@login_required
 def upload_file(project_id):
     # check if the post request has the file part
     if "files[]" not in request.files:
