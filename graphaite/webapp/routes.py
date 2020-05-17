@@ -419,5 +419,19 @@ def register():
         user.store()
         
         flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('createProject'))
+        return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+
+        for aUser in views_by_graphaite_user(g.couch):
+            if aUser.key == form.email.data and bcrypt.check_password_hash(aUser.value, form.password.data):
+                return redirect(url_for('createProject'))
+
+        flash('Login Unsuccessful. Please check email and password', 'danger')
+        
+    return render_template('login.html', title='Login', form=form)
