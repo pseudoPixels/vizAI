@@ -8,6 +8,7 @@ import json
 from flask import Flask, g
 from jinja2 import Template
 import uuid
+from flask_bcrypt import Bcrypt
 
 
 from graphaite.webapp import app
@@ -19,13 +20,13 @@ from graphaite.core.utils.fileUtils import delete_files_of_directory
 from graphaite.core.utils.dataFrameUtils import get_all_features
 
 
-## Forms
-from graphaite.webapp.forms import RegistrationForm, LoginForm
+
 
 
 ## Models
 from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
 from graphaite.core.models.GraphaiteProject import GraphaiteProjectModel
+from graphaite.core.models.graphaiteUser import GraphaiteUserModel
 
 from flaskext.couchdb import CouchDBManager
 from couchdb.design import ViewDefinition
@@ -58,11 +59,61 @@ views_by_graphaite_graph = ViewDefinition(
     """,
 )
 
+views_by_graphaite_user = ViewDefinition(
+    "graphaite_views",
+    "by_graphaite_user",
+    """
+    function (doc) {
+         if (doc.doc_type == 'graphaite_user') {
+            emit(doc.email, doc.password)
+        };   
+    }
+    """,
+)
+
 
 manager = CouchDBManager()
 manager.setup(app)
-manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph])
+manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph, views_by_graphaite_user])
 manager.sync(app)
+
+## password hashing
+bcrypt = Bcrypt(app)
+
+
+
+## Forms
+# from graphaite.webapp.forms import RegistrationForm, LoginForm
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+
+class RegistrationForm(FlaskForm):
+    # username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    confirm_password = PasswordField(
+        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+    )
+    submit = SubmitField("Sign Up")
+
+    # def validate_email(self, email):
+    #     # row = 
+    #     print("="*20)
+    #     print(views_by_graphaite_user(g.couch))
+    #     print("="*20)
+
+    #     for aUser in views_by_graphaite_user(g.couch):
+    #         if aUser.key == email:
+    #             raise ValidationError("That email is taken. Please choose a different one.")
+
+class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    remember = BooleanField("Remember Me")
+    submit = SubmitField("Login")
+
+
 
 
 # @app.route("/")
@@ -354,7 +405,19 @@ def upload_file(project_id):
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    
     if form.validate_on_submit():
-        flash(f'Account created for {form.email.data}!', 'success')
+
+        for aUser in views_by_graphaite_user(g.couch):
+            if aUser.key == form.email.data:
+                    flash('That email is taken. Please choose a different one.', 'danger')
+                    return redirect(url_for('register'))
+
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+
+        user = GraphaiteUserModel(email = form.email.data, password=hashed_password)
+        user.store()
+        
+        flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('createProject'))
     return render_template('register.html', title='Register', form=form)
