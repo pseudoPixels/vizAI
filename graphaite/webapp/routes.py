@@ -10,7 +10,7 @@ from jinja2 import Template
 import uuid
 from flask_bcrypt import Bcrypt
 
-# from flask_login import login_required, LoginManager
+from flask_login import login_required, LoginManager, login_user, current_user, logout_user
 
 
 from graphaite.webapp import app
@@ -74,16 +74,41 @@ views_by_graphaite_user = ViewDefinition(
 )
 
 
+views_by_graphaite_user_docID = ViewDefinition(
+    "graphaite_views",
+    "by_graphaite_user_docID",
+    """
+    function (doc) {
+         if (doc.doc_type == 'graphaite_user') {
+            emit(doc.email, doc._id)
+        };   
+    }
+    """,
+)
+
+
 manager = CouchDBManager()
 manager.setup(app)
-manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph, views_by_graphaite_user])
+manager.add_viewdef([views_by_graphaite_project_owner, views_by_graphaite_graph, views_by_graphaite_user, views_by_graphaite_user_docID])
 manager.sync(app)
+
+
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 
 ## password hashing
 bcrypt = Bcrypt(app)
 
-# login_manager = LoginManager(app)
-# login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    for aUser in views_by_graphaite_user_docID(g.couch):
+        if aUser.key == user_id:
+            return GraphaiteUserModel.load(aUser.value)
+
+    return None
 
 ## Forms
 # from graphaite.webapp.forms import RegistrationForm, LoginForm
@@ -100,15 +125,6 @@ class RegistrationForm(FlaskForm):
     )
     submit = SubmitField("Sign Up")
 
-    # def validate_email(self, email):
-    #     # row = 
-    #     print("="*20)
-    #     print(views_by_graphaite_user(g.couch))
-    #     print("="*20)
-
-    #     for aUser in views_by_graphaite_user(g.couch):
-    #         if aUser.key == email:
-    #             raise ValidationError("That email is taken. Please choose a different one.")
 
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
@@ -217,7 +233,7 @@ def getDataFrame(project_id):
 
 
 @app.route("/home")
-# @login_required
+@login_required
 def createProject():
 
     userProjects = []
@@ -417,7 +433,7 @@ def register():
                     flash('That email is taken. Please choose a different one.', 'danger')
                     return redirect(url_for('register'))
 
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        hashed_password = hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
         user = GraphaiteUserModel(email = form.email.data, password=hashed_password)
         user.store()
@@ -433,8 +449,16 @@ def login():
     if form.validate_on_submit():
 
         for aUser in views_by_graphaite_user(g.couch):
-            if aUser.key == form.email.data and bcrypt.check_password_hash(aUser.value, form.password.data):
-                return redirect(url_for('createProject'))
+            if aUser.key == form.email.data and bcrypt.check_password_hash(aUser.value, form.password.data): #bcrypt.check_password_hash(aUser.value, form.password.data):
+                    user = None
+                    for bUser in views_by_graphaite_user_docID(g.couch):
+                        if bUser.key == bUser.key:
+                            user = GraphaiteUserModel.load(bUser.value)
+
+                    login_user(user, remember=False)
+                    next_page = request.args.get('next')
+                    return redirect(next_page) if next_page else redirect(url_for('createProject'))
+                    # return redirect(url_for('createProject'))
 
         flash('Login Unsuccessful. Please check email and password', 'danger')
 

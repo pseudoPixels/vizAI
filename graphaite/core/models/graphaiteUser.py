@@ -7,13 +7,17 @@ from flaskext.couchdb import (
     ListField,
     IntegerField,
 )
+from flask_login import UserMixin
 
 
-class GraphaiteUserModel(Document):
+class GraphaiteUserModel(UserMixin, Document):
     doc_type = "graphaite_user"
 
     email = TextField()  ## unique email address of the user
     password = TextField()  ## hashed user password
+
+    def get_id(self):
+        return str(self.email)
 
 
 if __name__ == "__main__":
