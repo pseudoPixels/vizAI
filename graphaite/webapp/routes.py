@@ -480,7 +480,7 @@ def login():
                         if bUser.key == bUser.key:
                             user = GraphaiteUserModel.load(bUser.value)
 
-                    login_user(user, remember=False)
+                    login_user(user, remember=form.remember.data)
                     next_page = request.args.get('next')
                     return redirect(next_page) if next_page else redirect(url_for('createProject'))
                     # return redirect(url_for('createProject'))
@@ -488,3 +488,8 @@ def login():
         flash('Login Unsuccessful. Please check email and password', 'danger')
 
     return render_template('login.html', title='Login', form=form)
+
+
+@app.route("/", methods=['GET', 'POST'])
+def welcome():
+    return render_template('welcome.html', title='Welcome')    
