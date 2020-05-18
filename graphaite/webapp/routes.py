@@ -490,6 +490,12 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('welcome'))
+
+
 @app.route("/", methods=['GET', 'POST'])
 def welcome():
     return render_template('welcome.html', title='Welcome')    
