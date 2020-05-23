@@ -212,15 +212,20 @@
                         <form id="fs">
 
 
-                           Set target variable:
-                           <select name="target_variable">
+                           <h4 style="font-weight:bold;">Set target variable:</h4>
+                           <select name="target_variable" class="custom-select">
                               {% for aFeature in feature_variables%}
+                              {% if aFeature == target_variable %}
+                              <option value="{{aFeature}}" selected="selected">{{aFeature}}</option>
+                              {% else %}
                               <option value="{{aFeature}}">{{aFeature}}</option>
+                              {% endif %}
                               {% endfor %}
                            </select>
                            <br /><br />
 
-                           Select feature variables to visualize:<br />
+                           <h4 style="font-weight:bold;">Select feature variables to visualize:</h4>
+
                            {% for aFeature in feature_variables%}
                            <input type="checkbox" value="{{aFeature}}" name="selected_features">{{aFeature}}</input>
                            {% endfor %}

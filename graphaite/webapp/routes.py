@@ -302,7 +302,8 @@ def autoviz(project_id):
 
 
     return render_template("autoviz.html", 
-    feature_variables=feature_variables, 
+    feature_variables=feature_variables,
+    target_variable= aProjectDoc.selected_target_variable,
     project_id=project_id)
 
 
