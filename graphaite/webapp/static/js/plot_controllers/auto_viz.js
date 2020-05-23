@@ -7,6 +7,9 @@ $(document).ready(function () {
         });
     }
 
+
+
+
     $("#btn_get_auto_vis").on("click", function () {
 
 
@@ -32,7 +35,7 @@ $(document).ready(function () {
                                                                     <div class='card-body'>\
                                                                         <h4 class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</h4>\
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
-                                                                        <div><a href='" + graphEditorLink + "'>Edit chart</a> | <a href='#'>Add insights</a> | <a href='#'>Add to data story</a> | <a href='#'>Delete</a> </div>\
+                                                                        <div><a href='" + graphEditorLink + "'>Edit chart</a> | <a href='#'>Add insights</a> | <a href='#'>Add to Favourties</a> | <a href='#'>Delete</a> </div>\
                                                                     </div>\
                                                                 </div>\
                                                             </div>");
