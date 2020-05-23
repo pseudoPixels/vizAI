@@ -303,8 +303,7 @@ def autoviz(project_id):
 
     return render_template("autoviz.html", 
     feature_variables=feature_variables, 
-    project_id=project_id)#, 
-    #plots=plots)
+    project_id=project_id)
 
 
 @app.route("/getAutoViz/<project_id>", methods=["POST"])
@@ -498,4 +497,45 @@ def logout():
 
 @app.route("/", methods=['GET', 'POST'])
 def welcome():
-    return render_template('welcome.html', title='Welcome')    
+    return render_template('welcome.html', title='Welcome')
+
+
+@app.route("/favourites/<project_id>")
+@login_required
+def favourites(project_id):
+    ## load the project document from database
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+    
+    df = pd.read_csv(aProjectDoc.dataset_path)
+    ## The list will be available from project info (CouchDB)
+    feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
+
+    return render_template("favourites.html", 
+    feature_variables=feature_variables, 
+    project_id=project_id)
+
+
+
+@app.route("/getFavouritesViz/<project_id>", methods=["POST"])
+@login_required
+def getFavouritesViz(project_id):
+
+    ## load the project document
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    plots = {}
+
+    favouriteGraphIDsOfThisProject = aProjectDoc.favourites_graphaite_graph_ids
+
+    for aGraph in views_by_graphaite_graph(g.couch):
+        if aGraph.key in favouriteGraphIDsOfThisProject:
+            aGraphDoc = GraphaiteGraphModel.load(aGraph.value)
+
+            plots[aGraph.value] = {
+                    "figure_data": str(aGraphDoc.figure_data),
+                    "feature_tags": aGraphDoc.feature_tags,
+                    "figure_title": aGraphDoc.graph_title,
+                    "graph_id": aGraphDoc.graph_id
+            }
+
+    return jsonify({"plots": plots})

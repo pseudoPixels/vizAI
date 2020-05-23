@@ -24,6 +24,8 @@ class GraphaiteProjectModel(Document):
 
     graphaite_graph_ids = ListField(TextField())
 
+    favourites_graphaite_graph_ids = ListField(TextField()) ##graph ids which are added to favourites
+
 
 if __name__ == "__main__":
     pass
