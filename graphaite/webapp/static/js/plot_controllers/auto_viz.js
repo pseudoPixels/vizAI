@@ -7,12 +7,28 @@ $(document).ready(function () {
         });
     }
 
+    function show_only_selected_feature_tabs() {
+        //1. first hide all the tabs as init
+        $("input[type=checkbox][name=selected_features]").each(function () {
+            $("#custom-nav-" + $(this).val() + "-tab").hide();
 
+        });
 
+        //2. show only the select feature tabs
+        $('input[type=checkbox][name=selected_features]:checked').each(function () {
+            $("#custom-nav-" + $(this).val() + "-tab").show();
 
-    $("#btn_get_auto_vis").on("click", function () {
+        });
 
+        //3. click on one of the feature tab, so that the visulations are visible to user. 
+        $("#custom-nav-" + $('input[type=checkbox][name=selected_features]:checked').val() + "-tab").click();
+    }
 
+    function get_auto_vizuations() {
+        // disable the ai generation button, so there is only single requests at any given time
+        // the button is enabled again on completion of the request.
+        $('#btn_get_auto_vis').prop('disabled', true);
+        $('.aiProgressStatus').show();
 
         $.ajax({
             type: "POST",
@@ -43,18 +59,31 @@ $(document).ready(function () {
                         var figure = JSON.parse(aPlotObject['figure_data']);
                         Plotly.newPlot(unique_div_id, figure.data, figure.layout);
                     }
-
-
                 }
+
+                // show only the selected featrues of visualizations
+                show_only_selected_feature_tabs();
+
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);
+            },
+            complete: function () {
+                //enable the request button on completion of the request, regardless of the request failure/success.
+                $('#btn_get_auto_vis').prop('disabled', false);
+                $('.aiProgressStatus').hide();
             }
 
         });
+    }
 
 
+
+    $("#btn_get_auto_vis").on("click", function () {
+        get_auto_vizuations();
     });
 
+    // on page load, get the available visualziation present by default.
+    get_auto_vizuations();
 
 });

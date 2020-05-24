@@ -227,7 +227,11 @@
                            <h4 style="font-weight:bold;">Select feature variables to visualize:</h4>
 
                            {% for aFeature in feature_variables%}
+                           {% if aFeature in selected_feature_variables %}
+                           <input type="checkbox" value="{{aFeature}}" name="selected_features" checked>{{aFeature}}</input>
+                           {% else %}
                            <input type="checkbox" value="{{aFeature}}" name="selected_features">{{aFeature}}</input>
+                           {% endif %}
                            {% endfor %}
 
                            <br />
@@ -235,6 +239,34 @@
                         </form>
                         <br />
                         <button id="btn_get_auto_vis" class="btn btn-primary btn-sm">Get Auto Visualizations</button>
+
+
+                        <div class="text-center aiProgressStatus">
+                           <div class="spinner-border text-primary" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <div class="spinner-border text-secondary" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <div class="spinner-border text-success" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <div class="spinner-border text-danger" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <div class="spinner-border text-warning" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <div class="spinner-border text-info" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <div class="spinner-border text-dark" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                           <br />
+                           AI working for automating data visualizations. Please wait ...
+                        </div>
+
 
                      </div>
                   </div>
