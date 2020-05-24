@@ -51,7 +51,10 @@ $(document).ready(function () {
                                                                     <div class='card-body'>\
                                                                         <h4 class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</h4>\
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
-                                                                        <div><a href='" + graphEditorLink + "'>Edit chart</a> | <a href='#'>Add insights</a> | <a href='#'>Add to Favourties</a> | <a href='#'>Delete</a> </div>\
+                                                                        <div><a href='" + graphEditorLink + "'>Edit chart</a> \
+                                                                         | <a href='#'>Add insights</a> \
+                                                                         | <a href='#' class='addToFavourite' projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' >Add to Favourties</a> \
+                                                                         | <a href='#'>Delete</a> </div>\
                                                                     </div>\
                                                                 </div>\
                                                             </div>");
@@ -78,10 +81,48 @@ $(document).ready(function () {
     }
 
 
+    function add_graph_to_favourite(projectID, graphID) {
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: "http://127.0.0.1:5000/add_graph_to_favourites/",
+            data: "projectID=" + projectID + '&graphID=' + graphID,
+            success: function (option) {
+                console.log("added graph to favourites");
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+
+        });
+    }
+
+
+
+
+
+    // =======================================================
+    // UI Interactions Handlers
+    //========================================================
 
     $("#btn_get_auto_vis").on("click", function () {
         get_auto_vizuations();
     });
+
+    $(document).on("click", ".addToFavourite", function () {
+        console.log($(this).attr("projectID"));
+        console.log($(this).attr("graphID"));
+        add_graph_to_favourite($(this).attr("projectID"), $(this).attr("graphID"));
+
+        return false;
+    });
+
+
+
+
+
+
+
 
     // on page load, get the available visualziation present by default.
     get_auto_vizuations();

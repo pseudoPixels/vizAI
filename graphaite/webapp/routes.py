@@ -529,6 +529,10 @@ def getFavouritesViz(project_id):
 
     favouriteGraphIDsOfThisProject = aProjectDoc.favourites_graphaite_graph_ids
 
+    print("="*20)
+    print(favouriteGraphIDsOfThisProject)
+    print("="*20)
+
     for aGraph in views_by_graphaite_graph(g.couch):
         if aGraph.key in favouriteGraphIDsOfThisProject:
             aGraphDoc = GraphaiteGraphModel.load(aGraph.value)
@@ -541,3 +545,28 @@ def getFavouritesViz(project_id):
             }
 
     return jsonify({"plots": plots})
+
+
+
+@app.route("/add_graph_to_favourites/", methods=["POST"])
+@login_required
+def add_graph_to_favourite():
+
+    project_id = request.form['projectID']
+    graph_id = request.form['graphID']
+
+    ## load the project document
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    if graph_id not in aProjectDoc.favourites_graphaite_graph_ids:
+        aProjectDoc.favourites_graphaite_graph_ids.append(graph_id)
+
+    aProjectDoc.store()
+
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+    print(aProjectDoc.favourites_graphaite_graph_ids)
+
+
+
+    return jsonify({"statusCode": "200"})
+
