@@ -46,13 +46,21 @@ $(document).ready(function () {
                         // create unique div id, to map the plotly fig
                         var unique_div_id = get_uuid();
                         var graphEditorLink = "http://127.0.0.1:5000/graph_editor/" + $('#project_id').text() + "/" + aPlotObject['graph_id'];
+
+                        var favourtieBtnIcon = '';
+
+                        if (aPlotObject['isFavourite'] == true) {
+                            favourtieBtnIcon = "<i class='menu-icon fa fa-star' style='color:orange;align:right;float:right; font-size: 24px;'></i>"
+                        } else {
+                            favourtieBtnIcon = "<i class='menu-icon fa fa-star-o' style='color:orange;align:right;float:right; font-size: 24px;'></i>"
+                        }
+
+
                         $("#tab-row-" + aFeatureTag).append("<div class='col-lg-6' style='width:100%;'>\
                                                                 <div class='card' >\
                                                                     <div class='card-body'>\
                                                                     <span style='width:100%'> <span class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</span>" + "<a href='#' class='addToFavourite' \
-                                                                    projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' title='Add/Remove Fabourtie' >" + "<i class='menu-icon fa fa-star-o' \
-                                                                    style='color:orange;align:right;float:right; \
-                                                                    font-size: 24px;'></i> </a></span> \
+                                                                    projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' title='Add/Remove Fabourtie' >" + favourtieBtnIcon + "</a></span> \
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
                                                                         <div><a href='" + graphEditorLink + "'>Edit chart</a> \
                                                                          | <a href='#'>Add insights</a> \

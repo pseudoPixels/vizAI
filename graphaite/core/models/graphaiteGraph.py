@@ -6,6 +6,7 @@ from flaskext.couchdb import (
     Mapping,
     ListField,
     IntegerField,
+    BooleanField
 )
 
 
@@ -20,6 +21,7 @@ class GraphaiteGraphModel(Document):
         TextField()
     )  ## feature tags used for displaying charts in corresponding categories (mainly, x, y axes are the tags)
     # last_modified_date = DateTimeField(default=datetime.datetime.now)
+    isFavourite = BooleanField(default=False)
 
     ### Graph Atributes
     chart_type = TextField()

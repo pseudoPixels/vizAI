@@ -338,6 +338,7 @@ def getAutoViz(project_id):
                         "figure_data": str(aGraphDoc.figure_data),
                         "feature_tags": aGraphDoc.feature_tags,
                         "figure_title": aGraphDoc.graph_title,
+                        "isFavourite" : aGraphDoc.isFavourite,
                         "graph_id": aGraphDoc.graph_id
                 }
 
@@ -529,9 +530,9 @@ def getFavouritesViz(project_id):
 
     favouriteGraphIDsOfThisProject = aProjectDoc.favourites_graphaite_graph_ids
 
-    print("="*20)
-    print(favouriteGraphIDsOfThisProject)
-    print("="*20)
+    # print("="*20)
+    # print(favouriteGraphIDsOfThisProject)
+    # print("="*20)
 
     for aGraph in views_by_graphaite_graph(g.couch):
         if aGraph.key in favouriteGraphIDsOfThisProject:
@@ -561,11 +562,20 @@ def add_or_remove_graph_to_favourite():
     ## load the project document
     aProjectDoc = GraphaiteProjectModel.load(project_id)
 
+    ## load the graph document
+    graphRow = views_by_graphaite_graph(g.couch)[graph_id]
+    graph = GraphaiteGraphModel.load(list(graphRow)[0].value)
+
     ## the graph is not in favourite, so by toggle add it to favourite
     if graph_id not in aProjectDoc.favourites_graphaite_graph_ids:
         aProjectDoc.favourites_graphaite_graph_ids.append(graph_id)
         aProjectDoc.store()
         
+        ## update the graph attribute to the corresponding
+        graph.isFavourite = True
+        graph.store()
+
+
     ## the graph is already in favourite, so by toggle remove it from favourite
     else:
         ## make sure there is no duplicate of any graph_id in the list
@@ -573,6 +583,10 @@ def add_or_remove_graph_to_favourite():
         ## remove the graph from favourite.
         aProjectDoc.favourites_graphaite_graph_ids.remove(graph_id)
         aProjectDoc.store()
+
+        ## update the graph attribute to the corresponding
+        graph.isFavourite = False
+        graph.store()
         
 
     return jsonify({"statusCode": "200"})
