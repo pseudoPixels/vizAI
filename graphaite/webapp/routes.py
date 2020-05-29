@@ -548,9 +548,12 @@ def getFavouritesViz(project_id):
 
 
 
-@app.route("/add_graph_to_favourites/", methods=["POST"])
+@app.route("/add_or_remove_graph_to_favourite/", methods=["POST"])
 @login_required
-def add_graph_to_favourite():
+def add_or_remove_graph_to_favourite():
+    """
+    Toggle a graph addition/removal to/from favourites.
+    """
 
     project_id = request.form['projectID']
     graph_id = request.form['graphID']
@@ -558,15 +561,19 @@ def add_graph_to_favourite():
     ## load the project document
     aProjectDoc = GraphaiteProjectModel.load(project_id)
 
+    ## the graph is not in favourite, so by toggle add it to favourite
     if graph_id not in aProjectDoc.favourites_graphaite_graph_ids:
         aProjectDoc.favourites_graphaite_graph_ids.append(graph_id)
-
-    aProjectDoc.store()
-
-    aProjectDoc = GraphaiteProjectModel.load(project_id)
-    print(aProjectDoc.favourites_graphaite_graph_ids)
-
-
+        aProjectDoc.store()
+        
+    ## the graph is already in favourite, so by toggle remove it from favourite
+    else:
+        ## make sure there is no duplicate of any graph_id in the list
+        aProjectDoc.favourites_graphaite_graph_ids = list(set(aProjectDoc.favourites_graphaite_graph_ids))
+        ## remove the graph from favourite.
+        aProjectDoc.favourites_graphaite_graph_ids.remove(graph_id)
+        aProjectDoc.store()
+        
 
     return jsonify({"statusCode": "200"})
 

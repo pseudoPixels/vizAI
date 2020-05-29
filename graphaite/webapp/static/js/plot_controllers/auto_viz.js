@@ -50,7 +50,7 @@ $(document).ready(function () {
                                                                 <div class='card' >\
                                                                     <div class='card-body'>\
                                                                     <span style='width:100%'> <span class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</span>" + "<a href='#' class='addToFavourite' \
-                                                                    projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' title='Add to Fabourties' >" + "<i class='menu-icon fa fa-star-o' \
+                                                                    projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' title='Add/Remove Fabourtie' >" + "<i class='menu-icon fa fa-star-o' \
                                                                     style='color:orange;align:right;float:right; \
                                                                     font-size: 24px;'></i> </a></span> \
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
@@ -88,7 +88,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/add_graph_to_favourites/",
+            url: "http://127.0.0.1:5000/add_or_remove_graph_to_favourite/",
             data: "projectID=" + projectID + '&graphID=' + graphID,
             success: function (option) {
                 console.log("added graph to favourites");
