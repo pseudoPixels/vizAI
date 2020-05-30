@@ -62,7 +62,7 @@ $(document).ready(function () {
                                                                     <span style='width:100%'> <span class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</span>" + "<a href='#' class='addToFavourite' \
                                                                     projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' title='Add/Remove Fabourtie' >" + favourtieBtnIcon + "</a></span> \
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
-                                                                        <div><a href='" + graphEditorLink + "'>Edit chart</a> \
+                                                                        <div><a target='_blank' href='" + graphEditorLink + "'>Edit chart</a> \
                                                                          | <a href='#'>Add insights</a> \
                                                                          | <a href='#' class='addToFavourite' projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' >Add to Favourties</a> \
                                                                          | <a href='#'>Delete</a> </div>\
