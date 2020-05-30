@@ -575,6 +575,8 @@ def add_or_remove_graph_to_favourite():
         graph.isFavourite = True
         graph.store()
 
+        ## status code 1, to denote added to favourite
+        return jsonify({"statusCode": 1})
 
     ## the graph is already in favourite, so by toggle remove it from favourite
     else:
@@ -587,7 +589,10 @@ def add_or_remove_graph_to_favourite():
         ## update the graph attribute to the corresponding
         graph.isFavourite = False
         graph.store()
+
+        ## status code -1, to denote remove from favourite
+        return jsonify({"statusCode": -1})
         
 
-    return jsonify({"statusCode": "200"})
+    return jsonify({"statusCode": 400})
 

@@ -92,14 +92,29 @@ $(document).ready(function () {
     }
 
 
-    function add_graph_to_favourite(projectID, graphID) {
+    function add_graph_to_favourite(projectID, graphID, favIcon) {
         $.ajax({
             type: "POST",
             cache: false,
             url: "http://127.0.0.1:5000/add_or_remove_graph_to_favourite/",
             data: "projectID=" + projectID + '&graphID=' + graphID,
-            success: function (option) {
+            success: function (returnData) {
                 console.log("added graph to favourites");
+
+
+                if (returnData['statusCode'] == 1) {
+                    favIcon.removeClass("fa-star-o");
+                    favIcon.addClass("fa-star");
+                    // alert("Graph Added to Favourite.")
+
+                } else if (returnData['statusCode'] == -1) {
+                    favIcon.removeClass("fa-star");
+                    favIcon.addClass("fa-star-o");
+                    // alert("Graph Removed from Favourite!")
+                } else {
+                    alert("Something went wrong!!!")
+                }
+
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);
@@ -123,7 +138,9 @@ $(document).ready(function () {
     $(document).on("click", ".addToFavourite", function () {
         console.log($(this).attr("projectID"));
         console.log($(this).attr("graphID"));
-        add_graph_to_favourite($(this).attr("projectID"), $(this).attr("graphID"));
+        var favIcon = $(this).find('i')
+
+        add_graph_to_favourite($(this).attr("projectID"), $(this).attr("graphID"), favIcon);
 
         return false;
     });
