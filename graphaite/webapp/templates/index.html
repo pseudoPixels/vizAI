@@ -130,15 +130,15 @@
                      <br />
                      Make:
                      <select id="chart_type">
-                        <option value="histogram">Histogram</option>
-                        <option value="scatter">Scatter</option>
-                        <option value="line">Line</option>
-                        <option value="area">Area</option>
-                        <option value="violin">Violin</option>
-                        <option value="box">Box</option>
-                        <option value="strip">Strip</option>
-                        <option value="funnel">Funnel</option>
-                        <option value="pie">Pie</option>
+                        <option value="histogram" {% if chart_type=="histogram" %} selected="selected" {% endif %}>Histogram</option>
+                        <option value="scatter" {% if chart_type=="scatter" %} selected="selected" {% endif %}>Scatter</option>
+                        <option value="line" {% if chart_type=="line" %} selected="selected" {% endif %}>Line</option>
+                        <option value="area" {% if chart_type=="area" %} selected="selected" {% endif %}>Area</option>
+                        <option value="violin" {% if chart_type=="violin" %} selected="selected" {% endif %}>Violin</option>
+                        <option value="box" {% if chart_type=="box" %} selected="selected" {% endif %}>Box</option>
+                        <option value="strip" {% if chart_type=="strip" %} selected="selected" {% endif %}>Strip</option>
+                        <option value="funnel" {% if chart_type=="funnel" %} selected="selected" {% endif %}>Funnel</option>
+                        <option value="pie" {% if chart_type=="pie" %} selected="selected" {% endif %}>Pie</option>
                      </select>
 
                      X-axis: <div class="card-body featureDroppable" id="graph_x" style="border:1px solid #AAA;border-radius: 10px;padding:15px;">{{graph_settings['graph_x']}}</div>

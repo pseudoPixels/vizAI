@@ -161,6 +161,7 @@ def graph_editor(project_id, graph_id=None):
     fig_data = ""
     graph_title = "Untitled Visualization..."
     graph_settings = {}
+    chart_type = "histogram"
 
     ## fetch the graph info if the edit is based on an existing graph (i.e., graph_id is not null)
     if graph_id is not None:
@@ -177,6 +178,8 @@ def graph_editor(project_id, graph_id=None):
 
         graph_title = graphDoc.graph_title
 
+        chart_type = graphDoc.chart_type
+
 
     all_features = get_all_features(data=data)
     categorical_features = get_categorical_features(data=data)
@@ -190,6 +193,7 @@ def graph_editor(project_id, graph_id=None):
         categorical_features=categorical_features,
         neumeric_features=neumeric_features,
         graph_settings=graph_settings,
+        chart_type = str(chart_type),
         graph_title = str(graph_title),
         project_id=project_id,
         graph_id=graph_id
