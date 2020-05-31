@@ -151,31 +151,35 @@ class LoginForm(FlaskForm):
 
 
 
-# @app.route("/")
+@app.route("/graph_editor/<project_id>/")
 @app.route("/graph_editor/<project_id>/<graph_id>")
-def graph_editor(project_id, graph_id):
+def graph_editor(project_id, graph_id=None):
 
     projectDoc = GraphaiteProjectModel.load(project_id)
 
     data = pd.read_csv(projectDoc.dataset_path)
-    fig_data = ""  # get_bar_plot(data=data, x="sex", y="age")
+    fig_data = ""
+    graph_settings = {}
 
-    graphDoc = None
-    for aGraph in views_by_graphaite_graph(g.couch):
-        if aGraph.key == graph_id:
-            graphDoc = GraphaiteGraphModel.load(aGraph.value)
-            break
+    ## fetch the graph info if the edit is based on an existing graph (i.e., graph_id is not null)
+    if graph_id is not None:
+        graphDoc = None
+        for aGraph in views_by_graphaite_graph(g.couch):
+            if aGraph.key == graph_id:
+                graphDoc = GraphaiteGraphModel.load(aGraph.value)
+                break
 
-    if graphDoc is not None:
-        fig_data = graphDoc.figure_data
+        if graphDoc is not None:
+            fig_data = graphDoc.figure_data
+
+        graph_settings = {"graph_x":graphDoc.x, "graph_y":graphDoc.y, "graph_color":graphDoc.color}
 
 
     all_features = get_all_features(data=data)
     categorical_features = get_categorical_features(data=data)
     neumeric_features = get_numeric_features(data=data)
 
-    graph_settings = {"graph_x":graphDoc.x, "graph_y":graphDoc.y, "graph_color":graphDoc.color}
-
+    
     return render_template(
         "index.html",
         pData=fig_data,
