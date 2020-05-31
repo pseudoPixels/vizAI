@@ -230,6 +230,8 @@ def getPlot(project_id, graph_id, save_graph=None):
     chart_type = request.form["chart_type"]
     chart_template = request.form["chart_template"]
 
+    graph_height = request.form["graph_height"]
+
     data = pd.read_csv(projectDoc.dataset_path)
     # data = data.sort_values(by = [graph_x_axis, graph_y_axis] )
 
@@ -244,6 +246,7 @@ def getPlot(project_id, graph_id, save_graph=None):
         names=graph_names,
         barmode="group",
         template=chart_template,
+        height= int(graph_height)
     )
 
     chart_params = GRAPHS_DICT[chart_type].get_graph_param_keys()

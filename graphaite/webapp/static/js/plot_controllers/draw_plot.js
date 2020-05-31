@@ -61,7 +61,8 @@ $(document).ready(function () {
                 "&graph_size=" + graph_size +
                 "&graph_names=" + graph_names +
                 "&chart_type=" + chart_type +
-                "&chart_template=" + chart_template,
+                "&chart_template=" + chart_template +
+                "&graph_height=" + "600",
             success: function (option) {
                 //alert(option['plotData']);
                 var figure = JSON.parse(option['plotData']);
@@ -131,7 +132,8 @@ $(document).ready(function () {
                 "&graph_names=" + graph_names +
                 "&chart_type=" + chart_type +
                 "&chart_template=" + chart_template +
-                "&graph_title=" + graph_title,
+                "&graph_title=" + graph_title +
+                "&graph_height=" + "430",
             success: function (option) {
                 alert("visualization saved!!")
             },
