@@ -197,29 +197,6 @@ def graph_editor(project_id, graph_id=None):
 def getPlot(project_id, graph_id, save_graph=None):
     projectDoc = GraphaiteProjectModel.load(project_id)
 
-
-    # graphRow = views_by_graphaite_graph(g.couch)[graph_id]
-
-    # # print(len(graphRow))
-
-    # # graph = GraphaiteGraphModel.load(list(graphRow)[0].value)
-    
-    # # if 
-
-    # if graphRow is None:
-    #     print("*"*20)
-    #     print("Graph does not exist yet")
-    #     print(graph)
-    #     print("*"*20)
-    # else:
-    #     print("*"*20)
-    #     print("Graph Already Exist")
-    #     print(graph)
-    #     print("*"*20)
-
-    # # graph = GraphaiteGraphModel.load(list(graphRow)[0].value)
-
-
     graph_x_axis = request.form["graph_x"]
     graph_y_axis = request.form["graph_y"]
     graph_color = request.form["graph_color"]
@@ -254,7 +231,7 @@ def getPlot(project_id, graph_id, save_graph=None):
 
 
     if save_graph is not None and save_graph == 'true':
-        print("here in save")
+       
         graph_title = request.form["graph_title"]
         
         graphRow = views_by_graphaite_graph(g.couch)[graph_id]
@@ -277,22 +254,16 @@ def getPlot(project_id, graph_id, save_graph=None):
             aProjectDoc.store()
         
         else: ## the graph already exists, load it from db and update the document
-            print("Updating Existing Graph")
+            
             graphModel = GraphaiteGraphModel.load(list(graphRow)[0].value)
-            print("Previous title was, ", graphModel.graph_title)
+            
             graphModel.graph_title = graph_title
             graphModel.figure_data = fig_data
             graphModel.x = graph_x_axis
             graphModel.y = graph_y_axis
             graphModel.color = graph_color
 
-
             graphModel.store()
-
-
-        # print(len(graphRow))
-
-        #   graph = GraphaiteGraphModel.load(list(graphRow)[0].value)       
 
 
     return jsonify({"plotData": fig_data, "chart_params": chart_params})
