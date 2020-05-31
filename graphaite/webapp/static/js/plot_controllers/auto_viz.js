@@ -59,7 +59,7 @@ $(document).ready(function () {
                         $("#tab-row-" + aFeatureTag).append("<div class='col-lg-6' style='width:100%;'>\
                                                                 <div class='card' >\
                                                                     <div class='card-body'>\
-                                                                    <span style='width:100%'> <span class='card-title box-title'>"+ aPlotObject['feature_tags'].join(" | ") + "</span>" + "<a href='#' class='addToFavourite' \
+                                                                    <span style='width:100%'> <span class='card-title box-title'>"+ aPlotObject['figure_title'] + "</span>" + "<a href='#' class='addToFavourite' \
                                                                     projectID='" + $('#project_id').text() + "' graphID='" + aPlotObject['graph_id'] + "' title='Add/Remove Fabourtie' >" + favourtieBtnIcon + "</a></span> \
                                                                         <div id='" + unique_div_id + "' style='width:650px;'></div>\
                                                                         <div><a target='_blank' href='" + graphEditorLink + "'>Edit chart</a> \

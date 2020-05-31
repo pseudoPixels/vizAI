@@ -53,7 +53,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/getPlot/" + $('#project_id').text(),
+            url: "http://127.0.0.1:5000/getPlot/" + $('#project_id').text() + "/" + GRAPH_ID,
             data: "graph_x=" + graph_x +
                 "&graph_y=" + graph_y +
                 "&graph_color=" + graph_color +
@@ -103,6 +103,44 @@ $(document).ready(function () {
     });
 
 
+
+    $("#save_viz").on("click", function () {
+
+        var graph_x = $("#graph_x").text();
+        var graph_y = $("#graph_y").text();
+        var graph_color = $("#graph_color").text();
+        var graph_facet = $("#graph_facet").text();
+        var graph_size = $("#graph_size").text();
+        var graph_names = $("#names").text();
+
+        var chart_type = $("#chart_type").val();
+        var chart_template = $("#chart_template").val();
+
+        var graph_title = $("#graph_title").val();
+
+
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: "http://127.0.0.1:5000/getPlot/" + $('#project_id').text() + "/" + GRAPH_ID + "/true",
+            data: "graph_x=" + graph_x +
+                "&graph_y=" + graph_y +
+                "&graph_color=" + graph_color +
+                "&graph_facet=" + graph_facet +
+                "&graph_size=" + graph_size +
+                "&graph_names=" + graph_names +
+                "&chart_type=" + chart_type +
+                "&chart_template=" + chart_template +
+                "&graph_title=" + graph_title,
+            success: function (option) {
+                alert("visualization saved!!")
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+
+        });
+    });
 
 
 

@@ -18,6 +18,13 @@
    <title>Graphaite</title>
    <meta name="description" content="Ela Admin - HTML5 Admin Template">
    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous">
+
+
    <link rel="apple-touch-icon" href="{{ url_for('static',filename='images/logo2.png') }}">
    <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo2.png') }}">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
@@ -162,6 +169,13 @@
                <div class="col-lg-10">
                   <div class="card">
                      <div class="card-body">
+                        <div class="form-inline">
+                           <input size="100%" type="text" class="form-control" id="graph_title" value="Untitled Visualization..."
+                              placeholder="Set title of your Visualization here...">
+                           &nbsp; &nbsp;
+                           <button id="save_viz" class="btn btn-success">Save Visualization</button>
+                        </div>
+                        <br />
                         <div id='myDiv'>
                            <!-- Plotly chart will be drawn inside this DIV -->
                         </div>

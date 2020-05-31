@@ -192,9 +192,33 @@ def graph_editor(project_id, graph_id=None):
     )
 
 
-@app.route("/getPlot/<project_id>", methods=["POST"])
-def getPlot(project_id):
+@app.route("/getPlot/<project_id>/<graph_id>", methods=["POST"])
+@app.route("/getPlot/<project_id>/<graph_id>/<save_graph>", methods=["POST"])
+def getPlot(project_id, graph_id, save_graph=None):
     projectDoc = GraphaiteProjectModel.load(project_id)
+
+
+    # graphRow = views_by_graphaite_graph(g.couch)[graph_id]
+
+    # # print(len(graphRow))
+
+    # # graph = GraphaiteGraphModel.load(list(graphRow)[0].value)
+    
+    # # if 
+
+    # if graphRow is None:
+    #     print("*"*20)
+    #     print("Graph does not exist yet")
+    #     print(graph)
+    #     print("*"*20)
+    # else:
+    #     print("*"*20)
+    #     print("Graph Already Exist")
+    #     print(graph)
+    #     print("*"*20)
+
+    # # graph = GraphaiteGraphModel.load(list(graphRow)[0].value)
+
 
     graph_x_axis = request.form["graph_x"]
     graph_y_axis = request.form["graph_y"]
@@ -223,6 +247,50 @@ def getPlot(project_id):
     )
 
     chart_params = GRAPHS_DICT[chart_type].get_graph_param_keys()
+
+
+
+    if save_graph is not None and save_graph == 'true':
+        print("here in save")
+        graph_title = request.form["graph_title"]
+        
+        graphRow = views_by_graphaite_graph(g.couch)[graph_id]
+
+        ## The graph already does not exist, so create the new graph model
+        if len(graphRow) == 0:
+            graphModel = GraphaiteGraphModel(
+                graph_id=graph_id,
+                graph_title=graph_title,
+                figure_data=fig_data,
+                insights=["No insights added yet!"],
+                feature_tags = ["feature_tag_1"],
+                x = graph_x_axis,
+                y = graph_y_axis,
+                color = graph_color
+            )
+            graphModel.store()
+            ## add the graph to project
+            aProjectDoc.graphaite_graph_ids.append(graph_id)
+            aProjectDoc.store()
+        
+        else: ## the graph already exists, load it from db and update the document
+            print("Updating Existing Graph")
+            graphModel = GraphaiteGraphModel.load(list(graphRow)[0].value)
+            print("Previous title was, ", graphModel.graph_title)
+            graphModel.graph_title = graph_title
+            graphModel.figure_data = fig_data
+            graphModel.x = graph_x_axis
+            graphModel.y = graph_y_axis
+            graphModel.color = graph_color
+
+
+            graphModel.store()
+
+
+        # print(len(graphRow))
+
+        #   graph = GraphaiteGraphModel.load(list(graphRow)[0].value)       
+
 
     return jsonify({"plotData": fig_data, "chart_params": chart_params})
 
