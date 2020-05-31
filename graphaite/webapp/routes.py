@@ -159,6 +159,7 @@ def graph_editor(project_id, graph_id=None):
 
     data = pd.read_csv(projectDoc.dataset_path)
     fig_data = ""
+    graph_title = "Untitled Visualization..."
     graph_settings = {}
 
     ## fetch the graph info if the edit is based on an existing graph (i.e., graph_id is not null)
@@ -174,6 +175,8 @@ def graph_editor(project_id, graph_id=None):
 
         graph_settings = {"graph_x":graphDoc.x, "graph_y":graphDoc.y, "graph_color":graphDoc.color}
 
+        graph_title = graphDoc.graph_title
+
 
     all_features = get_all_features(data=data)
     categorical_features = get_categorical_features(data=data)
@@ -187,6 +190,7 @@ def graph_editor(project_id, graph_id=None):
         categorical_features=categorical_features,
         neumeric_features=neumeric_features,
         graph_settings=graph_settings,
+        graph_title = str(graph_title),
         project_id=project_id,
         graph_id=graph_id
     )
