@@ -1,6 +1,22 @@
 $(document).ready(function () {
 
-    //    alert($("#names").text());
+    function get_uuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    //Get the graph id
+    var GRAPH_ID = $("#graph_id").text();
+
+    //For new graph, there is no graph id yet (i.e., None).
+    //in such cases create, new unique graph_id
+    if (GRAPH_ID == 'None') {
+        GRAPH_ID = get_uuid();
+    }
+
+
 
     $(document).on('change', ".plot_feature", function () {//here
         $.ajax({
@@ -85,5 +101,9 @@ $(document).ready(function () {
         }
 
     });
+
+
+
+
 
 });
