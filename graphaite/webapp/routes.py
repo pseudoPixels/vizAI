@@ -277,6 +277,48 @@ def getPlot(project_id, graph_id, save_graph=None):
     return jsonify({"plotData": fig_data, "chart_params": chart_params})
 
 
+
+@app.route("/get_variables/<project_id>", methods=["POST"])
+def get_variables(project_id):
+    """ Returns all variables, selected features and target feature variable
+    """
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    df = pd.read_csv(aProjectDoc.dataset_path)
+
+    return jsonify({
+        "all": get_all_features(data=df),
+        "categorical" : get_categorical_features(data=df),
+        "selected_features" : aProjectDoc.selected_feature_variables,
+        "target_feature" : aProjectDoc.selected_target_variable
+    })
+
+
+@app.route("/set_variables/<project_id>", methods=["POST"])
+def set_variables(project_id):
+    """ Sets Target and Features Variables
+    """
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    ## getting user seelected target and feature varaibles 
+    new_target_variable =  request.form.get("target_variable")
+    new_feature_variables = request.form.getlist("selected_features")
+
+    aProjectDoc.selected_target_variable = new_target_variable
+    aProjectDoc.selected_feature_variables = new_feature_variables
+
+    aProjectDoc.store()
+
+
+    return jsonify({
+        "status": 200
+    })
+
+
+
+
+
+
 @app.route("/getDataFrame/<project_id>", methods=["POST"])
 def getDataFrame(project_id):
     aProjectDoc = GraphaiteProjectModel.load(project_id)

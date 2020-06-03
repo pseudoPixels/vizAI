@@ -84,6 +84,73 @@ $(document).ready(function (e) {
     });
 
 
+    function get_and_render_variables() {
+        $.ajax({
+            url: 'http://127.0.0.1:5000/get_variables/' + $('#project_id').text(),
+            dataType: 'json', // what to expect back from server
+            type: 'post',
+            success: function (res) { // display success response
+                console.log(res['target_feature'])
 
+                //Render the dropdown for selecting target variable
+                for (i = 0; i < res['categorical'].length; i++) {
+                    aFeature = res['categorical'][i];
+                    opt = '';
+                    if (aFeature == res['target_feature']) {
+                        opt = "<option value='" + aFeature + "' selected='selected'>" + aFeature + "</option>";
+                    } else {
+                        opt = "<option value='" + aFeature + "'>" + aFeature + "</option>";
+                    }
+                    $("#targetVar").append(opt);
+                }
+
+                for (i = 0; i < res['all'].length; i++) {
+                    aFeature = res['all'][i];
+
+                    rad = '';
+
+                    if (res['selected_features'].includes(aFeature)) {
+                        rad = '<input type="checkbox" value="' + aFeature + '" name="selected_features" checked> ' + aFeature + '</input><br/>';
+                    } else {
+                        rad = '<input type="checkbox" value="' + aFeature + '" name="selected_features"> ' + aFeature + '</input><br/>';
+                    }
+
+                    $("#selectVar").append(rad);
+
+                }
+
+
+
+            },
+            error: function (response) {
+                $('#msg').html(response.message); // display error response
+            }
+        });
+    }
+
+    get_and_render_variables();
+
+
+
+    function set_feature_and_target_variables() {
+
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: "http://127.0.0.1:5000/set_variables/" + $('#project_id').text(),
+            data: $('#fs').serialize(),
+            success: function (option) {
+                alert("Feature and Target Variables Set and Saved.");
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+
+
+    $("#save_feature_info").on("click", function () {
+        set_feature_and_target_variables();
+    });
 
 });
