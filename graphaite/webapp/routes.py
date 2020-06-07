@@ -482,9 +482,14 @@ def getAutoViz(project_id):
 @app.route("/manage_datasets/<project_id>")
 @login_required
 def manage_datasets(project_id):
-    # print("="*10, session.get('PROJECT_ID'))
-    # print(project_id)
     return render_template("manage_datasets.html", project_id=project_id)
+
+
+
+@app.route("/view_datasets/<project_id>")
+@login_required
+def view_datasets(project_id):
+    return render_template("view_dataset.html", project_id=project_id)
 
 
 @app.route("/python-flask-files-upload/<project_id>", methods=["POST"])

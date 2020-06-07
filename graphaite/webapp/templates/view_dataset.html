@@ -137,56 +137,17 @@
                 <div class="row">
 
                     <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Set Dataset</h4>
-                            </div>
-                            <div class="card-body">
-                                <h4>Browse Dataset to Upload</h4>
-                                <dl>
-                                    <p>
-                                        <p id="msg"></p>
-                                        <input type="file" id="multiFiles" name="files[]" multiple="multiple" /> <br /><br />
-                                        <button id="upload">Upload</button>
-                                    </p>
-                                </dl>
-                            </div>
-                        </div>
 
 
                         <div class="card">
                             <div class="card-header">
-                                <h4>Set Feature Variables</h4>
+                                <h4>View Raw Data</h4>
                             </div>
                             <div class="card-body">
-
-                                <form id="fs">
-
-
-                                    <h4>Set target variable:</h4>
-                                    <select name="target_variable" class="custom-select" id="targetVar">
-
-                                    </select>
-                                    <br /><br />
-
-                                    <h4>Select feature variables to visualize:</h4>
-                                    <div id="selectVar">
-                                        <br />
-
-                                    </div>
-
-
-
-                                    <br />
-
-                                </form>
-
-                                <br />
-                                <button id="save_feature_info" class="btn btn-success" style="float:left;">Set & Save</button>
-
+                                <table id='view_raw_data' class="display" style="width:100%">
+                                </table>
                             </div>
                         </div>
-
 
                     </div>
 
@@ -207,7 +168,7 @@
                         Copyright &copy; 2020 Graphaite
                     </div>
                     <div class="col-sm-6 text-right">
-                        Designed by <a href="https://colorlib.com">Graphaite</a>
+                        Designed by <a href="#">Graphaite</a>
                     </div>
                 </div>
             </div>
@@ -224,7 +185,7 @@
     <script src="{{ url_for('static',filename='assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-    <script src="{{ url_for('static',filename='js/plot_controllers/manage_datasets.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/plot_controllers/view_dataset.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </body>
