@@ -17,7 +17,6 @@ $(document).ready(function () {
         //2. show only the select feature tabs
         $('input[type=checkbox][name=selected_features]:checked').each(function () {
             $("#custom-nav-" + $(this).val() + "-tab").show();
-
         });
 
         //3. click on one of the feature tab, so that the visulations are visible to user. 
