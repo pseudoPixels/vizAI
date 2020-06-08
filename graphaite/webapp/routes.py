@@ -22,7 +22,7 @@ from graphaite.core.utils.fileUtils import delete_files_of_directory
 from graphaite.core.utils.dataFrameUtils import get_all_features
 
 
-
+import plotly
 
 
 ## Models
@@ -645,6 +645,10 @@ def getFavouritesViz(project_id):
                     "figure_title": aGraphDoc.graph_title,
                     "graph_id": aGraphDoc.graph_id
             }
+
+            # import plotly.io as pio
+            # f = pio.from_json(str(aGraphDoc.figure_data))
+            # pio.write_image(fig=f, file='firstFig.png')
 
     return jsonify({"plots": plots})
 
