@@ -12,3 +12,5 @@ app.config["UPLOAD_FOLDER"] = (
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
 from graphaite.webapp import routes
+
+
