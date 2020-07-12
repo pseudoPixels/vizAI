@@ -23,7 +23,11 @@ from graphaite.core.utils.dataFrameUtils import get_all_features
 
 
 import plotly
+import plotly.io as pio
+import zipfile
+from flask import send_file
 
+from os.path import basename
 
 ## Models
 from graphaite.core.models.graphaiteGraph import GraphaiteGraphModel
@@ -646,9 +650,7 @@ def getFavouritesViz(project_id):
                     "graph_id": aGraphDoc.graph_id
             }
 
-            # import plotly.io as pio
-            # f = pio.from_json(str(aGraphDoc.figure_data))
-            # pio.write_image(fig=f, file='firstFig.png')
+            
 
     return jsonify({"plots": plots})
 
@@ -701,3 +703,48 @@ def add_or_remove_graph_to_favourite():
 
     return jsonify({"statusCode": 400})
 
+
+
+@app.route("/image_export/<project_id>/")
+@login_required
+def image_export(project_id):
+   
+    return render_template("image_export.html", project_id=project_id)
+
+@app.route('/download_images_as_zip/<project_id>/<imgWidth>/<imgHeight>/<imgExtension>/')
+@login_required
+def download_images_as_zip(project_id, imgWidth, imgHeight, imgExtension):
+    
+    ## load the project document
+    aProjectDoc = GraphaiteProjectModel.load(project_id)  
+
+    temp_dir = str(pathlib.Path(__file__).parent.absolute()) + "/" + aProjectDoc.project_title
+
+    if not os.path.exists(temp_dir):
+        os.makedirs(temp_dir)  
+
+    favouriteGraphIDsOfThisProject = aProjectDoc.favourites_graphaite_graph_ids
+
+    for aGraph in views_by_graphaite_graph(g.couch):
+        if aGraph.key in favouriteGraphIDsOfThisProject:
+            aGraphDoc = GraphaiteGraphModel.load(aGraph.value)
+            
+            f = pio.from_json(str(aGraphDoc.figure_data))
+            pio.write_image(fig=f, 
+                            file=temp_dir+'/'+ aGraphDoc.graph_title + '.' + imgExtension, 
+                            format=imgExtension,
+                            height = int(imgHeight),
+                            width = int(imgWidth)
+                            )
+
+    
+    open(str(pathlib.Path(__file__).parent.absolute())+'/myNew.zip', 'a').close()
+    zipf = zipfile.ZipFile(str(pathlib.Path(__file__).parent.absolute())+'/myNew.zip','w', zipfile.ZIP_DEFLATED)
+    for root,dirs, files in os.walk(temp_dir):
+        for file in files:
+            zipf.write(temp_dir+'/'+file, basename(temp_dir+'/'+file))
+    zipf.close()
+    return send_file(str(pathlib.Path(__file__).parent.absolute())+'/myNew.zip',
+            mimetype = 'zip',
+            attachment_filename= aProjectDoc.project_title + '_visualizations.zip',
+            as_attachment = True)

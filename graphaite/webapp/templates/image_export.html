@@ -57,8 +57,6 @@
                             Dataset </a>
                     </li>
 
-
-
                     <li class="menu-title">Visualizations</li>
                     <li>
                         <a href="http://127.0.0.1:5000/favourites/{{project_id}}"><i class="menu-icon fa fa-star"></i>
@@ -86,7 +84,7 @@
                             Jupyter Notebook </a>
                     </li>
                     <li>
-                        <a href="http://127.0.0.1:5000/image_export/{{project_id}}/"><i class="menu-icon fa fa-camera-retro"></i>
+                        <a href="#"><i class="menu-icon fa fa-camera-retro"></i>
                             Image Exports </a>
                     </li>
 
@@ -104,7 +102,7 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
+                    <a class="navbar-brand" href="/home"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
                             alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
@@ -129,70 +127,55 @@
         <!-- /header -->
         <!-- Header-->
         <div class="content">
-            <!-- PROJECT ID IMPORTANT -->
             <div style="display: none;" id='project_id'>{{project_id}}</div>
-
 
             <div class="animated fadeIn">
                 <div class="row">
 
                     <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Set Dataset</h4>
-                            </div>
-                            <div class="card-body">
-                                <h4>Browse Dataset to Upload</h4>
-                                <dl>
-                                    <p>
-                                        <p id="msg"></p>
-                                        <input type="file" id="multiFiles" name="files[]" multiple="multiple" /> <br /><br />
-                                        <button id="upload">Upload</button>
-                                    </p>
-                                </dl>
-                            </div>
-                        </div>
-
 
                         <div class="card">
                             <div class="card-header">
-                                <h4>Set Feature Variables</h4>
+                                <h4>Export Visualizations</h4>
+
                             </div>
                             <div class="card-body">
+                                <h4>Your visualizations from Favourites will be exported. Add the visualizations to
+                                    Favourites for exporting.</h4>
+                                <br /><br />
 
-                                <form id="fs">
-
-
-                                    <h4>Set target variable:</h4>
-                                    <select name="target_variable" class="custom-select" id="targetVar">
-
-                                    </select>
-                                    <br /><br />
-
-                                    <h4>Select feature variables to visualize:</h4>
-                                    <div id="selectVar">
-                                        <br />
-
-                                    </div>
-
-
-
-                                    <br />
-
-                                </form>
-
+                                <div class="col-xs-4">
+                                    <label for="imgHeight">Image Height (pixels): </label>
+                                    <input class="form-control imgExportSettings" style="width:250px;" id="imgHeight"
+                                        type="number" min="200" step="10" max="1200" value="430">
+                                </div>
                                 <br />
-                                <button id="save_feature_info" class="btn btn-success" style="float:left;">Set & Save</button>
+                                <div class="col-xs-4">
+                                    <label for="imgWidth">Image Width (pixels):</label>
+                                    <input class="form-control imgExportSettings" style="width:250px;" id="imgWidth"
+                                        type="number" min="200" step="10" max="1200" value="700">
+                                </div>
+                                <br />
+
+                                <div class="col-xs-4">
+                                    <label for="imgExtension">Select the format for the export:</label>
+                                    <br />
+                                    <select id="imgExtension" class="imgExportSettings">
+                                        <option value="png">Select Export Format</option>
+                                        <option value="png">PNG</option>
+                                        <option value="jpg">JPG</option>
+                                        <option value="svg">SVG</option>
+                                        <option value="pdf">PDF</option>
+                                    </select>
+                                </div>
+                                <br /> <br />
+                                <a class="btn btn-success" id="expLink" href="http://127.0.0.1:5000/download_images_as_zip/{{project_id}}/500/500/png"
+                                    target="_blank">
+                                    Export Visualizations </a>
 
                             </div>
                         </div>
-
-
                     </div>
-
-
-
-
                 </div>
 
             </div>
@@ -207,7 +190,7 @@
                         Copyright &copy; 2020 Graphaite
                     </div>
                     <div class="col-sm-6 text-right">
-                        Designed by <a href="https://colorlib.com">Graphaite</a>
+                        Designed by <a href="#">Graphaite</a>
                     </div>
                 </div>
             </div>
@@ -224,7 +207,7 @@
     <script src="{{ url_for('static',filename='assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-    <script src="{{ url_for('static',filename='js/plot_controllers/manage_datasets.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/plot_controllers/image_export.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </body>
