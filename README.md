@@ -37,8 +37,34 @@ Details of the CouchdDB installation command:: https://linuxize.com/post/how-to-
 
 Done!
 
-### App Start
+
+### Local Start App
 ```buildoutcfg
 >>> cd vizAI
 >>> sh run.sh
 ```
+
+
+### Deployment Server Start App
+Details of creating/configuring nginx + gunicorn for flask cloud deployment:: https://www.youtube.com/watch?v=goToXTC96Co
+
+Once done, reload the supervisor as following:
+```buildoutcfg
+>>> sudo supervisorctl reload
+```
+
+
+On any update of the app and reflect the changes in deployed app: 
++ pull the latest from git, 
++ install the updates and 
++ reload supervisor 
+
+as following:
+
+```buildoutcfg
+>>> cd vizAI
+>>> git pull origin master
+>>> pip install -e .
+>>> sudo supervisorctl reload
+```
+
