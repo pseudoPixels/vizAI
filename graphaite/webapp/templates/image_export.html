@@ -46,35 +46,42 @@
                 <ul class="nav navbar-nav">
                     <li class="menu-title">Datasets</li>
                     <li>
-                        <a href="http://127.0.0.1:5000/manage_datasets/{{project_id}}"><i class="menu-icon fa fa-cloud-upload"></i>
+                        <a href="{{ url_for('manage_datasets', project_id=project_id)}}"><i class="menu-icon fa fa-cloud-upload"></i>
                             Connect
                             Dataset </a>
                     </li>
 
                     <li>
-                        <a href="http://127.0.0.1:5000/view_datasets/{{project_id}}"><i class="menu-icon fa fa-table"></i>
+                        <a href="{{ url_for('view_datasets', project_id=project_id)}}"><i class="menu-icon fa fa-table"></i>
                             View
                             Dataset </a>
+
                     </li>
+
+
 
                     <li class="menu-title">Visualizations</li>
                     <li>
-                        <a href="http://127.0.0.1:5000/favourites/{{project_id}}"><i class="menu-icon fa fa-star"></i>
+                        <a href="{{ url_for('favourites', project_id=project_id)}}"><i class="menu-icon fa fa-star"></i>
                             Favourites / Dashboard</a>
                     </li>
 
                     <li>
-                        <a href="http://127.0.0.1:5000/autoviz/{{project_id}}"><i class="menu-icon fa fa-th"></i>
+                        <a href="{{ url_for('autoviz', project_id=project_id)}}"><i class="menu-icon fa fa-th"></i>
                             Auto Plots (AI) </a>
                     </li>
 
 
                     <li>
-                        <a target="_blank" href="http://127.0.0.1:5000/graph_editor/{{project_id}}/"><i class="menu-icon fa fa-bar-chart"></i>
+                        <a target="_blank" href="{{ url_for('graph_editor', project_id=project_id)}}"><i class="menu-icon fa fa-bar-chart"></i>
                             Create New Visualization </a>
                     </li>
 
-                    <li class="menu-title">Exports</li>
+                    <li class="menu-title">Downloads</li>
+                    <li>
+                        <a href="{{ url_for('image_export', project_id=project_id)}}"><i class="menu-icon fa fa-camera-retro"></i>
+                            Visualizations as Images </a>
+                    </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-laptop"></i>
                             PDF Presentation </a>
@@ -83,10 +90,7 @@
                         <a href="#"><i class="menu-icon fa fa-bars"></i>
                             Jupyter Notebook </a>
                     </li>
-                    <li>
-                        <a href="#"><i class="menu-icon fa fa-camera-retro"></i>
-                            Image Exports </a>
-                    </li>
+
 
 
                 </ul>
