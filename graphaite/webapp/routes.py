@@ -396,7 +396,11 @@ def autoviz(project_id):
     aProjectDoc = GraphaiteProjectModel.load(project_id)
     # graphsOfThisProject = aProjectDoc.graphaite_graph_ids
 
-    df = pd.read_csv(aProjectDoc.dataset_path)
+    df = pd.DataFrame()
+
+    if aProjectDoc.dataset_path is not None and len(aProjectDoc.dataset_path) > 0:
+        df = pd.read_csv(aProjectDoc.dataset_path)
+        
     ## The list will be available from project info (CouchDB)
     feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
 
