@@ -64,6 +64,7 @@ as following:
 ```buildoutcfg
 >>> cd vizAI
 >>> git pull origin master
+>>> source venv/bin/activate
 >>> pip install -e .
 >>> sudo supervisorctl reload
 ```

@@ -611,6 +611,10 @@ def logout():
 def welcome():
     return render_template('welcome.html', title='Welcome')
 
+@app.route("/gallery", methods=['GET', 'POST'])
+def gallery():
+    return render_template('gallery.html', title='Gallery')
+
 
 @app.route("/favourites/<project_id>")
 @login_required
