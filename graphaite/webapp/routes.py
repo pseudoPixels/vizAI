@@ -615,6 +615,14 @@ def welcome():
 def gallery():
     return render_template('gallery.html', title='Gallery')
 
+@app.route("/features", methods=['GET', 'POST'])
+def features():
+    return render_template('features.html', title='Features')
+
+@app.route("/faq", methods=['GET', 'POST'])
+def faq():
+    return render_template('faq.html', title='FAQ')
+
 
 @app.route("/favourites/<project_id>")
 @login_required
