@@ -72,14 +72,16 @@
             
             /* Caption text */
             .text {
-              color: #000000;
-              font-size: 30px;
-              padding: 8px 12px;
+              color: black;
+              font-size: 25px;
+              padding: 8px 8px;
               position: absolute;
               bottom: 8px;
               width: 100%;
               text-align: center;
-              text-shadow: 2px 2px 8px rgb(131, 131, 131);
+              text-shadow: 2px 2px 8px rgb(105, 105, 105);
+              
+              top: 0;
             }
             
             /* Number text (1/3 etc) */
@@ -165,26 +167,80 @@
             <h3>Graphaite Gallery</h3> <br />
         </div>
 
+        <!-- The dots/circles -->
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+            <span class="dot" onclick="currentSlide(8)"></span>
+            <span class="dot" onclick="currentSlide(9)"></span>
+            <span class="dot" onclick="currentSlide(10)"></span>
+
+        </div>
         <!-- Slideshow container -->
         <div class="slideshow-container">
 
             <!-- Full-width images with number and caption text -->
             <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <div class="text">AI Generated Instant Insightful Visualizations</div>
+                <img src="{{ url_for('static',filename='images/gallery/autoVizPS.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
 
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <div class="text">AI Generated Automatic Dashboard</div>
+                <img src="{{ url_for('static',filename='images/gallery/autoDashboardPS.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <div class="text">Automatically Organized Visualizations for Easy Access</div>
+                <img src="{{ url_for('static',filename='images/gallery/featureTabsPS.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <div class="text">Interactive Visualizations</div>
+                <img src="{{ url_for('static',filename='images/gallery/interactivePlotsP1.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <div class="text">Add/Manage Your Favourites</div>
+                <img src="{{ url_for('static',filename='images/gallery/favouritesPS.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <img src="{{ url_for('static',filename='images/gallery/connectDatasetPS.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+                <div class="text">Connect Your Dataset for Instant Insights using AI</div>
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
+                <img src="{{ url_for('static',filename='images/gallery/viewRawDatasetPS.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+                <div class="text">Clean View of your Dataset on Browser</div>
+            </div>
+
+            <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
                 <img src="{{ url_for('static',filename='images/gallery/graphEditor.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
-                <div class="text">Drag & Drop Visualization</div>
+                <div class="text">Drag & Drop Visualization to Edit or Build from Scratch</div>
             </div>
 
             <div class="mySlides">
-
-                <img src="{{ url_for('static',filename='images/gallery/graphEditor.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
-                <div class="text">AI Generated Visualization Dashboard</div>
+                <img src="{{ url_for('static',filename='images/gallery/export.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+                <div class="text">Download Visualizations in Your Required Formats</div>
             </div>
+
+
 
             <div class="mySlides">
 
-                <img src="{{ url_for('static',filename='images/gallery/graphEditor.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
-                <div class="text">One-Click Visualizations Download</div>
+                <img src="{{ url_for('static',filename='images/gallery/createProjects.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
+                <div class="text">Create/Manage Multiple Projects</div>
             </div>
 
             <!-- Next and previous buttons -->
@@ -193,12 +249,7 @@
         </div>
         <br>
 
-        <!-- The dots/circles -->
-        <div style="text-align:center">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-        </div>
+
 
 
     </main>
