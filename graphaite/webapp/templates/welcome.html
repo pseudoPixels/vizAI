@@ -145,10 +145,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link active" href="/">Home</a>
+                        <!-- <a class="nav-item nav-link active" href="/">Home</a>
                         <a class="nav-item nav-link" href="/features">Features</a>
                         <a class="nav-item nav-link" href="/gallery">Gallery</a>
-                        <a class="nav-item nav-link" href="/faq">FAQ</a>
+                        <a class="nav-item nav-link" href="/faq">FAQ</a> -->
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
@@ -167,10 +167,10 @@
         <div style="text-align:justify">
             <h1 style="text-align:justify;text-align: center;color: black;">Data In; Instant Insights Out</h1>
             <h4 style="text-align:justify;text-align: center;color: gray;">Accelerate your data study using advanced AI
-                & Deep Learning. <br /> With Graphaite, creating insightful & interactive data visualizations is just
+                & Deep Learning. <br /> With <i>Graphaite</i>, creating insightful & interactive data visualizations is
+                just
                 one click away.</h4>
         </div>
-        <br />
 
         <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
             <img src="{{ url_for('static',filename='images/gallery/sys_arch_1PS.png') }}" style="width:60%;  display: block; margin-left: auto; margin-right: auto;">
@@ -179,13 +179,13 @@
 
 
         <br />
-        <a href="/register" style="text-decoration: none;">
-            <button type="button" class="btn btn-warning btn-lg" style="display: block; margin-left: auto; margin-right: auto;"><b>Get
-                    Started for Free Today!</b></button>
-        </a>
+        <!-- <a href="/register" style="text-decoration: none;"> -->
+        <button type="button" onclick=" relocate_home()" class="btn btn-warning btn-lg" style="display: block; margin-left: auto; margin-right: auto;"><b>Get
+                Started for Free Today!</b></button>
+        <!-- </a> -->
         <br /><br /><br /><br />
         <div class="mySlides" style="justify-content: center;align-items: center;display: flex;" class="align-items-center">
-            <img src="{{ url_for('static',filename='images/logoGraphaite.png') }}" style="width:20%;  display: block; margin-left: auto; margin-right: auto;">
+            <img src="{{ url_for('static',filename='images/gallery/logoGraphaitePS.png') }}" style="width:40%;  display: block; margin-left: auto; margin-right: auto;">
             <br />
 
         </div>
@@ -229,7 +229,7 @@
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cpu" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
                 </svg>
-                AI Generated Automatic Dashboard
+                AI Generated Automatic Dashboard Comprising Multiple Visualizations
             </h4>
         </div>
         <div class="slideshow-container">
@@ -246,7 +246,7 @@
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cpu" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
                 </svg>
-                Interactive Visualizations
+                Interactive Visualizations for Details and Further Graph Controls
             </h4>
         </div>
         <div class="slideshow-container">
@@ -351,7 +351,29 @@
                 <img src="{{ url_for('static',filename='images/gallery/createProjects.png') }}" style="width:98%;  display: block; margin-left: auto; margin-right: auto;">
             </div>
         </div>
-        <br /><br /><br />
+        <br /><br /><br /><br /><br />
+
+        <p style="font-size: 20px; max-width:70%;justify-content: center;align-items: center;text-align: justify;  display: flex;display: block; margin-left: auto; margin-right: auto;">
+            Graphaite helps you accelerate the data study and you can instantly use the generated visualizations as:
+            high
+            quality images (png/jpeg) for <b>your data analysis reports</b>, scalable vector graphics
+            (svg/eps) for the <b> research article you are writing</b>, pdf for the <b> next presentation</b> or even
+            as <b>Jupyter
+                Notebook</b>
+            to use <b> as starter for further analysis</b>.
+        </p>
+
+        <!-- <a href="/register" style="text-decoration: none;"> -->
+        <button type="button" onclick=" relocate_home()" class="btn btn-warning btn-lg" style="display: block; margin-left: auto; margin-right: auto;"><b>Get
+                Started for Free Today!</b></button>
+        <!-- </a> -->
+        <script>
+            function relocate_home() {
+                location.href = "/register";
+            } 
+        </script>
+
+        <br /><br /><br /><br /><br />
     </main>
 
 
