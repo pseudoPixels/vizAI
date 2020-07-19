@@ -437,6 +437,17 @@ def getAutoViz(project_id):
 
     plots = {}
 
+    ## check if any dataset connected or not
+    isDatasetConnected = False
+    datasetPath = aProjectDoc.dataset_path
+    if datasetPath and datasetPath.strip():
+        isDatasetConnected = True
+
+    ## if no dataset connected, return empty result.
+    if isDatasetConnected == False:
+        return jsonify({"plots": plots})
+
+
     ## used to keep track if its the first time request after creating project
     ## we check if there is any visualization availabe yet or not. if no viz
     ## available yet, we try to generate new one assuming this is new project and its first

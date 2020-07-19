@@ -35,6 +35,7 @@ $(document).ready(function () {
             url: "/getAutoViz/" + $('#project_id').text(),
             data: $('#fs').serialize(),
             success: function (option) {
+                var isVizAvailable = false;
                 for (aPlotID in option['plots']) {
                     // {'figure_data':'jsonFigureValue', 'feature_tags':['feature1', 'feature2',..]}
                     aPlotObject = option['plots'][aPlotID];
@@ -54,6 +55,7 @@ $(document).ready(function () {
                             favourtieBtnIcon = "<i class='menu-icon fa fa-star-o' style='color:orange;align:right;float:right; font-size: 24px;'></i>"
                         }
 
+                        isVizAvailable = true;
 
                         $("#tab-row-" + aFeatureTag).append("<div class='col-lg-6' style='width:100%;'>\
                                                                 <div class='card' >\
@@ -76,7 +78,12 @@ $(document).ready(function () {
 
                 // show only the selected featrues of visualizations
                 show_only_selected_feature_tabs();
-                alert("Your visualizations are ready now!");
+
+                if (isVizAvailable == true) {
+                    alert("Your visualizations are ready now!\nClick through the following tabs.");
+                }
+
+
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);
