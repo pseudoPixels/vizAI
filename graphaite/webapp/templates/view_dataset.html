@@ -134,7 +134,12 @@
             <!-- PROJECT ID IMPORTANT -->
             <div style="display: none;" id='project_id'>{{project_id}}</div>
 
-
+            {% if isDatasetConnected == False %}
+            <div class="alert alert-warning">
+                You have not connected any dataset yet! Please, <a href="{{ url_for('manage_datasets', project_id=project_id)}}">Connect
+                    Dataset</a> first to use this feature.
+            </div>
+            {% endif %}
             <div class="animated fadeIn">
                 <div class="row">
 

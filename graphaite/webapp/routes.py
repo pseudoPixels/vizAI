@@ -497,7 +497,16 @@ def manage_datasets(project_id):
 @app.route("/view_datasets/<project_id>")
 @login_required
 def view_datasets(project_id):
-    return render_template("view_dataset.html", project_id=project_id)
+
+    isDatasetConnected = False
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+    datasetPath = aProjectDoc.dataset_path
+
+    if datasetPath and datasetPath.strip():
+        isDatasetConnected = True
+
+
+    return render_template("view_dataset.html", project_id=project_id, isDatasetConnected=isDatasetConnected)
 
 
 @app.route("/python-flask-files-upload/<project_id>", methods=["POST"])
