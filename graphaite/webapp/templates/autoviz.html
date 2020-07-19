@@ -122,7 +122,10 @@
          </div>
          <div class="top-right">
             <div class="header-menu">
-
+               <div class="user-area dropdown float-right">
+                  <a href="#" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-lightbulb-o"></i>
+                     How to use this page?</a>
+               </div>
                <div class="user-area dropdown float-right">
                   <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                      <img class="user-avatar rounded-circle" src="{{ url_for('static',filename='images/pp.png') }}" alt="User Avatar">
@@ -140,10 +143,45 @@
       <div class="content">
          {% if isDatasetConnected == False %}
          <div class="alert alert-warning">
-            You have not connected any dataset yet! Please, <a href="{{ url_for('manage_datasets', project_id=project_id)}}">Connect
-               Dataset</a> first to use this feature.
+            You have not connected any dataset yet! Please, <a class="alert-link" href="{{ url_for('manage_datasets', project_id=project_id)}}">Connect
+               Dataset</a> first to use this feature. Watch <a class="alert-link" href="#" data-toggle="modal"
+               data-target="#exampleModalLong">
+               <i class="fa fa-lightbulb-o"></i>
+               How to use this page?
+            </a>
          </div>
          {% endif %}
+
+         <!-- Modal -->
+         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h4 class="modal-title" id="exampleModalLongTitle">Graphaite</h4>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+
+                     <!-- 16:9 aspect ratio -->
+                     <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qN3OueBm9F4"
+                           allowfullscreen></iframe>
+                     </div>
+
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
          <div class="animated fadeIn">
             <div class="row">
 
