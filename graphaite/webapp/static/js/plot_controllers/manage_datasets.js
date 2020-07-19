@@ -1,5 +1,6 @@
 $(document).ready(function (e) {
 
+    // alert(url_for('manage_datasets', project_id = project_id));
     var dTable = NaN;
     var already = false;
 
@@ -8,7 +9,7 @@ $(document).ready(function (e) {
 
 
         $.ajax({
-            url: 'http://127.0.0.1:5000/getDataFrame/' + $('#project_id').text(), // point to server-side URL
+            url: '/getDataFrame/' + $('#project_id').text(), // point to server-side URL
             dataType: 'json', // what to expect back from server
             cache: false,
             contentType: false,
@@ -56,7 +57,7 @@ $(document).ready(function (e) {
         }
 
         $.ajax({
-            url: 'http://127.0.0.1:5000/python-flask-files-upload/' + $('#project_id').text(),
+            url: '/python-flask-files-upload/' + $('#project_id').text(),
             dataType: 'json', // what to expect back from server
             cache: false,
             contentType: false,
@@ -74,7 +75,9 @@ $(document).ready(function (e) {
                 })
                 // dTable.destroy();
                 update_dataset();
+                get_and_render_variables();
 
+                alert("Dataset Connected Successfully!\n\nPlease Set Feature Variables from below and Hit 'Set & Save'");
 
             },
             error: function (response) {
@@ -86,7 +89,7 @@ $(document).ready(function (e) {
 
     function get_and_render_variables() {
         $.ajax({
-            url: 'http://127.0.0.1:5000/get_variables/' + $('#project_id').text(),
+            url: '/get_variables/' + $('#project_id').text(),
             dataType: 'json', // what to expect back from server
             type: 'post',
             success: function (res) { // display success response
@@ -137,7 +140,7 @@ $(document).ready(function (e) {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/set_variables/" + $('#project_id').text(),
+            url: "/set_variables/" + $('#project_id').text(),
             data: $('#fs').serialize(),
             success: function (option) {
                 alert("Feature and Target Variables Set and Saved.");
@@ -154,3 +157,5 @@ $(document).ready(function (e) {
     });
 
 });
+
+// http://127.0.0.1:5000
