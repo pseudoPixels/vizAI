@@ -76,7 +76,8 @@ $(document).ready(function (e) {
                 // dTable.destroy();
                 update_dataset();
                 get_and_render_variables();
-
+                $("#firstThingsFirst").hide();
+                $("#alertSetFeatureVars").show();
                 alert("Dataset Connected Successfully!\n\nPlease Set Feature Variables from below and Hit 'Set & Save'");
 
             },
@@ -143,7 +144,8 @@ $(document).ready(function (e) {
             url: "/set_variables/" + $('#project_id').text(),
             data: $('#fs').serialize(),
             success: function (option) {
-                alert("Feature and Target Variables Set and Saved.");
+                alert("Nicely Done! You are all set.");
+                $("#alertSetFeatureVars").hide();
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);

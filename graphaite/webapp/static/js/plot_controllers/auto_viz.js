@@ -76,7 +76,7 @@ $(document).ready(function () {
 
                 // show only the selected featrues of visualizations
                 show_only_selected_feature_tabs();
-
+                alert("Your visualizations are ready now!");
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);

@@ -405,11 +405,21 @@ def autoviz(project_id):
     feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
 
 
+    ## checking if the dataset is connected already or not
+    isDatasetConnected = False
+    datasetPath = aProjectDoc.dataset_path
+
+    if datasetPath and datasetPath.strip():
+        isDatasetConnected = True
+
+
+
     return render_template("autoviz.html", 
     feature_variables=feature_variables,
     target_variable= aProjectDoc.selected_target_variable,
     selected_feature_variables = aProjectDoc.selected_feature_variables,
-    project_id=project_id)
+    project_id=project_id,
+    isDatasetConnected=isDatasetConnected)
 
 
 @app.route("/getAutoViz/<project_id>", methods=["POST"])
@@ -490,7 +500,15 @@ def getAutoViz(project_id):
 @app.route("/manage_datasets/<project_id>")
 @login_required
 def manage_datasets(project_id):
-    return render_template("manage_datasets.html", project_id=project_id)
+
+    isDatasetConnected = False
+    aProjectDoc = GraphaiteProjectModel.load(project_id)
+    datasetPath = aProjectDoc.dataset_path
+
+    if datasetPath and datasetPath.strip():
+        isDatasetConnected = True
+
+    return render_template("manage_datasets.html", project_id=project_id, isDatasetConnected=isDatasetConnected)
 
 
 
@@ -638,14 +656,24 @@ def faq():
 def favourites(project_id):
     ## load the project document from database
     aProjectDoc = GraphaiteProjectModel.load(project_id)
+
+    ## check if the dataset is connected 
+    isDatasetConnected = False
+    datasetPath = aProjectDoc.dataset_path
+    if datasetPath and datasetPath.strip():
+        isDatasetConnected = True
     
-    df = pd.read_csv(aProjectDoc.dataset_path)
-    ## The list will be available from project info (CouchDB)
-    feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
+    feature_variables = []
+
+    if isDatasetConnected == True:
+        df = pd.read_csv(aProjectDoc.dataset_path)
+        ## The list will be available from project info (CouchDB)
+        feature_variables = get_all_features(data=df) #["age", "pclass", "sibsp", "parch", "fare", "sex", "survived"]
 
     return render_template("favourites.html", 
     feature_variables=feature_variables, 
-    project_id=project_id)
+    project_id=project_id,
+    isDatasetConnected=isDatasetConnected)
 
 
 

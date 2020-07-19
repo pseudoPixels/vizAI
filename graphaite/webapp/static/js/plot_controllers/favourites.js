@@ -11,7 +11,7 @@ $(document).ready(function () {
     $.ajax({
         type: "POST",
         cache: false,
-        url: "http://127.0.0.1:5000/getFavouritesViz/" + $('#project_id').text(),
+        url: "/getFavouritesViz/" + $('#project_id').text(),
         success: function (option) {
             // check if the plots in favourites are not empty
             if (Object.keys(option['plots']).length > 0) {
@@ -21,7 +21,7 @@ $(document).ready(function () {
 
                     // create unique div id, to map the plotly fig
                     var unique_div_id = get_uuid();
-                    var graphEditorLink = "http://127.0.0.1:5000/graph_editor/" + $('#project_id').text() + "/" + aPlotObject['graph_id'];
+                    var graphEditorLink = "/graph_editor/" + $('#project_id').text() + "/" + aPlotObject['graph_id'];
                     $("#favsViz").append("<div class='col-lg-6' style='width:80%;'>\
                                                                     <div class='card' >\
                                                                         <div class='card-body'>\
@@ -39,7 +39,8 @@ $(document).ready(function () {
             }
             // No plots added to the favourites yet. Show this message to the user
             else {
-                $("#favsViz").append("<h3 style='align:center;'>No Graphs added to favourites yet! <br/><br/> Select graphs from the <i>'Auto Plots (AI)'</i> menu to appear here.</h3>");
+                //$("#favsViz").append("<h3 style='align:center;'>No Graphs added to favourites yet! <br/><br/> Select graphs from the <i>'Auto Plots (AI)'</i> menu to appear here.</h3>");
+                $("#alertIsFavEmpty").show();
             }
 
 

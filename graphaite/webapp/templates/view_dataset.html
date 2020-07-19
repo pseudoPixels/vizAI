@@ -52,7 +52,8 @@
                     </li>
 
                     <li>
-                        <a href="{{ url_for('view_datasets', project_id=project_id)}}"><i class="menu-icon fa fa-table"></i>
+                        <a style="color: black;font-weight: bold;" href="{{ url_for('view_datasets', project_id=project_id)}}"><i
+                                class="menu-icon fa fa-table"></i>
                             View
                             Dataset </a>
 
@@ -80,15 +81,15 @@
                     <li class="menu-title">Downloads</li>
                     <li>
                         <a href="{{ url_for('image_export', project_id=project_id)}}"><i class="menu-icon fa fa-camera-retro"></i>
-                            Visualizations as Images </a>
+                            Export as Images </a>
                     </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-laptop"></i>
-                            PDF Presentation </a>
+                            PDF Presentation &nbsp <i class="fa fa-lock"></i> </a>
                     </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-bars"></i>
-                            Jupyter Notebook </a>
+                            Jupyter Notebook &nbsp <i class="fa fa-lock"></i> </a>
                     </li>
 
 

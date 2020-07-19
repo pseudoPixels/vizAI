@@ -46,7 +46,8 @@
                 <ul class="nav navbar-nav">
                     <li class="menu-title">Datasets</li>
                     <li>
-                        <a href="{{ url_for('manage_datasets', project_id=project_id)}}"><i class="menu-icon fa fa-cloud-upload"></i>
+                        <a style="color: black;font-weight: bold;" href="{{ url_for('manage_datasets', project_id=project_id)}}"><i
+                                class="menu-icon fa fa-cloud-upload"></i>
                             Connect
                             Dataset </a>
                     </li>
@@ -80,15 +81,15 @@
                     <li class="menu-title">Downloads</li>
                     <li>
                         <a href="{{ url_for('image_export', project_id=project_id)}}"><i class="menu-icon fa fa-camera-retro"></i>
-                            Visualizations as Images </a>
+                            Export as Images </a>
                     </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-laptop"></i>
-                            PDF Presentation </a>
+                            PDF Presentation &nbsp <i class="fa fa-lock"></i> </a>
                     </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-bars"></i>
-                            Jupyter Notebook </a>
+                            Jupyter Notebook &nbsp <i class="fa fa-lock"></i> </a>
                     </li>
 
 
@@ -131,6 +132,20 @@
         <!-- /header -->
         <!-- Header-->
         <div class="content">
+            {% if isDatasetConnected == False %}
+            <div class="alert alert-success" id="firstThingsFirst">
+                First things first. Connect your dataset here. You can also download & connect open source datasets to
+                play
+                around
+                with Graphaite: <a class="alert-link" target="_blank" href="https://raw.githubusercontent.com/pandas-dev/pandas/master/doc/data/tips.csv">Tips
+                </a>, <a class="alert-link" target="_blank" href="https://gist.githubusercontent.com/michhar/2dfd2de0d4f8727f873422c5d959fff5/raw/fa71405126017e6a37bea592440b4bee94bf7b9e/titanic.csv">Titanic
+                </a>, <a class="alert-link" target="_blank" href="https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv">Iris
+                    Dataset
+                </a> or any other.
+            </div>
+            {% endif %}
+
+
             <!-- PROJECT ID IMPORTANT -->
             <div style="display: none;" id='project_id'>{{project_id}}</div>
 
@@ -141,7 +156,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Set Dataset</h4>
+                                <h4>Connect Dataset</h4>
                             </div>
                             <div class="card-body">
                                 <h4>Browse Dataset to Upload</h4>
@@ -155,7 +170,9 @@
                             </div>
                         </div>
 
-
+                        <div class="alert alert-success" id="alertSetFeatureVars" style="display:none;">
+                            Please set Target & Feature variables from below for your visualizations.
+                        </div>
                         <div class="card">
                             <div class="card-header">
                                 <h4>Set Feature Variables</h4>

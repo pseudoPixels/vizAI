@@ -62,7 +62,8 @@
 
                     <li class="menu-title">Visualizations</li>
                     <li>
-                        <a href="{{ url_for('favourites', project_id=project_id)}}"><i class="menu-icon fa fa-star"></i>
+                        <a style="color: black;font-weight: bold;" href="{{ url_for('favourites', project_id=project_id)}}"><i
+                                class="menu-icon fa fa-star"></i>
                             Favourites / Dashboard</a>
                     </li>
 
@@ -80,15 +81,15 @@
                     <li class="menu-title">Downloads</li>
                     <li>
                         <a href="{{ url_for('image_export', project_id=project_id)}}"><i class="menu-icon fa fa-camera-retro"></i>
-                            Visualizations as Images </a>
+                            Export as Images </a>
                     </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-laptop"></i>
-                            PDF Presentation </a>
+                            PDF Presentation &nbsp <i class="fa fa-lock"></i> </a>
                     </li>
                     <li>
                         <a href="#"><i class="menu-icon fa fa-bars"></i>
-                            Jupyter Notebook </a>
+                            Jupyter Notebook &nbsp <i class="fa fa-lock"></i> </a>
                     </li>
 
 
@@ -131,6 +132,18 @@
         <!-- /header -->
         <!-- Header-->
         <div class="content">
+            {% if isDatasetConnected == False %}
+            <div class="alert alert-warning">
+                You have not connected any dataset yet! Please, <a class="alert-link" href="{{ url_for('manage_datasets', project_id=project_id)}}">Connect
+                    Dataset</a> first to use this feature.
+            </div>
+            {% endif %}
+
+            <div class="alert alert-info" style="display:none;" id="alertIsFavEmpty">
+                You have not added any visualization to Favourites. You can add visualizations to Favourites from
+                <a class="alert-link" href="{{ url_for('autoviz', project_id=project_id)}}">Auto Plots (AI)</a>.
+            </div>
+
             <div style="display: none;" id='project_id'>{{project_id}}</div>
 
             <div class="animated fadeIn">
