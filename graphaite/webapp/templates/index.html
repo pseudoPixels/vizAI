@@ -94,7 +94,7 @@
       <header id="header" class="header">
          <div class="top-left">
             <div class="navbar-header">
-               <a class="navbar-brand" href="./"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
+               <a class="navbar-brand" href="{{ url_for('manage_datasets', project_id=project_id)}}"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
                      alt="Logo"></a>
                <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
             </div>
@@ -117,6 +117,12 @@
       <!-- /header -->
       <!-- Header-->
       <div class="content">
+         {% if isDatasetConnected == False %}
+         <div class="alert alert-warning">
+            You have not connected any dataset yet! Please, <a class="alert-link" href="{{ url_for('manage_datasets', project_id=project_id)}}">Connect
+               Dataset</a> first to use this feature.
+         </div>
+         {% endif %}
          <div style="display: none;" id='project_id'>{{project_id}}</div>
          <div style="display: none;" id='graph_id'>{{graph_id}}</div>
 

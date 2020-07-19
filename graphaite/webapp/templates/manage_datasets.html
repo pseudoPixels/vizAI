@@ -107,13 +107,17 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
+                    <a class="navbar-brand" href="{{ url_for('manage_datasets', project_id=project_id)}}"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
                             alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
             <div class="top-right">
                 <div class="header-menu">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" style="color:chocolate;transform: scale(1.5);"><i class="fa fa-lightbulb-o"></i>
+                            How to use this page?</a>
+                    </div>
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
@@ -126,6 +130,8 @@
                             <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </header>

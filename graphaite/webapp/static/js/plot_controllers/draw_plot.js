@@ -53,7 +53,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/getPlot/" + $('#project_id').text() + "/" + GRAPH_ID,
+            url: "/getPlot/" + $('#project_id').text() + "/" + GRAPH_ID,
             data: "graph_x=" + graph_x +
                 "&graph_y=" + graph_y +
                 "&graph_color=" + graph_color +
@@ -123,7 +123,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/getPlot/" + $('#project_id').text() + "/" + GRAPH_ID + "/true",
+            url: "/getPlot/" + $('#project_id').text() + "/" + GRAPH_ID + "/true",
             data: "graph_x=" + graph_x +
                 "&graph_y=" + graph_y +
                 "&graph_color=" + graph_color +

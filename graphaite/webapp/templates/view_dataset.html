@@ -107,7 +107,7 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
+                    <a class="navbar-brand" href="{{ url_for('view_datasets', project_id=project_id)}}"><img src="{{ url_for('static',filename='images/logoGraphaite.png') }}"
                             alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>

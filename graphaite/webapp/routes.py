@@ -161,33 +161,47 @@ def graph_editor(project_id, graph_id=None):
 
     projectDoc = GraphaiteProjectModel.load(project_id)
 
-    data = pd.read_csv(projectDoc.dataset_path)
+    ## check if any dataset connected or not
+    isDatasetConnected = False
+    datasetPath = projectDoc.dataset_path
+    if datasetPath and datasetPath.strip():
+        isDatasetConnected = True
+
+    
     fig_data = ""
     graph_title = "Untitled Visualization..."
     graph_settings = {}
     chart_type = "histogram"
 
-    ## fetch the graph info if the edit is based on an existing graph (i.e., graph_id is not null)
-    if graph_id is not None:
-        graphDoc = None
-        for aGraph in views_by_graphaite_graph(g.couch):
-            if aGraph.key == graph_id:
-                graphDoc = GraphaiteGraphModel.load(aGraph.value)
-                break
+    all_features = []
+    categorical_features = []
+    neumeric_features = []
 
-        if graphDoc is not None:
-            fig_data = graphDoc.figure_data
+    ## do followings iff dataset already connected.
+    if isDatasetConnected == True:
+        data = pd.read_csv(projectDoc.dataset_path)
 
-        graph_settings = {"graph_x":graphDoc.x, "graph_y":graphDoc.y, "graph_color":graphDoc.color}
+        ## fetch the graph info if the edit is based on an existing graph (i.e., graph_id is not null)
+        if graph_id is not None:
+            graphDoc = None
+            for aGraph in views_by_graphaite_graph(g.couch):
+                if aGraph.key == graph_id:
+                    graphDoc = GraphaiteGraphModel.load(aGraph.value)
+                    break
 
-        graph_title = graphDoc.graph_title
+            if graphDoc is not None:
+                fig_data = graphDoc.figure_data
 
-        chart_type = graphDoc.chart_type
+            graph_settings = {"graph_x":graphDoc.x, "graph_y":graphDoc.y, "graph_color":graphDoc.color}
+
+            graph_title = graphDoc.graph_title
+
+            chart_type = graphDoc.chart_type
 
 
-    all_features = get_all_features(data=data)
-    categorical_features = get_categorical_features(data=data)
-    neumeric_features = get_numeric_features(data=data)
+        all_features = get_all_features(data=data)
+        categorical_features = get_categorical_features(data=data)
+        neumeric_features = get_numeric_features(data=data)
 
     
     return render_template(
@@ -200,7 +214,8 @@ def graph_editor(project_id, graph_id=None):
         chart_type = str(chart_type),
         graph_title = str(graph_title),
         project_id=project_id,
-        graph_id=graph_id
+        graph_id=graph_id,
+        isDatasetConnected=isDatasetConnected
     )
 
 
