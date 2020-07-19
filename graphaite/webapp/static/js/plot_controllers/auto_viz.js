@@ -32,7 +32,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/getAutoViz/" + $('#project_id').text(),
+            url: "/getAutoViz/" + $('#project_id').text(),
             data: $('#fs').serialize(),
             success: function (option) {
                 for (aPlotID in option['plots']) {
@@ -44,7 +44,7 @@ $(document).ready(function () {
                         aFeatureTag = aPlotObject['feature_tags'][index];
                         // create unique div id, to map the plotly fig
                         var unique_div_id = get_uuid();
-                        var graphEditorLink = "http://127.0.0.1:5000/graph_editor/" + $('#project_id').text() + "/" + aPlotObject['graph_id'];
+                        var graphEditorLink = "/graph_editor/" + $('#project_id').text() + "/" + aPlotObject['graph_id'];
 
                         var favourtieBtnIcon = '';
 
@@ -95,7 +95,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             cache: false,
-            url: "http://127.0.0.1:5000/add_or_remove_graph_to_favourite/",
+            url: "/add_or_remove_graph_to_favourite/",
             data: "projectID=" + projectID + '&graphID=' + graphID,
             success: function (returnData) {
                 console.log("added graph to favourites");
