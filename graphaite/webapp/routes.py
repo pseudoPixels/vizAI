@@ -437,6 +437,11 @@ def getAutoViz(project_id):
 
     plots = {}
 
+    ## used to keep track if its the first time request after creating project
+    ## we check if there is any visualization availabe yet or not. if no viz
+    ## available yet, we try to generate new one assuming this is new project and its first
+    ## request for automatic data viz.
+    isFirstRun = True
 
     ## check if the previous an new targe and feature variables are exact same.
     ## if they are exact same, we just load of db and send instead of generating plots again.
@@ -456,41 +461,49 @@ def getAutoViz(project_id):
                         "graph_id": aGraphDoc.graph_id
                 }
 
+                ## we found at least one vizualization of the project, denoting its not the first
+                ## time request for auto viz
+                isFirstRun = False
+
+        ## we have existing visualizations for the project
+        if isFirstRun == False:
+            return jsonify({"plots": plots})
+
 
     ## some settings (such as, target or feature variables) changed and need to regenerate auto plots 
-    else:
-            
-        data = pd.read_csv(aProjectDoc.dataset_path)
+    # else:
+        
+    data = pd.read_csv(aProjectDoc.dataset_path)
 
-        ## get auto generated plots
-        plots = get_auto_generated_graphs(
-            dataset=data,
-            feature_variables=new_feature_variables,
-            target_variable=new_target_variable,
+    ## get auto generated plots
+    plots = get_auto_generated_graphs(
+        dataset=data,
+        feature_variables=new_feature_variables,
+        target_variable=new_target_variable,
+    )
+
+    aProjectDoc.graphaite_graph_ids = []
+    ## add the graphs to database
+    for aPlotID in plots:
+        plotModel = GraphaiteGraphModel(
+            graph_id=aPlotID,
+            graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
+            figure_data=plots[aPlotID]["figure_data"],
+            insights=["No insights added yet!"],
+            feature_tags = plots[aPlotID]["feature_tags"],
+            **plots[aPlotID]["graph_settings"]
         )
 
-        aProjectDoc.graphaite_graph_ids = []
-        ## add the graphs to database
-        for aPlotID in plots:
-            plotModel = GraphaiteGraphModel(
-                graph_id=aPlotID,
-                graph_title=" | ".join(plots[aPlotID]["feature_tags"]),
-                figure_data=plots[aPlotID]["figure_data"],
-                insights=["No insights added yet!"],
-                feature_tags = plots[aPlotID]["feature_tags"],
-                **plots[aPlotID]["graph_settings"]
-            )
-
-            plotModel.store()
-           
-            ## add the graphid to the corresponding project data model
-            aProjectDoc.graphaite_graph_ids.append(aPlotID)
-            aProjectDoc.store()
-
-        ## since the target and feature variable changed, update and store them
-        aProjectDoc.selected_target_variable = new_target_variable
-        aProjectDoc.selected_feature_variables = new_feature_variables
+        plotModel.store()
+        
+        ## add the graphid to the corresponding project data model
+        aProjectDoc.graphaite_graph_ids.append(aPlotID)
         aProjectDoc.store()
+
+    ## since the target and feature variable changed, update and store them
+    aProjectDoc.selected_target_variable = new_target_variable
+    aProjectDoc.selected_feature_variables = new_feature_variables
+    aProjectDoc.store()
 
 
 

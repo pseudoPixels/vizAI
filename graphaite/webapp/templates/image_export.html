@@ -132,6 +132,12 @@
         <!-- /header -->
         <!-- Header-->
         <div class="content">
+
+            <div class="alert alert-warning" style="display:none;" id="alertEmptyFav">
+                You have not added any visualizations to Favourites! Please, add visualizations from <a class="alert-link"
+                    href="{{ url_for('autoviz', project_id=project_id)}}">Auto
+                    Plots (AI)</a> to Favourites first to download them.
+            </div>
             <div style="display: none;" id='project_id'>{{project_id}}</div>
 
             <div class="animated fadeIn">
