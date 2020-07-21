@@ -367,6 +367,7 @@ def getDataFrame(project_id):
 @login_required
 def createProject():
     userProjects = []
+
     for aProject in views_by_graphaite_project_owner(g.couch):
         if aProject.key == current_user.email:
             aProjectDoc = GraphaiteProjectModel.load(aProject.value)
@@ -651,11 +652,14 @@ def login():
     if form.validate_on_submit():
 
         for aUser in views_by_graphaite_user(g.couch):
+            
             if aUser.key == form.email.data and bcrypt.check_password_hash(aUser.value, form.password.data): #bcrypt.check_password_hash(aUser.value, form.password.data):
+                    
                     user = None
                     for bUser in views_by_graphaite_user_docID(g.couch):
-                        if bUser.key == bUser.key:
+                        if aUser.key == bUser.key:
                             user = GraphaiteUserModel.load(bUser.value)
+
 
                     login_user(user, remember=form.remember.data)
                     next_page = request.args.get('next')
