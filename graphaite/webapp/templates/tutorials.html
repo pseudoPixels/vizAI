@@ -15,7 +15,6 @@
 	<link rel="apple-touch-icon" href="{{ url_for('static',filename='images/logo2.png') }}">
 	<link rel="shortcut icon" href="{{ url_for('static',filename='images/logo2.png') }}">
 
-
 	{% if title %}
 	<title>Graphaite</title>
 	{% else %}
@@ -46,8 +45,8 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarToggle">
 					<div class="navbar-nav mr-auto">
-						<a class="nav-item nav-link active" href="/home">My Projects</a>
-						<a class="nav-item nav-link" href="/tutorials">Tutorials</a>
+						<a class="nav-item nav-link " href="/home">My Projects</a>
+						<a class="nav-item nav-link active" href="/tutorials">Tutorials</a>
 						<a class="nav-item nav-link" href="#">Contact Us</a>
 					</div>
 					<!-- Navbar Right Side -->
@@ -59,31 +58,32 @@
 		</nav>
 	</header>
 	<main role="main" class="container">
+
 		<div class="row">
 			<div class="col-md-12">
-				{% with messages = get_flashed_messages(with_categories=true) %}
-				{% if messages %}
-				{% for category, message in messages %}
-				<div class="alert alert-{{ category }}">
-					{{ message }}
-				</div>
-				{% endfor %}
-				{% endif %}
-				{% endwith %}
-				{% block content %}{% endblock %}
-
-
 				<div class="content-section">
-					<form method="post" action="/create_new_project/">
-						<legend class="border-bottom mb-4">Create New Project</legend>
-						<div class="form-group">
-							<input type="text" class="form-control" name="project_name" placeholder="Enter new project name...">
-						</div>
+					<legend class="border-bottom mb-4">Connecting Your Dataset with Grapahite</legend>
+					<!-- 16:9 aspect ratio -->
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v_zUcN64wyI" allowfullscreen></iframe>
+					</div>
 
-						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-sm" value="Create">
-						</div>
-					</form>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content-section">
+					<legend class="border-bottom mb-4">Creating New Visualization from Scratch using simple Drag & Drop</legend>
+					<!-- 16:9 aspect ratio -->
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dvWfC0CisUA" allowfullscreen></iframe>
+					</div>
 				</div>
 
 			</div>
@@ -94,39 +94,16 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content-section">
-					<legend class="border-bottom mb-4">Your Projects</legend>
-					<table class="table table-borderless table-hover">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Project</th>
-								<th scope="col">Last Modified</th>
-								<th scope="col">Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for aProject in userProjects %}
-							<tr>
-								<th scope="row">{{loop.index}}</th>
-								<td>{{aProject.project_title}}</td>
-								<td>-</td>
-								<td> <a class="btn btn-danger btn-sm" href="/manage_datasets/{{aProject.project_doc_id}}">Delete</a> <a class="btn btn-success btn-sm"
-									 href="/manage_datasets/{{aProject.project_doc_id}}">Open Project</a></td>
-							</tr>
-
-
-							{% endfor %}
-						</tbody>
-					</table>
-
-
-
+					<legend class="border-bottom mb-4">Automatic Data Visualization using Graphaite AI & Deep Learning</legend>
+					<!-- 16:9 aspect ratio -->
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/M_qG2UU_sFU" allowfullscreen></iframe>
+					</div>
 				</div>
 
 			</div>
 
 		</div>
-
 
 
 	</main>

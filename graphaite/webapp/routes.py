@@ -376,6 +376,11 @@ def createProject():
     # print(userProjects)
     return render_template("home.html", userProjects=userProjects)
 
+@app.route("/tutorials")
+@login_required
+def tutorials():
+    return render_template("tutorials.html")    
+
 
 ALLOWED_EXTENSIONS = set(["csv"])
 
