@@ -40,5 +40,8 @@ $(document).ready(function (e) {
 
     update_dataset();
 
+    $(".locked").on("click", function () {
+        alert("This feature is locked in this early access version of Graphaite.");
+    });
 
 });
