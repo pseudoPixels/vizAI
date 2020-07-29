@@ -158,6 +158,10 @@ $(document).ready(function (e) {
         set_feature_and_target_variables();
     });
 
+    $(".locked").on("click", function () {
+        alert("This feature is locked in this early access version of Graphaite.");
+    });
+
 });
 
 // http://127.0.0.1:5000

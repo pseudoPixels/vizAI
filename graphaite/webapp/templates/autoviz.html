@@ -71,7 +71,8 @@
                <li class="menu-title">Visualizations</li>
 
                <li>
-                  <a href="{{ url_for('autoviz', project_id=project_id)}}"><i class="menu-icon fa fa-th"></i>
+                  <a style="color: black;font-weight: bold;" href="{{ url_for('autoviz', project_id=project_id)}}"><i
+                        class="menu-icon fa fa-th"></i>
                      Auto Plots (AI) </a>
                </li>
 
@@ -89,18 +90,17 @@
 
                <li class="menu-title">Downloads</li>
                <li>
-                  <a href="{{ url_for('image_export', project_id=project_id)}}"><i class="menu-icon fa fa-camera-retro"></i>
-                     Export as Images </a>
+                  <a href="#" class="locked"><i class="menu-icon fa fa-camera-retro"></i>
+                     Export as Images &nbsp <i class="fa fa-lock"></i> </a>
                </li>
                <li>
-                  <a href="#"><i class="menu-icon fa fa-laptop"></i>
+                  <a href="#" class="locked"><i class="menu-icon fa fa-laptop"></i>
                      PDF Presentation &nbsp <i class="fa fa-lock"></i> </a>
                </li>
                <li>
-                  <a href="#"><i class="menu-icon fa fa-bars"></i>
+                  <a href="#" class="locked"><i class="menu-icon fa fa-bars"></i>
                      Jupyter Notebook &nbsp <i class="fa fa-lock"></i> </a>
                </li>
-
 
 
             </ul>

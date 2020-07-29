@@ -35,6 +35,9 @@
 Details of the CouchdDB installation command:: https://linuxize.com/post/how-to-install-couchdb-on-ubuntu-18-04/
 
 
+#### 1.4 Install Anaconda
+
+
 Done!
 
 
