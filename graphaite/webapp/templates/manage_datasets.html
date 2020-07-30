@@ -64,6 +64,11 @@
                     <li class="menu-title">Visualizations</li>
 
                     <li>
+                        <a target="_blank" href="{{ url_for('graph_editor', project_id=project_id)}}"><i class="menu-icon fa fa-bar-chart"></i>
+                            Create New Visualization </a>
+                    </li>
+
+                    <li>
                         <a href="{{ url_for('autoviz', project_id=project_id)}}"><i class="menu-icon fa fa-th"></i>
                             Auto Plots (AI) </a>
                     </li>
@@ -75,10 +80,7 @@
                     </li>
 
 
-                    <li>
-                        <a target="_blank" href="{{ url_for('graph_editor', project_id=project_id)}}"><i class="menu-icon fa fa-bar-chart"></i>
-                            Create New Visualization </a>
-                    </li>
+
 
                     <li class="menu-title">Downloads</li>
                     <li>
