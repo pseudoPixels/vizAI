@@ -151,9 +151,12 @@
                 First things first. Connect your dataset here. You can also download & connect open source datasets to
                 play
                 around
-                with Graphaite: <a class="alert-link" target="_blank" href="https://raw.githubusercontent.com/pandas-dev/pandas/master/doc/data/tips.csv">Tips
-                </a>, <a class="alert-link" target="_blank" href="https://gist.githubusercontent.com/michhar/2dfd2de0d4f8727f873422c5d959fff5/raw/fa71405126017e6a37bea592440b4bee94bf7b9e/titanic.csv">Titanic
-                </a>, <a class="alert-link" target="_blank" href="https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv">Iris
+                with Graphaite: <a class="alert-link" target="_blank" href="{{ url_for('static',filename='sample_datasets/tips.csv') }}"
+                    download>Tips
+                </a>, <a class="alert-link" target="_blank" href="{{ url_for('static',filename='sample_datasets/titanic.csv') }}"
+                    download>Titanic
+                </a>, <a class="alert-link" target="_blank" href="{{ url_for('static',filename='sample_datasets/iris.csv') }}"
+                    download>Iris
                     Dataset
                 </a> or any other. <br /> Watch <a class="alert-link" href="#" data-toggle="modal" data-target="#exampleModalLong">
                     <i class="fa fa-lightbulb-o"></i>
